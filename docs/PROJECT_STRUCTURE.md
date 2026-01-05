@@ -86,10 +86,12 @@ diver-nest/
 - **Collections**: lowercase, plural (e.g., `users`, `activities`, `bookings`)
 - **Fields**: snake_case (e.g., `user_id`, `created_at`, `total_amount`)
 
-## 🎯 Component Organization
+## 🎯 Implementation Guidelines
 
-### Frontend Component Structure
-```
+### Frontend Structure (React/Vue.js)
+
+```javascript
+// Example component structure
 src/frontend/components/
 ├── common/                    # Reusable components
 │   ├── Button/
@@ -111,8 +113,10 @@ src/frontend/components/
     └── Navigation/
 ```
 
-### Backend Module Structure
-```
+### Backend Structure (Node.js/Express)
+
+```javascript
+// Example API structure
 src/backend/routes/
 ├── auth.js                    # Authentication routes
 ├── users.js                   # User management
@@ -124,6 +128,7 @@ src/backend/routes/
 ├── payments.js                # Payment processing
 └── admin.js                   # Admin operations
 
+// Controller structure
 src/backend/controllers/
 ├── authController.js          # Login, register, logout
 ├── bookingController.js       # Booking CRUD operations
@@ -157,23 +162,38 @@ src/backend/controllers/
 ## 🔧 Configuration Management
 
 ### Environment Variables Structure
-The application uses environment variables for configuration. Create a `.env` file based on `.env.example` template:
+The application uses environment variables for configuration. Create a `.env` file based on `.env.example`:
 
-**Required Environment Variables:**
-- **Database**: MongoDB connection string and database name
-- **Authentication**: JWT secret key and token expiration settings
-- **Payment Gateways**: Stripe and PayPal API keys (use test keys for development)
-- **Email Service**: Email provider credentials and sender information
-- **File Uploads**: Upload directory path and file size limits
-- **Application**: Port numbers and URL configurations
+```bash
+# Database Configuration
+MONGO_URI=your_mongodb_connection_string
+DB_NAME=your_database_name
 
-**Example `.env.example` template:**
-```
-# Copy this file to .env and fill in your actual values
-MONGO_URI=mongodb://localhost:27017/your_database
-JWT_SECRET=generate_a_secure_random_string
-STRIPE_SECRET_KEY=sk_test_your_test_key_here
-# ... add other required variables
+# Authentication Settings
+JWT_SECRET=your_secure_jwt_secret_here
+JWT_EXPIRE=7d
+BCRYPT_ROUNDS=12
+
+# Payment Gateway Keys (Use test keys for development)
+STRIPE_PUBLIC_KEY=pk_test_your_stripe_public_key
+STRIPE_SECRET_KEY=sk_test_your_stripe_secret_key
+PAYPAL_CLIENT_ID=your_paypal_client_id
+PAYPAL_CLIENT_SECRET=your_paypal_client_secret
+
+# Email Service Configuration
+EMAIL_SERVICE=your_email_provider
+EMAIL_API_KEY=your_email_service_api_key
+EMAIL_FROM=your_sender_email
+
+# File Upload Settings
+UPLOAD_PATH=./uploads
+MAX_FILE_SIZE=5242880
+
+# Application Configuration
+PORT=3000
+NODE_ENV=development
+FRONTEND_URL=http://localhost:3000
+BACKEND_URL=http://localhost:5000
 ```
 
 ### Environment Variable Security Guidelines
@@ -245,25 +265,31 @@ production/
 ## 📖 Getting Started
 
 1. **Clone the repository**
-   - Download or clone the project from the repository
-   - Navigate to the project directory
+   ```bash
+   git clone https://github.com/alen-oshan/diver-nest.git
+   cd diver-nest
+   ```
 
-2. **Set up environment configuration**
-   - Copy the `.env.example` file to `.env`
-   - Fill in your actual configuration values
-   - Ensure all required environment variables are set
+2. **Set up environment**
+   ```bash
+   cp .env.example .env
+   # Edit .env with your configuration
+   ```
 
-3. **Install project dependencies**
-   - Install Node.js dependencies using npm or yarn
-   - Install any additional tools or packages as needed
+3. **Install dependencies**
+   ```bash
+   npm install
+   ```
 
-4. **Initialize database**
-   - Set up MongoDB database connection
-   - Run database seeding scripts to populate initial data
+4. **Set up database**
+   ```bash
+   npm run seed-db
+   ```
 
-5. **Start development environment**
-   - Launch the development server
-   - Access the application through the configured ports
+5. **Start development**
+   ```bash
+   npm run dev
+   ```
 
 ---
 
