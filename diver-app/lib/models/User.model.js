@@ -22,7 +22,7 @@ const UserSchema = new mongoose.Schema(
 
     phone: {
       type: String,
-      required: true,
+      required: false,
       validate: {
         validator: (v) => !v || validator.isMobilePhone(v, 'any'),
         message: 'Please enter a valid phone number'

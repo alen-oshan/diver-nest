@@ -4,6 +4,7 @@ import React, { use } from 'react'
 import { doCredentialLogin } from '@/app/actions/index';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import Link from 'next/link';
 
 const UserLogin = () => {
     const router = useRouter();
@@ -42,7 +43,7 @@ const UserLogin = () => {
             </div>
 
             <button type='submit' className='bg-orange-300 rounded mt-4 flex justify-center w-36'> Login</button>
-
+            <p>Don't have an account? <Link href="register">Register</Link></p>
         </form>
     </>
   )
