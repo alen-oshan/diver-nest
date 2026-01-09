@@ -6,15 +6,16 @@ export const POST = async (request) => {
     const {name, email, password} = await request.json();
     console.log(name, email, password);
 
-    const hashedPassword = bcrypt.hash(password, 10);
+    const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = {
         name, 
         email, 
-        password:hashedPassword
+        passwordHash:hashedPassword,
     };
     try{
         await createUser(newUser)
     } catch (e){
+        console.log("Error details:", e);
         throw new NextResponse(e.message, {
             status:500}
         );

@@ -2,7 +2,8 @@ import NextAuth from 'next-auth'
 import GoogleProvider from 'next-auth/providers/google'
 import GithubProvider from 'next-auth/providers/github'
 import CredentialsProvider from 'next-auth/providers/credentials';
-import {getUserByEmail} from '@/temp/Users'
+import User from '@/lib/models/User.model'
+import bcrypt from 'bcryptjs';
 
 export const {
     handlers: {GET, POST},
@@ -40,7 +41,6 @@ export const {
                         password: { label: "Password", type: "password" },
                     },
                     async authorize(credentials) {
-                        console.log("Authorize called with:", credentials);
                         
                         if (!credentials?.email || !credentials?.password) {
                             console.log("Missing credentials");
@@ -48,7 +48,7 @@ export const {
                         }
 
                         try {
-                            const user = await getUserByEmail(credentials?.email);
+                            const user = await User.findOne({email:credentials?.email});
                             console.log("User found:", user);
 
                             if (!user) {
@@ -56,7 +56,15 @@ export const {
                                 return null;
                             }
 
-                            const isMatch = user.password === credentials.password;
+                            if (!user.passwordHash) {
+                                console.log("User has no password");
+                                return null;
+                            }
+
+                            console.log("Credentials password:", credentials.password);
+                            console.log("User passwordHash:", user.passwordHash);
+
+                            const isMatch = await bcrypt.compare(credentials.password, user.passwordHash);
                             console.log("Password match:", isMatch);
                             
                             if (isMatch) {
