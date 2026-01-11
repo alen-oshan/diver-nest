@@ -1,12 +1,14 @@
 import React from 'react'
-import RegisterForm from '@/app/components/RegisterForm'
+import UserRegister from '@/app/components/auth/UserRegister'
+import SocialLogin from '@/app/components/auth/SocailLogin'
 
-const RegisterPage = () => {
+const RegisterForm = () => {
   return (
     <>
-        <RegisterForm />
+        <UserRegister />
+        <SocialLogin />
     </>
   )
 }
 
-export default RegisterPage;
+export default RegisterForm;

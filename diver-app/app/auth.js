@@ -2,7 +2,7 @@ import NextAuth from 'next-auth'
 import GoogleProvider from 'next-auth/providers/google'
 import GithubProvider from 'next-auth/providers/github'
 import CredentialsProvider from 'next-auth/providers/credentials';
-import User from '@/lib/models/User.model'
+import {findOneUser} from '@/queries/user'
 import bcrypt from 'bcryptjs';
 
 export const {
@@ -48,7 +48,7 @@ export const {
                         }
 
                         try {
-                            const user = await User.findOne({email:credentials?.email});
+                            const user = await findOneUser({email:credentials?.email});
                             console.log("User found:", user);
 
                             if (!user) {

@@ -51,7 +51,7 @@ const UserRegister = () => {
             </div>
 
             <button type='submit' className='bg-orange-300 rounded mt-4 flex justify-center w-36'> Register</button>
-            <p>Don't have an account? <Link href="/">Login</Link></p>
+            <p>Don't have an account? <Link href="/login">Login</Link></p>
         </form>
   )
 }

@@ -1,10 +1,10 @@
 'use server'
-import { signIn, signOut } from "@/app/auth";
+import { signIn, signOut, auth} from "@/app/auth";
 
 export async function doSocialLogin(formData) {
     const action = formData.get('action');
     console.log(action)
-    await signIn(action, { redirectTo: "/home" });
+    await signIn(action, { redirectTo: "/profile" });
 }
 
 export async function logout() {
@@ -30,4 +30,11 @@ export async function doCredentialLogin(formData) {
         
         return { error: error.message || "Authentication failed" };
     }
+}
+
+export async function getServerSideProps(context) {
+    const session = await auth();
+    return {
+        session,
+    };
 }

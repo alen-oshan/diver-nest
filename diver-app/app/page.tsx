@@ -1,10 +1,14 @@
-import Image from "next/image";
-import styles from "./page.module.css";
-import AuthPage from "@/app/login/page"
-export default function Home() {
+import Header from '@/app/components/layout/Header';
+import Body from '@/app/components/layout/Body';
+import Footer from '@/app/components/layout/Footer';
+
+export default async function LandingPage() {
+  
   return (
-    <>
-      <AuthPage />
-    </>
+    <div className='min-h-screen'>
+      <Header />
+      <Body />
+      <Footer />      
+    </div>
   );
 }

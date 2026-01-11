@@ -1,12 +1,14 @@
 import React from 'react'
-import LoginForm from '@/app/components/LoginFrom'
+import SocailLogin from '@/app/components/auth/SocailLogin'
+import UserLogin from '@/app/components/auth/UserLogin'
 
-const page = () => {
+const LoginFrom = () => {
   return (
-    <div className='flex flex-col justify-center items-center m-4'>
-        <LoginForm />
-    </div>
+    <>
+      <UserLogin />
+      <SocailLogin />
+    </>
   )
 }
 
-export default page
+export default LoginFrom
