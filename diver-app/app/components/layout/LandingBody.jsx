@@ -1,8 +1,9 @@
 import React from 'react'
+import SlideShow from '@/app/components/body/slideshow'
 
 const Body = () => {
   return (
-    <div>Body</div>
+    <SlideShow />
   )
 }
 
