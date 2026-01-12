@@ -11,8 +11,8 @@ const QuickAccess = async() => {
         
         <div className='flex items-center gap-6 text-white'>
             {!user && <Link className='hover:opacity-80 transition-opacity' href='/login'>Sign In</Link>}
-            {!user && <Link className='px-4 py-2 rounded-mdhover:opacity-90 transition-opacity' href='/register'>Register</Link>}
-            {user && <Link className='px-4 py-2 rounded-mdhover:opacity-90 transition-opacity' href='/profile'>Profile</Link>}
+            {!user && <Link className='px-4 py-2 rounded-md hover:opacity-80 transition-opacity' href='/register'>Register</Link>}
+            {user && <Link className='px-4 py-2 rounded-md hover:opacity-90 transition-opacity' href='/profile'>Profile</Link>}
             {user && <LogoutButton />}
         </div>
     )

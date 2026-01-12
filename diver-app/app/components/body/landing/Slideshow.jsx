@@ -5,24 +5,45 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 const slides = [
   {
-    image: "https://images.unsplash.com/photo-1727101761134-a3ef9bd657df?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxzY3ViYSUyMGRpdmluZyUyMHVuZGVyd2F0ZXJ8ZW58MXx8fHwxNzY4MTEwNDQ5fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+    imageDesktop: "https://images.unsplash.com/photo-1727101761134-a3ef9bd657df?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxzY3ViYSUyMGRpdmluZyUyMHVuZGVyd2F0ZXJ8ZW58MXx8fHwxNzY4MTEwNDQ5fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+    imageMobile: '/images/hero-mobile-1.jpg',
     title: "Explore the Deep Blue",
     description: "Discover the most breathtaking underwater experiences with our expert dive guides."
   },
   {
-    image: "https://images.unsplash.com/photo-1558117338-aa433feb1c62?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx0cm9waWNhbCUyMGJlYWNoJTIwcmVzb3J0fGVufDF8fHx8MTc2ODA3NDA3MXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+    imageDesktop: "https://images.unsplash.com/photo-1558117338-aa433feb1c62?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx0cm9waWNhbCUyMGJlYWNoJTIwcmVzb3J0fGVufDF8fHx8MTc2ODA3NDA3MXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+    imageMobile: '/images/hero-mobile-1.jpg',
     title: "Luxury Beach Resorts",
     description: "Relax in paradise between dives at our hand-picked coastal accommodations."
   },
   {
-    image: "https://images.unsplash.com/photo-1727093481948-a84c1c24db99?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxkaXZpbmclMjBjb3JhbCUyMHJlZWZ8ZW58MXx8fHwxNzY4MTQzMzY0fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+    imageDesktop: "https://images.unsplash.com/photo-1727093481948-a84c1c24db99?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxkaXZpbmclMjBjb3JhbCUyMHJlZWZ8ZW58MXx8fHwxNzY4MTQzMzY0fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+    imageMobile: '/images/hero-mobile-1.jpg',    
     title: "Vibrant Coral Reefs",
     description: "Experience the stunning beauty of pristine coral ecosystems and marine life."
   }
 ];
 
+function useIsMobile(breakpoint = 640) {
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia(`(max-width: ${breakpoint}px)`)
+
+    const handler = (e) => setIsMobile(e.matches)
+    setIsMobile(mediaQuery.matches)
+
+    mediaQuery.addEventListener('change', handler)
+    return () => mediaQuery.removeEventListener('change', handler)
+  }, [breakpoint])
+
+  return isMobile
+}
+
 export default function Slideshow() {
   const [currentSlide, setCurrentSlide] = useState(0);
+  
+  const isMobile = useIsMobile()
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -50,11 +71,13 @@ export default function Slideshow() {
         <div
           key={index}
           className={`absolute inset-0 transition-opacity duration-1000 ${
-            index === currentSlide ? 'opacity-100' : 'opacity-0'
+            index === currentSlide
+              ? 'opacity-100 pointer-events-auto'
+              : 'opacity-0 pointer-events-none'
           }`}
         >
           <img
-            src={slide.image}
+            src={isMobile ? slide.imageMobile : slide.imageDesktop}
             alt={slide.title}
             className="w-full h-full object-cover"
           />
@@ -72,7 +95,7 @@ export default function Slideshow() {
                 <p className="text-lg md:text-xl text-white/90 mb-6">
                   {slide.description}
                 </p>
-                <button className="bg-[#4F959D] hover:bg-[#205781] text-white px-8 py-3 rounded-lg transition-colors duration-300 font-medium">
+                <button className="bg-[#FFFFFF] text-[#205781] hover:bg-[#205781] hover:text-white  px-8 py-3 rounded-lg transition-colors duration-300 font-medium">
                   Book Now
                 </button>
               </div>
