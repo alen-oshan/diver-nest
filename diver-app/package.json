@@ -9,8 +9,10 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@radix-ui/react-select": "^2.2.6",
     "@types/jsonwebtoken": "^9.0.10",
     "bcryptjs": "^3.0.3",
+    "clsx": "^2.1.1",
     "google-auth-library": "^10.5.0",
     "jsonwebtoken": "^9.0.3",
     "lucide-react": "^0.562.0",
@@ -20,6 +22,7 @@
     "next-cloudinary": "^6.17.5",
     "react": "19.2.3",
     "react-dom": "19.2.3",
+    "tailwind-merge": "^3.4.0",
     "validator": "^13.15.26"
   },
   "devDependencies": {
