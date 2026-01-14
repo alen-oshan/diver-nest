@@ -95,7 +95,7 @@ export default function Slideshow() {
                 <p className="text-lg md:text-xl text-white/90 mb-6">
                   {slide.description}
                 </p>
-                <button className="bg-[#FFFFFF] text-[#205781] hover:bg-[#205781] hover:text-white  px-8 py-3 rounded-lg transition-colors duration-300 font-medium">
+                <button className="bg-[#205781] text-white hover:bg-[#FFFFFF] hover:text-[#205781]  px-8 py-3 rounded-lg transition-colors duration-300 font-medium">
                   Book Now
                 </button>
               </div>
