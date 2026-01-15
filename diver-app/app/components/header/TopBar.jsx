@@ -8,8 +8,8 @@ const TopBar = () => {
         <div className="container mx-auto px-1 py-3">
             <div className="flex items-center justify-between">
                 <BusinessName />
-                {/* <QuickAccess /> */}
-                <LoggedQuickAccess />
+                <QuickAccess />
+                {/* <LoggedQuickAccess /> */}
             </div>
         </div> 
     )

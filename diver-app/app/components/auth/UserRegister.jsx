@@ -34,25 +34,70 @@ const UserRegister = () => {
         }
     }
   return (
-    <form onSubmit={handleSubmit}>          
-            <div>
-                <label htmlFor='name'>Name</label>
-                <input className='border mx-2 border-gray-500 rounded' type='name' id='name' name='name'></input>
-            </div>
-            
-            <div>
-                <label htmlFor='email'>Email Address</label>
-                <input className='border mx-2 border-gray-500 rounded' type='email' id='email' name='email'></input>
+    <div className="flex justify-center mt-8">
+        <form
+            onSubmit={handleSubmit}
+            className="w-full max-w-sm bg-white border rounded-lg p-6 shadow-sm space-y-4"
+        >
+            <h2 className="text-xl font-semibold text-center">
+            Create Account
+            </h2>
+
+            <div className="flex flex-col">
+            <label htmlFor="name" className="text-sm mb-1 text-gray-700">
+                Name
+            </label>
+            <input
+                type="text"
+                id="name"
+                name="name"
+                className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400"
+            />
             </div>
 
-            <div>
-                <label htmlFor='password'>Password</label>
-                <input className='border mx-2 border-gray-500 rounded' type='password' id='password' name='password'></input>
+            <div className="flex flex-col">
+            <label htmlFor="email" className="text-sm mb-1 text-gray-700">
+                Email Address
+            </label>
+            <input
+                type="email"
+                id="email"
+                name="email"
+                className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400"
+            />
             </div>
 
-            <button type='submit' className='bg-orange-300 rounded mt-4 flex justify-center w-36'> Register</button>
-            <p>Don't have an account? <Link href="/login">Login</Link></p>
+            <div className="flex flex-col">
+            <label htmlFor="password" className="text-sm mb-1 text-gray-700">
+                Password
+            </label>
+            <input
+                type="password"
+                id="password"
+                name="password"
+                className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400"
+            />
+            </div>
+
+            <button
+            type="submit"
+            className="w-full bg-[#205781] text-white py-2 rounded-md hover:opacity-80 transition font-medium"
+            >
+            Register
+            </button>
+
+            <p className="text-sm text-center text-gray-600">
+            Already have an account?{" "}
+            <Link
+                href="/login"
+                className="text-[#205781] hover:underline"
+            >
+                Login
+            </Link>
+            </p>
         </form>
+        </div>
+
   )
 }
 

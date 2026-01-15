@@ -28,24 +28,63 @@ const UserLogin = () => {
             setError("Check your credentials");
         }
     }
-  return (
-    <>
-        <form onSubmit={handleFormSubmit}>
-            <h1 className='text-xl text-red-600'>{error}</h1>
-            <div>
-                <label htmlFor='email'>Email Address</label>
-                <input className='border mx-2 border-gray-500 rounded' type='email' id='email' name='email'></input>
-            </div>
+     return (
+        <div className="flex justify-center mt-8">
+            <form
+                onSubmit={handleFormSubmit}
+                className="w-full max-w-sm bg-white border rounded-lg p-6 shadow-sm space-y-4"
+            >
+                <h2 className="text-xl font-semibold text-center mb-2">
+                Welcome Back
+                </h2>
 
-            <div>
-                <label htmlFor='password'>Password</label>
-                <input className='border mx-2 border-gray-500 rounded' type='password' id='password' name='password'></input>
-            </div>
+                {error && (
+                <p className="text-md text-red-600 text-center border-red-600 bg-red-200 p-4">
+                    {error}
+                </p>
+                )}
 
-            <button type='submit' className='bg-orange-300 rounded mt-4 flex justify-center w-36'> Login</button>
-            <p>Don't have an account? <Link href="register">Register</Link></p>
-        </form>
-    </>
+                <div className="flex flex-col">
+                <label htmlFor="email" className="text-sm mb-1 text-gray-700">
+                    Email Address
+                </label>
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400"
+                />
+                </div>
+
+                <div className="flex flex-col">
+                <label htmlFor="password" className="text-sm mb-1 text-gray-700">
+                    Password
+                </label>
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400"
+                />
+                </div>
+
+                <button
+                type="submit"
+                className="w-full bg-[#205781] text-white py-2 rounded-md hover:opacity-80 transition font-medium"
+                >
+                Login
+                </button>
+
+                <p className="text-sm text-center text-gray-600">
+                Don’t have an account?{" "}
+                <Link href="/register" className="text-[#205781] hover:underline">
+                    Register
+                </Link>
+                </p>
+            </form>
+        </div>
+
+
   )
 }
 

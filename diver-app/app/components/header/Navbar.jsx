@@ -1,9 +1,10 @@
 import React from 'react'
 import Link from 'next/link'
 import SVG from '@/app/components/header/SVGComp'
+import {User} from 'lucide-react'
 
 const Navbar = () => {   
-    const navbarList = ['Stay', 'Enjoy', 'Travel']       
+    const navbarList = ['Stay', 'Enjoy']       
     return (
 
       <div className="container mx-auto px-4 text-white">
@@ -18,6 +19,12 @@ const Navbar = () => {
               {nav} 
             </Link>
           ))}
+          <Link 
+            href={"/about-us"}
+            className='flex items-center gap-2 hover:opacity-80 transition-opacity text-lg'
+          > 
+            <User />Story
+          </Link>
         </nav>
       </div>
     )
