@@ -69,7 +69,7 @@ const activities = [
     price: 280,
     rating: 4.7,
     image: 'https://images.unsplash.com/photo-1561501900-3701fa6a0864?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjBob3RlbHxlbnwxfHx8fDE3NjgxMTg0Nzl8MA&ixlib=rb-4.1.0&q=80&w=1080',
-    roomType: 'Individual',
+    roomType: 'Single',
   },
   {
     id: 4,
@@ -78,7 +78,7 @@ const activities = [
     price: 120,
     rating: 4.3,
     image: 'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx0cm9waWNhbCUyMHJlc29ydHxlbnwxfHx8fDE3NjgyMDAwODF8MA&ixlib=rb-4.1.0&q=80&w=1080',
-    roomType: 'Individual',
+    roomType: 'Single',
   },
 ];
 

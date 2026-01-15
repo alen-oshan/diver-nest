@@ -4,6 +4,7 @@ import { ChevronDown, ShoppingCart, User } from 'lucide-react';
 import { useState, useEffect, useRef } from 'react';
 import { CartSidebar } from './cart/CartSidebar';
 import CurrencySelector from '@/app/components/header/CurrencySelector'
+import Link from 'next/link'
 
 
 const LoggedQuickAccess = () => {
@@ -14,10 +15,12 @@ const LoggedQuickAccess = () => {
         <div className="flex items-center gap-6 px-4 text-white">
                 <CurrencySelector />
                 {/* Profile with Username */}
-                <div className="flex items-center gap-2 hover:opacity-80 transition-colors cursor-pointer">
-                <User size={20} />
-                <span>John Doe</span>
-                </div>
+                <Link href="/profile">
+                    <div className="flex items-center gap-2 hover:opacity-80 transition-colors cursor-pointer">
+                    <User size={20} />
+                    <span>John Doe</span>
+                    </div>
+                </Link>
                 
                 {/* Cart Button */}
                 <button

@@ -10,9 +10,10 @@ export default function StayBody() {
   const pathname = usePathname() 
 
   const [selectedRoomType, setSelectedRoomType] = useState( 
-    pathname === '/stay' ? 'Shared Room':'Individual');
+    pathname === '/stay' ? 'Shared Room':'Single'
+  );
   const buttonTypes = 
-    pathname === '/stay' ? ['Shared Room', 'Private Room'] : ['Individual', 'Group'];
+    pathname === '/stay' ? ['Shared Room', 'Private Room'] : ['Single', 'Group'];
 
   return (
     <div className="min-h-screen bg-gray-50 py-12 px-16 md:px-16 lg:px-24">

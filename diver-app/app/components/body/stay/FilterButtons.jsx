@@ -3,7 +3,6 @@
 import React from 'react'
 
 const FilterButtons = (props) => {
-    
     function capitalizeFirstLetter(string) {
         return string.charAt(0).toUpperCase() + string.slice(1);
     }

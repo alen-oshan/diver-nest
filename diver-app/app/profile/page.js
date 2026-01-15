@@ -1,27 +1,14 @@
 import React from 'react'
-import { auth } from "@/app/auth";
-import { redirect } from "next/navigation";
-import LogoutButton from "@/app/components/auth/LogoutButton";
-import Navbar from '@/app/components/header/Navbar';
-import ProfileDetails from './profileDetails';
-import PastBookings from './pastBookings';
-import ChangeName from './ChangeName';
+import Header from '@/app/components/layout/Header'
+import ProfileBody from './ProfileBody'
 
-const HomePage = async() => {
-    const session = await auth()
-    if (!session?.user)
-        redirect("/")
-    return (
-        <>
-            <Navbar />
-            <div>
-                <ProfileDetails session={session} />
-                <LogoutButton />
-                <ChangeName session={session}/>
-                {/* <PastBookings session={session}/> */}
-            </div>
-        </>
-    )
+const page = () => {
+  return (
+    <>
+        <Header />
+        <ProfileBody />
+    </>
+  )
 }
 
-export default HomePage
+export default page
