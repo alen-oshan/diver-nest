@@ -5,7 +5,7 @@ import { Linkedin, Instagram, MessageCircle } from 'lucide-react';
 const AboutUsBody = () => {
   return (
     <div className="bg-gradient-to-br from-blue-50 via-cyan-50 to-teal-50 flex items-center justify-center p-6">
-      <div className="w-[70%] bg-white rounded-3xl shadow-2xl overflow-hidden">
+      <div className="lg:w-[70%] w-full bg-white rounded-3xl shadow-2xl overflow-hidden">
         <div className="grid md:grid-cols-2 gap-0">
           {/* Image and Social Section */}
           <div className="flex flex-col items-center justify-center p-8 md:p-12 bg-gradient-to-br from-teal-50 to-cyan-50">

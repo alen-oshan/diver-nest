@@ -21,7 +21,7 @@ export default function CurrencySelect() {
   const [selected, setSelected] = useState(currencies[0]);
 
   return (
-    <div className="relative inline-block w-20">
+    <div className="relative inline-block w-fit">
       <CurrencyButton 
         open={open}
         setOpen={setOpen}

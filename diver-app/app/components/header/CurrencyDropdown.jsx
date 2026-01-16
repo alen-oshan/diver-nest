@@ -4,7 +4,7 @@ const CurrencyDropdown = (props) => {
   return (
     <>
         {props.open && (
-            <div className="absolute mt-1 w-full bg-white border border-[#205781] rounded-md shadow-lg z-50 max-h-[120px] overflow-y-auto">
+            <div className="absolute mt-1 w-fit bg-white border border-[#205781] rounded-md shadow-lg z-50 max-h-[120px] overflow-y-auto">
             {props.currencies.map((currency) => (
                 <div
                 key={currency.code}

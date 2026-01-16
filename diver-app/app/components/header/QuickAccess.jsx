@@ -10,7 +10,7 @@ const QuickAccess = async() => {
     const user = props.session
     return (
         
-        <div className='flex items-center gap-6 text-white'>
+        <div className='flex items-center lg:gap-6 gap-2 text-white'>
             <CurrencySelector />
             {!user && <Link className='px-2 py-2 rounded-md hover:opacity-80 transition-opacity' href='/login'>Login</Link>}
             {!user && <Link className='px-2 py-2 rounded-md hover:opacity-80 transition-opacity' href='/register'>Register</Link>}
