@@ -1,7 +1,5 @@
 import mongoose from "mongoose";
-
-const validator = require('validator');
-
+import validator from 'validator'
 
 const ContactSchema = new mongoose.Schema(
   {
@@ -10,11 +8,11 @@ const ContactSchema = new mongoose.Schema(
       required: true,
       trim: true,
       minLength: 2,
-      maxLength: 100,
+      maxLength: 50,
     },
+
     email: {
       type: String,
-      required: true,
       lowercase: true,
       trim: true,
       validate: {
@@ -22,6 +20,7 @@ const ContactSchema = new mongoose.Schema(
         message: 'Please enter a valid email address'
       }
     },
+
     phone: {
       type: String,
       trim: true,
@@ -30,13 +29,7 @@ const ContactSchema = new mongoose.Schema(
         message: 'Please enter a valid phone number'
       }
     },
-    subject: {
-      type: String,
-      required: true,
-      trim: true,
-      minLength: 5,
-      maxLength: 200,
-    },
+
     message: {
       type: String,
       required: true,
@@ -44,6 +37,7 @@ const ContactSchema = new mongoose.Schema(
       minLength: 10,
       maxLength: 2000,
     },
+
     status: {
       type: String,
       enum: ["new", "read", "closed"],

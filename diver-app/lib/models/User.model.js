@@ -14,6 +14,7 @@ const UserSchema = new mongoose.Schema(
       required: true,
       unique: true,
       lowercase: true,
+      sparse: true,
       validate: {
         validator: validator.isEmail,
         message: 'Please enter a valid email address'
@@ -22,7 +23,6 @@ const UserSchema = new mongoose.Schema(
 
     phone: {
       type: String,
-      required: false,
       validate: {
         validator: (v) => !v || validator.isMobilePhone(v, 'any'),
         message: 'Please enter a valid phone number'
@@ -35,22 +35,19 @@ const UserSchema = new mongoose.Schema(
       default: "customer",
     },
 
-    passwordHash: {
+    password: {
       type: String,
+      required: true,
     },
 
     emailVerified: {
-      type: Date,
-      default: null,
+      type: Boolean,
+      default: false,
     },
+
     image: {
       type: String,
       default: null,
-    },
-    googleId: {
-      type: String,
-      default: null,
-      sparse: true, 
     },
   },
   {
