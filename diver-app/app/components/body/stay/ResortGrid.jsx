@@ -125,7 +125,7 @@ const ResortGrid = (props) => {
                         <span className="text-[20px] font-medium">{resort.rating}</span>
                         </div>
                         <div className="text-[24px] font-bold" style={{ color: '#205781' }}>
-                        <Price />
+                        <Price price={resort.price}/>
                         <span className="text-[16px] text-gray-500 font-normal">/night</span>
                         </div>
                     </div>
