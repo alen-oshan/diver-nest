@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect } from "react";
 import CurrencyButton from "./CurrencyButton";
 import CurrencyDropdown from "./CurrencyDropdown";
-
+import { useCurrencyStore } from '@/store/currencyStore';
 
 const currencies = [
   { code: "USD", name: "US Dollar" },
@@ -18,20 +18,22 @@ const currencies = [
 
 export default function CurrencySelect() {
   const [open, setOpen] = useState(false);
-  const [selected, setSelected] = useState(currencies[0]);
+  
+  const currentCurrency = useCurrencyStore((state) => state.currency);
+  const setCurrency = useCurrencyStore((state) => state.setCurrency);
 
   return (
     <div className="relative inline-block w-fit">
       <CurrencyButton 
         open={open}
         setOpen={setOpen}
-        selected={selected}
+        selected={currentCurrency}
       />
       {/* Dropdown */}
       <CurrencyDropdown 
         open={open}
         setOpen={setOpen}
-        setSelected={setSelected}
+        setSelected={setCurrency}
         currencies={currencies}
       />
       

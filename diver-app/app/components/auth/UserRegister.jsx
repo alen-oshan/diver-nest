@@ -1,8 +1,8 @@
 "use client";
 
+import React from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import React from 'react'
 
 const UserRegister = () => {
     const router = useRouter();
@@ -12,20 +12,14 @@ const UserRegister = () => {
 
         try {
             const formData = new FormData(event.currentTarget);
-            const name = formData.get('name');
-            const email = formData.get('email')
-            const password = formData.get('password')
+            const data = Object.fromEntries(formData);
 
             const response = await fetch('api/register', {
                 method:'POST',
                 headers:{
                     "content-type":"application/json"
                 },
-                body:JSON.stringify({
-                    name, 
-                    email,
-                    password,
-                })
+                body:JSON.stringify(data),
             })
             console.log(response.status)
             response.status === 201 && router.push("/")

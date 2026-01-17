@@ -8,9 +8,9 @@ export async function createResortBooking(bookingDetails) {
     } 
 }
 
-export async function findOnePersonResortBooking(email){
+export async function findAllResortBookings(){
     try {
-        const resort = ResortBooking.find(email);
+        const resort = ResortBooking.find();
         return resort;
     } catch (e){
         throw new Error(e);

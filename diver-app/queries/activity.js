@@ -10,7 +10,7 @@ export async function createActivity(activityDetails) {
 
 export async function findAllActivities(){
     try {
-        const activities = Activity.findOne(email);
+        const activities = Activity.find();
         return activities;
     } catch (e){
         throw new Error(e);

@@ -2,7 +2,7 @@ import React from 'react'
 import { Star } from 'lucide-react';
 import Image from 'next/image';
 import Link from "next/link";
-
+import Price from './resort/ResortPrice'
 
 const resorts = [
   {
@@ -125,7 +125,7 @@ const ResortGrid = (props) => {
                         <span className="text-[20px] font-medium">{resort.rating}</span>
                         </div>
                         <div className="text-[24px] font-bold" style={{ color: '#205781' }}>
-                        ${resort.price}
+                        <Price />
                         <span className="text-[16px] text-gray-500 font-normal">/night</span>
                         </div>
                     </div>

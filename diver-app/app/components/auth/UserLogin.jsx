@@ -18,7 +18,7 @@ const UserLogin = () => {
             const response = await doCredentialLogin(formData)
             
             if (!response.error){
-                router.push("/home")
+                router.push("/")
             } else {
                 setError("Check your credentials");
             }
