@@ -25,13 +25,6 @@ const ResortInfo = ({resort, googleMapsUrl}) => {
         const diffDays = getDateDiff();
         return diffDays > 0 ? diffDays : 1;
     };
-
-    const getMinDate = () => {
-        const today = new Date();
-        today.setDate(today.getDate() + 1);
-        const minDate = today.toISOString().split("T")[0];
-        return minDate;
-    }
     
     const nights = calculateNights();
     const totalPrice = resort.pricePerNight * rooms * nights;
@@ -66,6 +59,7 @@ const ResortInfo = ({resort, googleMapsUrl}) => {
                         setRooms={setRooms}
                         rooms={rooms}
                         maxRooms={resort.totalRooms}
+                        roomType={resort.roomType}
                     />
                     
                     <div className="grid grid-cols-2 gap-3">

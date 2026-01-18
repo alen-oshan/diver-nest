@@ -1,9 +1,9 @@
 import React from 'react'
 
-const RoomSelector = ({rooms, setRooms, maxRooms}) => {
+const RoomSelector = ({rooms, setRooms, maxRooms, roomType}) => {
   return (
     <div>
-        <label className="block text-sm text-gray-600 mb-1">Rooms</label>
+        <label className="block text-sm text-gray-600 mb-1">{roomType === 'Shared Room' ? "Rooms": "Beds"}</label>
         <input
             type="number"
             value={rooms}

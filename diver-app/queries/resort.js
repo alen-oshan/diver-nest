@@ -1,5 +1,4 @@
 import Resort from '@/lib/models/Resort.model'
-import { CallTracker } from 'assert';
 
 export async function createResort(resortDetails) {
     try{

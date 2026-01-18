@@ -12,14 +12,14 @@ const FilterButtons = (props) => {
         {props.buttonTypes.map((buttonType, index) => 
             <button
                 key={index}
-                onClick={() => props.setSelectedRoomType(`${buttonType}`)}
+                onClick={() => props.setSelectedItemType(`${buttonType}`)}
                 className={`px-8 py-3 rounded-lg text-[20px] font-medium transition-all
                             ${
-                                props.selectedRoomType === `${buttonType}`
+                                props.selectedItemType === `${buttonType}`
                                 ? 'bg-[#205781] text-white border-none'
                                 : 'bg-white text-[#205781] border-2 border-[#205781]'
                             }`} >
-                {capitalizeFirstLetter(buttonType)}
+                {buttonType}
             </button>
         )}
       </div>

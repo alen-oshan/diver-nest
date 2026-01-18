@@ -50,8 +50,8 @@ const ResortSchema = new mongoose.Schema(
 
     roomType: {
       type: String,
-      enum:["Single Room", "Shared Room"],
-      default:"Single Room",
+      enum:["Private Room", "Shared Room"],
+      default:"Private Room",
     },
 
     pricePerNight: {
@@ -75,6 +75,10 @@ const ResortSchema = new mongoose.Schema(
       type: String,
       required:true,
     },
+    amenities: {
+      type:[String],
+      required:true,
+    }
   },
   {
     timestamps: true,

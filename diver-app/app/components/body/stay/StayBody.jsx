@@ -7,24 +7,25 @@ import { usePathname } from 'next/navigation'
 
 export default function StayBody() {
   // get the url called
-  const pathname = usePathname() 
+  const pathname = usePathname();
+  const isStay = pathname === '/stay' ? true : false;
 
-  const [selectedRoomType, setSelectedRoomType] = useState( 
-    pathname === '/stay' ? 'Shared Room':'Single'
+  const [selectedItemType, setSelectedItemType] = useState( 
+    isStay ? 'Shared Room':'Single'
   );
   const buttonTypes = 
-    pathname === '/stay' ? ['Shared Room', 'Private Room'] : ['Single', 'Group'];
+    isStay ? ['Shared Room', 'Private Room'] : ['Single', 'Group'];
 
   return (
     <div className="min-h-screen bg-gray-50 py-12 px-16 md:px-16 lg:px-24">
       <FilterButtons 
-        setSelectedRoomType={setSelectedRoomType}
-        selectedRoomType={selectedRoomType}
+        setSelectedItemType={setSelectedItemType}
+        selectedItemType={selectedItemType}
         buttonTypes={buttonTypes}
       />
       <ResortGrid 
-        selectedRoomType={selectedRoomType}
-        pathname={pathname}
+        selectedItemType={selectedItemType}
+        isStay={isStay} 
       />  
     </div>
   );

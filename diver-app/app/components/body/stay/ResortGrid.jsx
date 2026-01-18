@@ -85,31 +85,29 @@ const activities = [
 
 
 const ResortGrid = (props) => {
-  const [resorts, setResorts] = useState([])
-    useEffect (() => {
-      async function fetchData() {
+    const [items, setItems] = useState([])
+
+    useEffect(() => {
+      const fetchData = async () => {
         try {
-          const response = await fetch('/api/resort');
-          const {resortsDTO} = await response.json();
-          setResorts(resortsDTO);
-        } catch(error) {
-          console.error('Error fetching data:', error.message);
+          const endpoint = props.isStay ? '/api/resort' : '/api/activity';
+          const response = await fetch(endpoint);
+          const data = await response.json();
+          console.log(data)
+          setItems(props.isStay ? data.resortsDTO : data.activitiesDTO);
+        } catch (error) {
+          console.error('Error fetching data:', error);
         }
-      }
+      };
+
       fetchData();
-    }, []);
+    }, [props.isStay]);
 
     
-    const filteredProducts = () => {
-        if(props.pathname==='/stay') {
-            return resorts.filter(
-                (resort) => resort.roomType === props.selectedRoomType
-            );
-        } else {
-            return activities.filter(
-                (activity) => activity.roomType === props.selectedRoomType
-            );
-        }
+    const filteredProducts = () => { 
+      return props.isStay
+      ? items.filter(item => item.roomType === props.selectedItemType)
+      : items.filter(item => item.activityType === props.selectedItemType);
     }
     
     

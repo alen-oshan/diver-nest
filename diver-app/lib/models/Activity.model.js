@@ -66,6 +66,11 @@ const ActivitySchema = new mongoose.Schema(
     duration: {
       type: Number, // Duration in minutes
     },
+
+    town: {
+      type: String, 
+      required:true,
+    },
   },
   {
     collection: "activities",
