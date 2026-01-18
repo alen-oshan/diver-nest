@@ -65,6 +65,7 @@ const ResortInfo = ({resort, googleMapsUrl}) => {
                     <RoomSelector 
                         setRooms={setRooms}
                         rooms={rooms}
+                        maxRooms={resort.totalRooms}
                     />
                     
                     <div className="grid grid-cols-2 gap-3">
@@ -136,7 +137,7 @@ const ResortInfo = ({resort, googleMapsUrl}) => {
                 <h3 className="font-semibold text-lg mb-3">Location</h3>
                 <div className="rounded-lg overflow-hidden border border-gray-200">
                     <img
-                    src={resort.locationMapUrl}
+                    src={resort.mapUrl}
                     alt="Resort location map"
                     className="w-full h-40 object-cover"
                     />

@@ -28,6 +28,12 @@ const ResortSchema = new mongoose.Schema(
       min: 1,
     },
     
+    reviewCount:{
+      type: Number,
+      min: 0,
+      required:true,
+    },
+    
     status: {
       type: String,
       enum: ["available", "fully_booked"],
@@ -42,10 +48,10 @@ const ResortSchema = new mongoose.Schema(
       type: [String],
     },
 
-    roomTypes: {
+    roomType: {
       type: String,
-      enum:["single", "shared"],
-      default:"single",
+      enum:["Single Room", "Shared Room"],
+      default:"Single Room",
     },
 
     pricePerNight: {

@@ -4,7 +4,18 @@ import {findAllResorts, createResort} from '@/queries/resort';
 export const GET = async () => {
     try {
         const resorts = await findAllResorts();
-        return NextResponse.json({ resorts });
+        const resortsDTO = resorts.map((resort, index) => 
+            ({
+                "id": index,
+                "name": resort.name,
+                "town": resort.town,
+                "price": resort.pricePerNight,
+                "rating": resort.rating,
+                "image": resort.images[0],
+                "roomType": resort.roomType,
+            })
+        )
+        return NextResponse.json({ resortsDTO });
     } catch(e){
         console.log("Error details:", e);
         throw new NextResponse(e.message, {

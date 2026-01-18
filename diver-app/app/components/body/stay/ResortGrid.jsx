@@ -1,10 +1,10 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Star } from 'lucide-react';
 import Image from 'next/image';
 import Link from "next/link";
 import Price from './resort/ResortPrice'
 
-const resorts = [
+const resor = [
   {
     id: 1,
     name: 'Sunset Beach Resort',
@@ -82,7 +82,22 @@ const activities = [
   },
 ];
 
+
+
 const ResortGrid = (props) => {
+  const [resorts, setResorts] = useState([])
+    useEffect (() => {
+      async function fetchData() {
+        try {
+          const response = await fetch('/api/resort');
+          const {resortsDTO} = await response.json();
+          setResorts(resortsDTO);
+        } catch(error) {
+          console.error('Error fetching data:', error.message);
+        }
+      }
+      fetchData();
+    }, []);
 
     
     const filteredProducts = () => {
@@ -101,9 +116,9 @@ const ResortGrid = (props) => {
 
     return (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-7xl mx-auto">
-            {filteredProducts().map((resort) => (
+            {filteredProducts().map((resort, index) => (
               <Link 
-                key={resort.id} href={`/stay/${encodeURIComponent(resort.name)}`}
+                key={index} href={`/stay/${encodeURIComponent(resort.name)}`}
                 className="block"> 
                 <div className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 hover:scale-105 cursor-pointer">
                 <div className="relative h-64 overflow-hidden">
