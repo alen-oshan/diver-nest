@@ -10,7 +10,7 @@ export async function createUser(user){
 
 export async function findUserByEmail(email) {
     try {
-        const user = User.find({email}).select('_id name email');
+        const user = await User.findOne({email}).select('_id name email password role');
         return user;
     } catch (e){
         throw new Error(e);
@@ -19,8 +19,8 @@ export async function findUserByEmail(email) {
 
 export async function findAllUsers() {
     try {
-        const user = User.find().lean();
-        return user;
+        const users = await User.find().lean();
+        return users;
     } catch (e){
         throw new Error(e);
     } 

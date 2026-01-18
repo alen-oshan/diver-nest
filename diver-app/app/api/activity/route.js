@@ -1,8 +1,10 @@
 import { NextResponse } from "next/server";
 import {findAllActivities, createActivity} from '@/queries/activity';
+import dbConnect from '@/lib/db/mongoose';
 
 export const GET = async () => {
     try {
+        await dbConnect();
         const activities = await findAllActivities();
         console.log(activities)
         const activitiesDTO = activities.map((activity, index) => 
@@ -27,6 +29,7 @@ export const GET = async () => {
 
 export const POST = async (request) => {
     try {
+        await dbConnect();
         const activitiesDetails = await request.json();
         console.log(activitiesDetails);
         await createActivity(activitiesDetails);

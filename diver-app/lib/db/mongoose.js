@@ -3,25 +3,28 @@ import mongoose from "mongoose";
 const MONGODB_URI = process.env.MONGODB_URI;
 
 if (!MONGODB_URI) {
-  throw new Error("Please define MONGODB_URI");
+  throw new Error("MONGODB_URI is not defined");
 }
 
-let cached = (global).mongoose;
 
-if (!cached) {
-  cached = (global).mongoose = { conn: null, promise: null };
-}
+const cached = global.mongoose ?? {
+  conn: null,
+  promise: null,
+};
 
-async function dbConnect() {
+global.mongoose = cached;
 
-  try {
-    const conn = await mongoose.connect(String(process.env.MONGODB_URI));
-    return conn;
-  }
-  catch (e) {
-    throw e;
+export default async function dbConnect() {
+  if (cached.conn) {
+    return cached.conn;
   }
 
-}
+  if (!cached.promise) {
+    cached.promise = mongoose.connect(MONGODB_URI, {
+      bufferCommands: false,
+    });
+  }
 
-export default dbConnect;
+  cached.conn = await cached.promise;
+  return cached.conn;
+}

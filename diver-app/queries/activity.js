@@ -10,8 +10,8 @@ export async function createActivity(activityDetails) {
 
 export async function findAllActivities(){
     try {
-        const activity = Activity.find().lean();
-        return activity;
+        const activities = await Activity.find().lean();
+        return activities;
     } catch (e){
         throw new Error(e);
     }

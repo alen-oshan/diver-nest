@@ -1,8 +1,10 @@
 import { NextResponse } from "next/server";
 import {findAllResorts, createResort} from '@/queries/resort';
+import dbConnect from '@/lib/db/mongoose';
 
 export const GET = async () => {
     try {
+        await dbConnect();
         const resorts = await findAllResorts();
         const resortsDTO = resorts.map((resort, index) => 
             ({
@@ -26,6 +28,7 @@ export const GET = async () => {
 
 export const POST = async (request) => {
     try {
+        await dbConnect();
         const resortDetails = await request.json();
         console.log(resortDetails);
         await createResort(resortDetails);

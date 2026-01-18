@@ -4,6 +4,7 @@ import GithubProvider from 'next-auth/providers/github'
 import CredentialsProvider from 'next-auth/providers/credentials';
 import { findUserByEmail } from '@/queries/user'
 import bcrypt from 'bcryptjs';
+import dbConnect from '@/lib/db/mongoose';
 
 export const {
     handlers: {GET, POST},
@@ -48,6 +49,7 @@ export const {
                         }
 
                         try {
+                            await dbConnect();
                             const user = await findUserByEmail({email:credentials?.email});
                             console.log("User found:", user);
 
@@ -86,4 +88,43 @@ export const {
                 })
             ],
             secret: process.env.NEXTAUTH_SECRET,
+            callbacks: {
+                async signIn({ user, account }) {
+                    if (account?.provider === "google" || account?.provider === "github") {
+                    const existingUser = await findUserByEmail(user.email);
+
+                    if (!existingUser) {
+                        await createUser({
+                        email: user.email,
+                        name: user.name,
+                        image: user.image,
+                        role: "user",
+                        });
+                    }
+                    }
+                    return true;
+                },
+
+                async jwt({ token, user }) {
+                    if (user) {
+                    token.role = user.role;
+                    }
+
+                    if (!token.role && token.email) {
+                    const dbUser = await findUserByEmail(token.email);
+                    token.role = dbUser?.role;
+                    }
+
+                    return token;
+                },
+
+                async session({ session, token }) {
+                    if (session.user) {
+                    session.user.email = token.email;
+                    session.user.role = token.role;
+                    }
+                    return session;
+                },
+            },
+
         });

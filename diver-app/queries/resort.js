@@ -10,7 +10,7 @@ export async function createResort(resortDetails) {
 
 export async function findAllResorts(){
     try {
-        const resorts = Resort.find().lean();
+        const resorts = await Resort.find().lean();
         return resorts;
     } catch (e){
         throw new Error(e);
