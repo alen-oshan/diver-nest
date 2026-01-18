@@ -1,4 +1,5 @@
-'use server'
+'use server';
+
 import { signIn, signOut, auth} from "@/app/auth";
 
 export async function doSocialLogin(formData) {
@@ -30,11 +31,4 @@ export async function doCredentialLogin(formData) {
         
         return { error: error.message || "Authentication failed" };
     }
-}
-
-export async function getServerSideProps(context) {
-    const session = await auth();
-    return {
-        session,
-    };
 }

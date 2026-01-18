@@ -1,13 +1,9 @@
 import { NextResponse } from "next/server";
-// import {getUserByEmail} from '@/queries/user';
+import {findUserByEmail} from '@/queries/user';
 
 export const GET = async(request) => {
     const session = await auth();
-    
-    !session ? NextResponse.json(
-      { error: "Unauthorized" },
-      { status: 401 }
-    ) : "";
+    console.log(session);
 
     return NextResponse.json("User detected", {
         status:200,

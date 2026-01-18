@@ -2,7 +2,7 @@ import NextAuth from 'next-auth'
 import GoogleProvider from 'next-auth/providers/google'
 import GithubProvider from 'next-auth/providers/github'
 import CredentialsProvider from 'next-auth/providers/credentials';
-import { findUserByEmail } from '@/queries/user'
+import { findUserByEmail, createUser } from '@/queries/user'
 import bcrypt from 'bcryptjs';
 import dbConnect from '@/lib/db/mongoose';
 
@@ -125,6 +125,6 @@ export const {
                     }
                     return session;
                 },
-            },
+            }
 
         });

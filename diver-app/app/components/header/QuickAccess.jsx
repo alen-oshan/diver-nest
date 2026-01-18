@@ -1,13 +1,13 @@
 import React from 'react'
 import Link from 'next/link'
 import LogoutButton from '@/app/components/auth/LogoutButton'
-import {getServerSideProps} from '@/app/actions/index'
 import CurrencySelector from '@/app/components/header/CurrencySelector'
+import {auth} from '@/app/auth'
 
 const QuickAccess = async() => {
+    const session = await auth();
+    const user = session ? true: false;
 
-    const props = await getServerSideProps();
-    const user = props.session
     return (
         
         <div className='flex items-center lg:gap-6 gap-2 text-white'>

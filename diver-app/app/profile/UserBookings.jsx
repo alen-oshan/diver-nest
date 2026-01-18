@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Calendar, Clock, MapPin, DollarSign } from 'lucide-react';
 
 const UserBookings = () => {
@@ -57,6 +57,15 @@ const UserBookings = () => {
           return "border-gray-300 text-gray-600 bg-gray-50";
       }
     };
+
+    useEffect(()=> {
+      async function getUserBooking(){
+        const response = await fetch('/api/resortBooking', { credentials: "include" })
+        const data = await response.json();
+        console.log(data);
+      }
+      getUserBooking();
+    }, [])
 
     return (
       <div className="px-16 grid grid-cols-2 w-full gap-8 h-full">

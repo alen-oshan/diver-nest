@@ -31,13 +31,12 @@ const UserSchema = new mongoose.Schema(
 
     role: {
       type: String,
-      enum: ["admin", "customer"],
-      default: "customer",
+      enum: ["admin", "user"],
+      default: "user",
     },
 
     password: {
       type: String,
-      required: true,
     },
 
     emailVerified: {

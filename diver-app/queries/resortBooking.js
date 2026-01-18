@@ -16,3 +16,13 @@ export async function findAllResortBookings(){
         throw new Error(e);
     }
 }
+
+export async function getUserResortBookings(email){
+    try {
+        const resort = ResortBooking.find({email});
+        return resort;
+    } catch (e){
+        throw new Error(e);
+    }
+}
+

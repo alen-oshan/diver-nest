@@ -1,15 +1,25 @@
 import { NextResponse } from "next/server";
-import {createResortBooking, findAllResortBookings} from '@/queries/resortBooking'
-import {findUserByEmail} from '@/queries/user'
-import {findResortByName} from '@/queries/resort'
+import { createResortBooking, getUserResortBookings } from '@/queries/resortBooking'
+import { findUserByEmail } from '@/queries/user'
+import { findResortByName } from '@/queries/resort'
+import { auth } from '@/app/auth'
 
 export const POST = async(request) => {
+
+    const session = await auth();
+
+    if (!session?.user?.email) {
+        return NextResponse.json(
+        { error: "Unauthorized" },
+        { status: 401 }
+        );
+    }
+
     const reqBody = await request.json();
 
     const { userEmail, resortName, checkInDate, checkOutDate, roomsBooked, totalAmount } = reqBody;
-    const [user] = await findUserByEmail(userEmail);
-    console.log(user)
-    const [resort] = await findResortByName(resortName);
+    const user = await findUserByEmail(userEmail);
+    const resort = await findResortByName(resortName);
     const newBooking = {
             userId: user._id,           
             resortId: resort._id,       
@@ -34,12 +44,26 @@ export const POST = async(request) => {
 }
 
 export const GET = async () => {
-    try {
-        const resortBookings = await findAllResortBookings();
-        return NextResponse.json({resortBookings}, {status:200})
-    } catch (e) {
-        throw new NextResponse.json(e.message, {
-            status:500,
-        });
-    }
+  const session = await auth();
+
+  if (!session?.user?.email) {
+    return NextResponse.json(
+      { error: "Unauthorized" },
+      { status: 401 }
+    );
+  }
+
+  const bookings = await getUserResortBookings(session.user.email);
+  const resortBookingDTO = {
+    bookingStatus: bookingStatus,
+    checkInDate: checkInDate,
+    checkOutDate: checkOutDate,
+    resortName: resortName,
+    roomsBooked: roomsBooked,
+    totalAmount: totalAmount,
+  }
+
+  return NextResponse.json(bookings, {
+    status:200,
+});
 }
