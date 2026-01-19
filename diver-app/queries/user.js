@@ -10,11 +10,12 @@ export async function createUser(user){
     }
 }
 
+
 export async function findUserByEmail(email) {
     await dbConnect();
     try {
-        const user = await User.findOne({email}).select('name email image role -_id').lean();
-        return user;
+        const user = await User.findOne({email}).select('name email image notification -_id').lean();
+        return user
     } catch (e){
         throw new Error(e);
     } 
@@ -43,10 +44,20 @@ export async function changeUserName(email, name) {
 
 export async function changeUserPassword(email, password) {
     await dbConnect();
-    
     try {
         const user = await User.findOne({email});
         user.password = password;
+        await user.save();
+    } catch (e) {
+        throw new Error(e);
+    }
+}
+
+export async function changeUserNotification(email, condition) {
+    await dbConnect();
+    try {
+        const user = await User.findOne({email});
+        user.notification = condition;
         await user.save();
     } catch (e) {
         throw new Error(e);

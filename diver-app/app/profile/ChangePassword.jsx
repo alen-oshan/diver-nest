@@ -23,8 +23,9 @@ const ChangePassword = () => {
 
     }
     return (
-        <form onSubmit={handlePasswordChange}>
+        
         <div className="bg-white rounded-lg border border-gray-200 p-6 row-span-3">
+            <form onSubmit={handlePasswordChange}>
             <h2 className="text-xl mb-1">Change Password</h2>
             <p className="text-sm text-gray-600 mb-6">
             Update your password to keep your account secure
@@ -65,8 +66,9 @@ const ChangePassword = () => {
             <button className="mt-6 px-4 py-2 bg-black text-white rounded-md hover:bg-gray-800" type='submit'>
                 Update Password
             </button>
+            </form>
         </div>
-        </form>
+        
   )
 }
 

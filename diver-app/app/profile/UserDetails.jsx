@@ -20,8 +20,9 @@ const UserDetails = ({user}) => {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    
       <div className="bg-white border rounded-md p-4 row-span-2">
+        <form onSubmit={handleSubmit}>
         <h2 className="text-lg mb-4">Profile</h2>
 
         <div className="flex items-center gap-4 mb-4">
@@ -49,9 +50,8 @@ const UserDetails = ({user}) => {
         <button type="submit" className="px-4 py-2 bg-black text-white rounded-md">
           Save Changes
         </button>
+        </form>
       </div>
-    </form>
-
   )
 }
 

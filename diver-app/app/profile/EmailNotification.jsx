@@ -1,10 +1,25 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
-const EmailNotification = () => {
-    const dummyNotifications ={
-        bookingConfirmation:true,
-    }
-    const [notifications, setNotification] = useState(dummyNotifications.bookingConfirmation)
+const EmailNotification = ({notification}) => {
+    const [button, SetButton] = useState(notification)
+
+    useEffect(() => {
+        const updateNotification = async () => {
+            try {
+                await fetch('/api/profile/notification', {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ notification: button }),
+                });
+            } catch (error) {
+                console.error('Failed to update notification state:', error);
+            }
+        };
+
+        updateNotification();
+    }, [button])
 
   return (
     <div className="bg-white border rounded-md p-4">
@@ -19,14 +34,14 @@ const EmailNotification = () => {
             </div>
 
             <button
-            onClick={() => setNotification(!notifications)}
+            onClick={() => SetButton(!button)}
             className={`relative inline-flex h-5 w-10 rounded-full transition-colors ${
-                notifications ? "bg-black" : "bg-gray-300"
+                button ? "bg-black" : "bg-gray-300"
             }`}
             >
             <span
                 className={`absolute top-0.5 left-0.5 h-4 w-4 bg-white rounded-full transition-transform ${
-                notifications
+                button
                     ? "translate-x-5"
                     : "translate-x-0"
                 }`}
