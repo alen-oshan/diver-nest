@@ -1,9 +1,9 @@
 import React from 'react'
 import Header from '@/app/components/layout/Header'
 import ProfileBody from './ProfileBody'
-import {auth} from '@/app/auth'
+import { auth } from '@/app/auth'
 import { redirect } from "next/navigation";
-import {findUserByEmail, changeUserName} from '@/queries/user';
+import { findUserByEmail } from '@/queries/user';
 
 const page = async() => {
   const session = await auth();

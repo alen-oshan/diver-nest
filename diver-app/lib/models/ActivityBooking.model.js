@@ -32,8 +32,21 @@ const ActivityBookingSchema = new mongoose.Schema(
     },
     bookingDate: {
       type: Date,
-      required:true,
+      required: true,
     },
+    userEmail: {
+      type: String,
+      required: true,
+    },
+    activityName: {
+      type: String,
+      required: true,
+    },
+    type: {
+      type: String,
+      enum: ["room", "activity"],
+      default: "room",
+    }
   },
   {
     timestamps: true,

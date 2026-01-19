@@ -23,7 +23,7 @@ export async function findAllResortBookings(){
 export async function getUserResortBookings(email){
     await dbConnect();
     try {
-        const resort = ResortBooking.find({email});
+        const resort = ResortBooking.find({email}).lean();
         return resort;
     } catch (e){
         throw new Error(e);

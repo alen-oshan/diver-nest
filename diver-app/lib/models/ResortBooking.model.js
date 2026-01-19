@@ -8,9 +8,19 @@ const ResortBookingSchema = new mongoose.Schema(
       required: true,
     },
 
+    userEmail: {
+      type: String,
+      required: true,
+    },
+
     resortId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Resort",
+      required: true,
+    },
+
+    resortName: {
+      type: String,
       required: true,
     },
 

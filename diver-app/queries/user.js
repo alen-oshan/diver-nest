@@ -32,7 +32,6 @@ export async function findAllUsers() {
 
 export async function changeUserName(email, name) {
     await dbConnect();
-    console.log(email, name);
     try {
         const user = await User.findOne({email});
         user.name = name;

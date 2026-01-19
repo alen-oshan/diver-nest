@@ -46,7 +46,7 @@ export const POST = async(request) => {
 export const GET = async () => {
   const session = await auth();
 
-  if (!session?.user?.email) {
+  if (!session) {
     return NextResponse.json(
       { error: "Unauthorized" },
       { status: 401 }
@@ -54,14 +54,17 @@ export const GET = async () => {
   }
 
   const bookings = await getUserResortBookings(session.user.email);
-  const resortBookingDTO = {
-    bookingStatus: bookings.bookingStatus,
-    checkInDate: bookings.checkInDate,
-    checkOutDate: bookings.checkOutDate,
-    resortName: bookings.resortName,
-    roomsBooked: bookings.roomsBooked,
-    totalAmount: bookings.totalAmount,
-  }
+  const resortBookingDTO = bookings.map((booking) => ({
+    bookingStatus: booking.bookingStatus,
+    checkInDate: booking.checkInDate.toISOString().split('T')[0],
+    checkOutDate: booking.checkOutDate.toISOString().split('T')[0],
+    resortName: booking.resortName,
+    roomsBooked: booking.roomsBooked,
+    totalAmount: booking.totalAmount,
+    type:booking.type,
+  }))
+
+  console.log(resortBookingDTO)
 
   return NextResponse.json(resortBookingDTO, {
     status:200,

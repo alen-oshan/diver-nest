@@ -23,26 +23,8 @@ export async function findAllActivities(){
 export async function findActivityByName(name) {
     await dbConnect();
     try{
-        const [activity] = await Activity.find({name}).lean();
-        console.log(activity)
-        return null;
-        return {
-            name: activity.name,
-            address: activity.address,
-            mapUrl: activity.mapUrl,
-            totalRooms: activity.totalRooms,
-            status: activity.status,
-            images: activity.images ?? [],
-            description: activity.description,
-            roomType: activity.roomType,
-            pricePerNight: activity.pricePerNight,
-            rating: activity.rating,
-            offers: activity.offers,
-            town: activity.town,
-            reviewCount: activity.reviewCount,
-            amenities: activity.amenities,
-        };
-        
+        const activity = await Activity.findOne({name}).lean();
+        return activity;
     } catch(e){
         throw new Error(e);
     }
