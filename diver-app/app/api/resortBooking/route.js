@@ -55,15 +55,15 @@ export const GET = async () => {
 
   const bookings = await getUserResortBookings(session.user.email);
   const resortBookingDTO = {
-    bookingStatus: bookingStatus,
-    checkInDate: checkInDate,
-    checkOutDate: checkOutDate,
-    resortName: resortName,
-    roomsBooked: roomsBooked,
-    totalAmount: totalAmount,
+    bookingStatus: bookings.bookingStatus,
+    checkInDate: bookings.checkInDate,
+    checkOutDate: bookings.checkOutDate,
+    resortName: bookings.resortName,
+    roomsBooked: bookings.roomsBooked,
+    totalAmount: bookings.totalAmount,
   }
 
-  return NextResponse.json(bookings, {
+  return NextResponse.json(resortBookingDTO, {
     status:200,
 });
 }

@@ -1,11 +1,19 @@
 import { NextResponse } from "next/server";
-import {findUserByEmail} from '@/queries/user';
+import { changeUserName } from '@/queries/user';
+import { auth } from '@/app/auth'
 
-export const GET = async(request) => {
+export const PUT = async(request) => {
     const session = await auth();
-    console.log(session);
+    if (!session) 
+        return new NextResponse("Access Denied:", {
+            status:403,
+        })
+    
+    const {email} = session.user
+    const {name} = await request.json()
+    changeUserName(email, name.trim());
 
-    return NextResponse.json("User detected", {
+    return new NextResponse("Name Changed: ", {
         status:200,
     })
 }

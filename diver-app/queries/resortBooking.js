@@ -1,6 +1,8 @@
 import ResortBooking from '@/lib/models/ResortBooking.model'
+import dbConnect from '@/lib/db/mongoose'
 
 export async function createResortBooking(bookingDetails) {
+    await dbConnect();
     try{
         await ResortBooking.create(bookingDetails);
     } catch (e) {
@@ -9,6 +11,7 @@ export async function createResortBooking(bookingDetails) {
 }
 
 export async function findAllResortBookings(){
+    await dbConnect();
     try {
         const resort = ResortBooking.find();
         return resort;
@@ -18,6 +21,7 @@ export async function findAllResortBookings(){
 }
 
 export async function getUserResortBookings(email){
+    await dbConnect();
     try {
         const resort = ResortBooking.find({email});
         return resort;

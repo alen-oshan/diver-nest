@@ -4,9 +4,19 @@ const UserDetails = ({user}) => {
 
   const [name, setName] = useState(user.name);
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async(event) => {
     event.preventDefault();
-    console.log({name});
+
+    await fetch('/api/profile', {
+      method:"PUT",
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({name: name}),
+      credentials: "include",
+    })
+
+    setName(name);
   }
 
   return (

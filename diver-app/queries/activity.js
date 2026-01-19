@@ -1,6 +1,8 @@
 import Activity from '@/lib/models/Activity.model'
+import dbConnect from '@/lib/db/mongoose'
 
 export async function createActivity(activityDetails) {
+    await dbConnect();
     try{
         await Activity.create(activityDetails);
     } catch (e) {
@@ -9,6 +11,7 @@ export async function createActivity(activityDetails) {
 }
 
 export async function findAllActivities(){
+    await dbConnect();
     try {
         const activities = await Activity.find().lean();
         return activities;
@@ -18,6 +21,7 @@ export async function findAllActivities(){
 }
 
 export async function findActivityByName(name) {
+    await dbConnect();
     try{
         const [activity] = await Activity.find({name}).lean();
         console.log(activity)
