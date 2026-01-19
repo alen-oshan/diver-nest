@@ -1,12 +1,29 @@
 import React from 'react'
+import { useState } from 'react';
+import { compileFunction } from 'vm';
 
 const ChangePassword = () => {
+    const [newPassword, setNewPassword] = useState("")
+    const [confirmPassword, setConfirmPassword] = useState("")
 
-    const handlePasswordChange = (event) => {
+    const handlePasswordChange = async(event) => {
         event.preventDefault();
+        if (! (newPassword === confirmPassword)){
+            alert("Passoword doesn't match")
+            return;
+        }
+        await fetch('api/profile/change-password', {
+            headers: {
+                'Content-Type': "application/json",
+            },
+            body: JSON.stringify({confirmPassword}),
+            method: "PUT",
+            credentials: "include",
+        })
 
     }
     return (
+        <form onSubmit={handlePasswordChange}>
         <div className="bg-white rounded-lg border border-gray-200 p-6 row-span-3">
             <h2 className="text-xl mb-1">Change Password</h2>
             <p className="text-sm text-gray-600 mb-6">
@@ -21,7 +38,7 @@ const ChangePassword = () => {
                 </label>
                 <input
                 type="password"
-                value={""}
+                value={newPassword}
                 onChange={(e) =>
                     setNewPassword(e.target.value)
                 }
@@ -35,7 +52,7 @@ const ChangePassword = () => {
                 </label>
                 <input
                 type="password"
-                value={""}
+                value={confirmPassword}
                 onChange={(e) =>
                     setConfirmPassword(e.target.value)
                 }
@@ -45,13 +62,11 @@ const ChangePassword = () => {
             </div>
             </div>
 
-            <button
-            onClick={handlePasswordChange}
-            className="mt-6 px-4 py-2 bg-black text-white rounded-md hover:bg-gray-800"
-            >
-            Update Password
+            <button className="mt-6 px-4 py-2 bg-black text-white rounded-md hover:bg-gray-800" type='submit'>
+                Update Password
             </button>
         </div>
+        </form>
   )
 }
 

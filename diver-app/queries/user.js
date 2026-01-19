@@ -40,3 +40,15 @@ export async function changeUserName(email, name) {
         throw new Error(e);
     }
 }
+
+export async function changeUserPassword(email, password) {
+    await dbConnect();
+    
+    try {
+        const user = await User.findOne({email});
+        user.password = password;
+        await user.save();
+    } catch (e) {
+        throw new Error(e);
+    }
+}
