@@ -6,6 +6,7 @@ export default async function ResortDetail({params}) {
   const { slug } = await params;
   const decodedSlug = decodeURIComponent(slug);
   const resort = await findResortByName(decodedSlug);
+  console.log(resort);
   return (
     <>
       <Header />

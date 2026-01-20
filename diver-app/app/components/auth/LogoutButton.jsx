@@ -5,7 +5,7 @@ const LogoutButton = () => {
   return (
     <div>
         <form action={logout}>
-            <button type='submit' className='px-4 py-2 rounded-md hover:opacity-80 transition-opacity'>
+            <button type='submit' className='p-2 rounded-md hover:opacity-80 transition-opacity'>
                 Logout
             </button>
         </form>

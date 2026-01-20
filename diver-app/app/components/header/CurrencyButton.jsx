@@ -5,7 +5,7 @@ const CurrencyButton = (props) => {
   return (
     <button
         onClick={() => props.setOpen(!props.open)}
-        className="w-fit bg-[#205781] text-white px-1 py-1 rounded-md flex justify-between items-center focus:outline-none"
+        className="w-fit bg-[#205781] text-white rounded-md flex justify-between items-center focus:outline-none"
       >
         <span className='px-2'>
           {props.selected.code}
