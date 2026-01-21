@@ -6,7 +6,6 @@ export const GET = async () => {
     try {
         await dbConnect();
         const activities = await findAllActivities();
-        console.log(activities)
         const activitiesDTO = activities.map((activity, index) => 
             ({
                 "id": index,
@@ -18,6 +17,8 @@ export const GET = async () => {
                 "activityType": activity.type,
             })
         )
+        
+        console.log(activitiesDTO)
         return NextResponse.json({ activitiesDTO });
     } catch(e){
         console.log("Error details:", e);

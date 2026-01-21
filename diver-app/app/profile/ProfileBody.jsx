@@ -7,6 +7,7 @@ import UserBookings from './UserBookings'
 
 const ProfileBody = ({user}) => {
     const [selectedTab, setSelectedTab] = useState('My Profile');
+    const [name, setName] = useState(user.name);
     const tabTypes = ['My Profile', 'My Bookings'];
 
     return (
@@ -16,7 +17,8 @@ const ProfileBody = ({user}) => {
                 selectedItemType={selectedTab}
                 buttonTypes={tabTypes}
             />
-            {selectedTab === 'My Profile' ? <ProfileInformation user={user}/> : <UserBookings />}
+            {selectedTab === 'My Profile' ? 
+            <ProfileInformation user={user} name={name} setName={setName}/> : <UserBookings />}
         </div>
     )
 }

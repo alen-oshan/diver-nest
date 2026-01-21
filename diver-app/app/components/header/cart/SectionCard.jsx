@@ -30,7 +30,6 @@ const SectionCard = ({ arrItems, setCartItems, total, section }) => {
   };
 
   const handleUpdateQuantity = (id, change, preValue) => {
-    console.log("value updating: ", preValue + change)
     updateItems(id, change + preValue , "quantity");
     setCartItems(items => updateQuantity(items, id, change));
     

@@ -1,4 +1,6 @@
 import React from 'react'
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 const DateSelector = (props) => {
 
@@ -41,19 +43,25 @@ const DateSelector = (props) => {
                 <label className="block text-sm text-gray-600 mb-1">{dateType.name}</label>
                 <div className="relative">
                     <div className="top-full left-0 right-0 z-10 bg-white border border-gray-300 rounded-md shadow-md">
-                        <input
-                            type="date"
-                            value={dateType.value}
-                            min={getMinDate()}
-                            onChange={(e) => {
-                                const newDate = e.target.value;
+                        <DatePicker
+                            selected={dateType.value ? new Date(dateType.value) : null}
+                            minDate={new Date(getMinDate())}
+                            dateFormat="yyyy-MM-dd"
+                            onChange={(date) => {
+                                if (!date) return;
+
+                                const newDate = date.toLocaleDateString("en-CA");
                                 dateType.func(newDate);
-                                
-                                const diff = dateType.normal ? calculateDateDiff(newDate, dateType.oppValue) : calculateDateDiff(dateType.oppValue, newDate);
+
+                                const diff = dateType.normal
+                                ? calculateDateDiff(newDate, dateType.oppValue)
+                                : calculateDateDiff(dateType.oppValue, newDate);
+
                                 if (diff < 1) dateType.oppFunc("");
                             }}
                             className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#205781]"
                         />
+
                     </div>
                 </div>
             </div>

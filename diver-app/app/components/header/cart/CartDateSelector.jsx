@@ -7,7 +7,7 @@ const CartDateSelector = ({section, item, updateDate}) => {
             <div className="mb-2">
                 <label className="text-xs text-gray-600 block mb-0.5">Activity Date</label>
                 <input
-                type="date"
+                type="date" 
                 value={item.activityDate}
                 onChange={(e) => updateDate(item.id, 'activityDate', e.target.value)}
                 className="w-1/2 text-xs border border-gray-300 rounded px-1.5 py-1 focus:outline-none focus:border-[#4F959D]"

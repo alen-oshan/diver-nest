@@ -71,6 +71,17 @@ const ActivitySchema = new mongoose.Schema(
       type: String, 
       required:true,
     },
+
+    amenities: {
+      type:[String],
+      required:true,
+    },
+    
+    reviewCount:{
+      type: Number,
+      min: 0,
+      required:true,
+    },
   },
   {
     collection: "activities",

@@ -21,10 +21,10 @@ export async function findUserByEmail(email) {
 
         const safeUser = {
         ...user,
-        id: user._id.toString(),
+        _id: user._id.toString(),
         };
 
-        return user
+        return safeUser;
     } catch (e){
         throw new Error(e);
     } 

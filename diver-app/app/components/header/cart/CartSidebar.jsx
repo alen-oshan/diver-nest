@@ -8,7 +8,7 @@ export function CartSidebar({ isOpen, onClose }) {
 
   useEffect( () =>{
     async function getCartItems() {
-      const response = await fetch('api/cart',{
+      const response = await fetch('/api/cart',{
         credentials: "include",
       })
       const data = await response.json()
@@ -29,6 +29,8 @@ export function CartSidebar({ isOpen, onClose }) {
   }, [])
   
   const [cartItems, setCartItems] = useState([]);
+  const [checkInDate, setCheckInDate] = useState("");
+  const [checkOutDate, setCheckOutDate] = useState("");
 
   const stayItems = cartItems.filter(item => item.type === 'stay');
   const activityItems = cartItems.filter(item => item.type === 'activity');

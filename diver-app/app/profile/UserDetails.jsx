@@ -1,9 +1,7 @@
 import React, { useState } from 'react'
+import Image from "next/image";
 
-const UserDetails = ({user}) => {
-
-  const [name, setName] = useState(user.name);
-
+const UserDetails = ({user, name, setName}) => {
   const handleSubmit = async(event) => {
     event.preventDefault();
 
@@ -26,9 +24,11 @@ const UserDetails = ({user}) => {
         <h2 className="text-lg mb-4">Profile</h2>
 
         <div className="flex items-center gap-4 mb-4">
-          <img
+          <Image
             src={user.image}
             alt={user.name}
+            width={48}
+            height={48} 
             className="w-20 h-20 rounded-full object-cover"
           />
 

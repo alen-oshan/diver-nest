@@ -23,23 +23,8 @@ export async function findAllResorts(){
 export async function findResortByName(name) {
     await dbConnect();
     try{
-        const [resort] = await Resort.find({name}).lean();
-        return {
-            name: resort.name,
-            address: resort.address,
-            mapUrl: resort.mapUrl,
-            totalRooms: resort.totalRooms,
-            status: resort.status,
-            images: resort.images ?? [],
-            description: resort.description,
-            roomType: resort.roomType,
-            pricePerNight: resort.pricePerNight,
-            rating: resort.rating,
-            offers: resort.offers,
-            town: resort.town,
-            reviewCount: resort.reviewCount,
-            amenities: resort.amenities,
-        };
+        const resort = await Resort.findOne({name}).select('-_id').lean();
+        return resort;
         
     } catch(e){
         throw new Error(e);

@@ -4,93 +4,15 @@ import Image from 'next/image';
 import Link from "next/link";
 import Price from './resort/ResortPrice'
 
-const resor = [
-  {
-    id: 1,
-    name: 'Sunset Beach Resort',
-    town: 'Malibu',
-    price: 150,
-    rating: 4.5,
-    image: 'https://images.unsplash.com/photo-1584132967334-10e028bd69f7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxiZWFjaCUyMHJlc29ydHxlbnwxfHx8fDE3NjgxNDI2Mzd8MA&ixlib=rb-4.1.0&q=80&w=1080',
-    roomType: 'Shared Room',
-  },
-  {
-    id: 2,
-    name: 'Mountain View Lodge',
-    town: 'Aspen',
-    price: 320,
-    rating: 4.8,
-    image: 'https://images.unsplash.com/photo-1445019980597-93fa8acb246c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb3VudGFpbiUyMHJlc29ydHxlbnwxfHx8fDE3NjgyMDAwODF8MA&ixlib=rb-4.1.0&q=80&w=1080',
-    roomType: 'Private Room',
-  },
-  {
-    id: 3,
-    name: 'Grand Luxury Hotel',
-    town: 'Miami',
-    price: 280,
-    rating: 4.7,
-    image: 'https://images.unsplash.com/photo-1561501900-3701fa6a0864?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjBob3RlbHxlbnwxfHx8fDE3NjgxMTg0Nzl8MA&ixlib=rb-4.1.0&q=80&w=1080',
-    roomType: 'Private Room',
-  },
-  {
-    id: 4,
-    name: 'Tropical Paradise Resort',
-    town: 'Honolulu',
-    price: 120,
-    rating: 4.3,
-    image: 'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx0cm9waWNhbCUyMHJlc29ydHxlbnwxfHx8fDE3NjgyMDAwODF8MA&ixlib=rb-4.1.0&q=80&w=1080',
-    roomType: 'Shared Room',
-  },
-];
-
-const activities = [
-  {
-    id: 1,
-    name: 'Doplhine Watching',
-    town: 'Malibu',
-    price: 150,
-    rating: 4.5,
-    image: 'https://images.unsplash.com/photo-1584132967334-10e028bd69f7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxiZWFjaCUyMHJlc29ydHxlbnwxfHx8fDE3NjgxNDI2Mzd8MA&ixlib=rb-4.1.0&q=80&w=1080',
-    roomType: 'Group',
-  },
-  {
-    id: 2,
-    name: 'Whales Watching',
-    town: 'Aspen',
-    price: 320,
-    rating: 4.8,
-    image: 'https://images.unsplash.com/photo-1445019980597-93fa8acb246c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb3VudGFpbiUyMHJlc29ydHxlbnwxfHx8fDE3NjgyMDAwODF8MA&ixlib=rb-4.1.0&q=80&w=1080',
-    roomType: 'Group',
-  },
-  {
-    id: 3,
-    name: 'Snorkeling',
-    town: 'Miami',
-    price: 280,
-    rating: 4.7,
-    image: 'https://images.unsplash.com/photo-1561501900-3701fa6a0864?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjBob3RlbHxlbnwxfHx8fDE3NjgxMTg0Nzl8MA&ixlib=rb-4.1.0&q=80&w=1080',
-    roomType: 'Single',
-  },
-  {
-    id: 4,
-    name: 'Diving',
-    town: 'Honolulu',
-    price: 120,
-    rating: 4.3,
-    image: 'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx0cm9waWNhbCUyMHJlc29ydHxlbnwxfHx8fDE3NjgyMDAwODF8MA&ixlib=rb-4.1.0&q=80&w=1080',
-    roomType: 'Single',
-  },
-];
-
-
 
 const ResortGrid = (props) => {
     const [items, setItems] = useState([])
+    const linkEndpoint = (props.isStay) ? 'stay' : 'enjoy';
 
     useEffect(() => {
       const fetchData = async () => {
         try {
-          const endpoint = props.isStay ? '/api/resort' : '/api/activity';
+          const endpoint = (props.isStay) ? '/api/resort' : '/api/activity';
           const response = await fetch(endpoint);
           const data = await response.json();
           console.log(data)
@@ -116,7 +38,7 @@ const ResortGrid = (props) => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-7xl mx-auto">
             {filteredProducts().map((resort, index) => (
               <Link 
-                key={index} href={`/stay/${encodeURIComponent(resort.name)}`}
+                key={index} href={`/${linkEndpoint}/${encodeURIComponent(resort.name)}`}
                 className="block"> 
                 <div className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 hover:scale-105 cursor-pointer">
                 <div className="relative h-64 overflow-hidden">

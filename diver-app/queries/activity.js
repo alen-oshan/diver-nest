@@ -23,7 +23,7 @@ export async function findAllActivities(){
 export async function findActivityByName(name) {
     await dbConnect();
     try{
-        const activity = await Activity.findOne({name}).lean();
+        const activity = await Activity.findOne({name}).select('-_id').lean();
         return activity;
     } catch(e){
         throw new Error(e);

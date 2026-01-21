@@ -1,16 +1,18 @@
 import { NextResponse } from 'next/server';
 import { addItemToCart, findAllCartItemsByEmail, removeCartItemByEmail } from '@/queries/cart';
 import { updateCartItem } from '@/queries/cartItem';
-
+import dbConnect from '@/lib/db/mongoose';
 import { auth } from '@/app/auth'
 
 export const GET = async() => {
+    await dbConnect();
     const session = await auth();
     const items = await findAllCartItemsByEmail(session.user.email)
     return new NextResponse(JSON.stringify(items), {status:201})
 }
 
 export const POST = async(request) => {
+    await dbConnect();
     const session = await auth();
     const reqBody = await request.json();
     console.log(reqBody)
