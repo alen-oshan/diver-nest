@@ -13,7 +13,7 @@ const CartButton = () => {
             className="hover:opacity-80 transition-colors"
             onClick={() => setIsCartOpen(!isCartOpen)}
             >
-            <ShoppingCart size={20} />
+            <ShoppingCart/>
             </button>
             <CartSidebar isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
         </div>

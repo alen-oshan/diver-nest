@@ -13,8 +13,17 @@ export async function createUser(user){
 
 export async function findUserByEmail(email) {
     await dbConnect();
+    
     try {
-        const user = await User.findOne({email}).select('name email image notification -_id').lean();
+        const user = await User.findOne({ email })
+        .select('name email image notification')
+        .lean();
+
+        const safeUser = {
+        ...user,
+        id: user._id.toString(),
+        };
+
         return user
     } catch (e){
         throw new Error(e);

@@ -10,7 +10,7 @@ const CartDateSelector = ({section, item, updateDate}) => {
                 type="date"
                 value={item.activityDate}
                 onChange={(e) => updateDate(item.id, 'activityDate', e.target.value)}
-                className="w-full text-xs border border-gray-300 rounded px-1.5 py-1 focus:outline-none focus:border-[#4F959D]"
+                className="w-1/2 text-xs border border-gray-300 rounded px-1.5 py-1 focus:outline-none focus:border-[#4F959D]"
                 />
             </div>
         )

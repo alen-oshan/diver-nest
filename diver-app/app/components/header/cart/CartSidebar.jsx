@@ -1,51 +1,41 @@
 'use client';
 
-import { Plus, Minus, Trash2, Calendar } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import CartHeader from './CartHeader'
-import StaySection from './StaySection';
 import SectionCard from './SectionCard';
 
 export function CartSidebar({ isOpen, onClose }) {
+
+  useEffect( () =>{
+    async function getCartItems() {
+      const response = await fetch('api/cart',{
+        credentials: "include",
+      })
+      const data = await response.json()
+      const formattedData = data.map((item) => ({
+        id: item._id.toString(), 
+        name: item.activityName || item.resortName, 
+        price: Number(item.quantity),
+        quantity: Number(item.quantity),
+        type: item.type,
+        checkIn: item.checkInDate ? item.checkInDate.split('T')[0] : null,
+        checkOut: item.checkOutDate ? item.checkOutDate.split('T')[0] : null, 
+        activityDate: item.bookingDate ? item.bookingDate.split('T')[0] : null, 
+      }));
+      console.log("Response:", formattedData)
+      setCartItems(formattedData)
+    }
+    getCartItems();
+  }, [])
   
-  const [cartItems, setCartItems] = useState([
-    { id: '1', name: 'Beach Resort Deluxe Room', price: 250, quantity: 2, type: 'stay', checkIn: '2026-01-20', checkOut: '2026-01-25' },
-    { id: '2', name: 'Ocean View Villa', price: 450, quantity: 1, type: 'stay', checkIn: '2026-01-22', checkOut: '2026-01-27' },
-    { id: '3', name: 'Scuba Diving Experience', price: 120, quantity: 3, type: 'activity', activityDate: '2026-01-21' },
-    { id: '4', name: 'Coral Reef Tour', price: 85, quantity: 2, type: 'activity', activityDate: '2026-01-23' },
-    { id: '5', name: 'Sunset Boat Cruise', price: 95, quantity: 1, type: 'activity', activityDate: '2026-01-24' },
-  ]);
+  const [cartItems, setCartItems] = useState([]);
 
   const stayItems = cartItems.filter(item => item.type === 'stay');
   const activityItems = cartItems.filter(item => item.type === 'activity');
 
-  const updateQuantity = (id, change) => {
-    setCartItems(items =>
-      items.map(item =>
-        item.id === id
-          ? { ...item, quantity: Math.max(1, item.quantity + change) }
-          : item
-      )
-    );
-  };
-
-  const removeItem = (id) => {
-    setCartItems(items => items.filter(item => item.id !== id));
-  };
-
-  const updateDate = (id, field, value) => {
-    setCartItems(items =>
-      items.map(item =>
-        item.id === id ? { ...item, [field]: value } : item
-      )
-    );
-  };
-
   const activityTotal = activityItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
   const stayTotal = stayItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
   const grandTotal = stayTotal + activityTotal;
-
-  const sectionTypes = ['Stays', 'Activities']
 
   if (!isOpen) return null;
 

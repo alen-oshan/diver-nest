@@ -1,31 +1,34 @@
 import mongoose from "mongoose";
-import { Activity } from "react";
-import validator from 'validator'
 
 const CartSchema = new mongoose.Schema(
   {
-    ResortName: {
-        type: String, 
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+      unique: true, 
     },
 
-    ActivityName: {
-        type: String,
-    },
-    
-    checkInDate: {
-        type: Date,
+    items: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "CartItem",
+      },
+    ],
+
+    totalPrice: {
+      type: Number,
+      default: 0,
     },
 
-    checkOutDate: {
-        type: Date,
+    status: {
+      type: String,
+      enum: ["active", "checked_out", "abandoned"],
+      default: "active",
     },
-
-    bookingDate: {
-        type: Date
-    }
   },
-
-)
+  { timestamps: true }
+);
 
 export default mongoose.models.Cart ||
-  mongoose.model("Contact", ContactSchema);
+  mongoose.model("Cart", CartSchema);
