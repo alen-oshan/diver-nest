@@ -16,12 +16,12 @@ const DateSelector = (props) => {
             <div className="relative">
                 <div className="top-full left-0 right-0 z-10 bg-white border border-gray-300 rounded-md shadow-md">
                     <DatePicker
-                        selected={props.bookingDate ? new Date(props.bookingDate) : null}
+                        selected={props.activityDate ? new Date(props.activityDate) : null}
                         minDate={new Date(getMinDate())}
                         dateFormat="yyyy-MM-dd"
                         onChange={(date) => {
                             if (!date) return;
-                            props.setBookingDate(date);
+                            props.setActivityDate(date);
                         }}
                         className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#205781]"
                     />

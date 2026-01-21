@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { Star, Wifi, Coffee, Utensils, Dumbbell, Wind, Car } from "lucide-react";
-import PricePerNight from './PricePerNight'
+import ResortPrice from './ResortPrice'
 import RoomSelector from './RoomSelector';
 import DateSelector from './DateSelector';
 
@@ -38,8 +38,39 @@ const ResortInfo = ({resort, googleMapsUrl}) => {
         "Free Parking": Car,
     };
 
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        if (event.nativeEvent.submitter.value === 'reserve')
+            handleReserve()
+        else
+            handleBookNow()
+    }
+
+    const sendProductToCart = async(cartDetails) => {
+        await fetch('/api/cart', {
+            method:'POST', 
+            credentials: 'include',
+            body: JSON.stringify(cartDetails),
+
+        })
+    }
+
     const handleReserve = () => {
-        setReserveMessage("You reserved the room for 15 minutes");
+        
+        if (!checkInDate || !checkOutDate) {
+            setReserveMessage("Please fill all the fields");
+        } else {
+            setReserveMessage("You reserved the room for 15 minutes");
+            const itemDetail = {
+                rooms,
+                checkIn:checkInDate,
+                checkOut:checkOutDate,
+                type:'stay', 
+                resortName:resort.name,
+                quantity:rooms
+            }
+            sendProductToCart(itemDetail)
+        }
         setTimeout(() => setReserveMessage(""), 5000); 
     };
 
@@ -48,10 +79,16 @@ const ResortInfo = ({resort, googleMapsUrl}) => {
     };
 
     return (
+        <form onSubmit={handleSubmit}>
         <div className="lg:col-span-1">
             <div className="bg-white border border-gray-200 rounded-lg p-6 sticky top-6">
                 <div className="mb-6 pb-6 border-b border-gray-200">
-                    <PricePerNight pricePerNight={resort.pricePerNight}/>
+                    <div className="flex items-start justify-between mb-4">
+                        <div className="text-3xl font-semibold text-gray-900">
+                            <ResortPrice price={resort.pricePerNight}/>
+                            <span className="text-lg text-gray-600 font-normal"> / night</span>
+                        </div>
+                    </div>
                 
                 {/* Booking Inputs */}
                 <div className="space-y-3 mb-4">
@@ -74,19 +111,23 @@ const ResortInfo = ({resort, googleMapsUrl}) => {
                 {/* Total Price */}
                 <div className="my-4 text-right">
                     <span className="text-gray-600">Total: </span>
-                    <span className="text-xl font-semibold text-gray-900">${totalPrice}</span>
+                    <span className="text-xl font-semibold text-gray-900">
+                        <ResortPrice price={totalPrice}/>
+                    </span>
                 </div>
 
                 {/* Booking Buttons */}
                 <div className="flex gap-2">
                     <button
-                    onClick={handleReserve}
+                    type='submit'
+                    value='reserve'
                     className="flex-1 bg-white border-2 border-blue-600 text-blue-600 px-4 py-3 rounded-lg font-semibold hover:bg-blue-50 transition-colors"
                     >
                     Reserve
                     </button>
                     <button
-                    onClick={handleBookNow}
+                    type='submit'
+                    value='book'
                     className="flex-1 bg-blue-600 text-white px-4 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
                     >
                     Book Now
@@ -147,6 +188,7 @@ const ResortInfo = ({resort, googleMapsUrl}) => {
                 </div>
             </div>
         </div>
+    </form>
     )
 }
 

@@ -14,11 +14,6 @@ const CartItemSchema = new mongoose.Schema(
     checkOut: Date,
     activityDate: Date,
 
-    price: {
-      type: Number,
-      required: true,
-    },
-
     type: {
       type: String,
       enum: ["stay", "activity"],

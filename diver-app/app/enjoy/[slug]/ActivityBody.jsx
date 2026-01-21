@@ -1,5 +1,5 @@
 import ActivityHeader from "./ActivityHeader"
-import ImageGallery from "@/app/components/body/stay/ImageGallery"
+import ImageGallery from "./ImageGallery"
 import ActivityInfo from "./ActivityInfo"
 
 const ActivityBody = ({activity}) => {

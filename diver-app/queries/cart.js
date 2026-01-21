@@ -1,16 +1,35 @@
 import Cart from '@/lib/models/Cart.model'
 import { findUserByEmail } from '@/queries/user'
 import { createCartItem, findCartItem} from '@/queries/cartItem'
+import { findResortByName } from './resort'
+import { findActivityByName} from './activity'
+import dbConnect from '@/lib/db/mongoose'
+
 
 export async function findAllCartItemsByEmail(email) {
+    await dbConnect();
+
     const user = await findUserByEmail(email)
     const userId = user._id;
     const cart = await Cart.findOne({userId}).select('items').lean()
     if(!cart) return null;
-    return await Promise.all(cart.items.map( async(cartItemId) => await findCartItem(cartItemId)))
+
+    return await Promise.all(cart.items.map( async(cartItemId) => {
+        const cartItem = await findCartItem(cartItemId)
+        if(!cartItem) return null;
+        const product = cartItem.type === 'stay' ? 
+        await findResortByName(cartItem.resortName) : await findActivityByName(cartItem.activityName);
+        console.log("product:::", cartItem)
+
+        const price = cartItem.type === 'stay' ? product.pricePerNight : product.price;
+
+        return {...cartItem, price}
+    }))
 }
 
 export async function findCartByEmail(email) {
+    await dbConnect();
+
     const user = await findUserByEmail(email)
     const userId = user._id;
     const cart = Cart.findOne({userId}).lean()
@@ -18,6 +37,7 @@ export async function findCartByEmail(email) {
 }
 
 export async function removeCartItemByEmail(email, cartItemId) {
+    await dbConnect();
     try {
         const user = await findUserByEmail(email);
         const userId = user._id;
@@ -36,6 +56,7 @@ export async function removeCartItemByEmail(email, cartItemId) {
 }
 
 export async function createCart(email) {
+    await dbConnect();
     const user = await findUserByEmail(email);
     const cartDetails = {
         userId: user._id,
@@ -45,9 +66,9 @@ export async function createCart(email) {
 }
 
 export async function addItemToCart(email, cartItemDetails) {
+    await dbConnect();
     try {
         const cartItem = await createCartItem(cartItemDetails)
-        console.log("cartItem::", cartItem);
         let cart = await findCartByEmail(email);
         
         if(!cart){
@@ -56,7 +77,6 @@ export async function addItemToCart(email, cartItemDetails) {
 
         const updatedItems = [...(cart.items || []), cartItem._id];
         await Cart.updateOne({ _id: cart._id }, { $set: { items: updatedItems } });
-        console.log("cart::", cart);
         return { ...cart, items: updatedItems };
     } catch (e) {
         console.log(e)

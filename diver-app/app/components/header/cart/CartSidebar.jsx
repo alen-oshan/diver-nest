@@ -12,13 +12,14 @@ export function CartSidebar({ isOpen, onClose }) {
         credentials: "include",
       })
       const data = await response.json()
+      console.log(data);
+      if (!data) return null
       const formattedData = data.map((item) => ({
         ...item, 
         id: item._id, 
         name: item.activityName || item.resortName, 
         price: Number(item.price),
         quantity: Number(item.quantity),
-        type: item.type,
         checkIn: item.checkIn ? item.checkIn.split('T')[0] : null,
         checkOut: item.checkOut ? item.checkOut.split('T')[0] : null, 
         activityDate: item.activityDate ? item.activityDate.split('T')[0] : null, 

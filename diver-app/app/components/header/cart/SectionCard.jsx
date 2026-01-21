@@ -6,7 +6,7 @@ import { updateQuantity, removeItem, updateDate } from './CartUtil';
 const SectionCard = ({ arrItems, setCartItems, total, section }) => {
   const updateItems = async (item, change, type) => {
     try {
-      const response = await fetch('api/cart', {
+      const response = await fetch('/api/cart', {
         method: "PUT",
         credentials: "include",
         headers: {
@@ -19,11 +19,6 @@ const SectionCard = ({ arrItems, setCartItems, total, section }) => {
         }), 
       });
 
-      if (!response.ok) {
-        throw new Error(`Failed to update item: ${response.statusText}`);
-      }
-
-      console.log("Item updated successfully:", await response.json());
     } catch (error) {
       console.error("Error updating item:", error);
     }

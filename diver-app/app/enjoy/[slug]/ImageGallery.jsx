@@ -3,7 +3,7 @@
 import React from 'react'
 import { useState } from 'react';
 
-const ImageGallery = ({resort}) => {
+const ImageGallery = ({activity}) => {
 
     const [selectedImageIndex, setSelectedImageIndex] = useState(0);
 
@@ -12,15 +12,15 @@ const ImageGallery = ({resort}) => {
             {/* Main Image */}
             <div className="mb-4 rounded-lg overflow-hidden bg-gray-100">
             <img
-                src={resort.images[selectedImageIndex]}
-                alt={`${resort.name} - Image ${selectedImageIndex + 1}`}
+                src={activity.images[selectedImageIndex]}
+                alt={`${activity.name} - Image ${selectedImageIndex + 1}`}
                 className="w-full h-[350px] object-cover"
             />
             </div>
 
             {/* Thumbnail Images */}
             <div className="grid grid-cols-5 gap-3">
-            {resort.images.map((image, index) => (
+            {activity.images.map((image, index) => (
                 <button
                     key={index}
                     onClick={() => setSelectedImageIndex(index)}

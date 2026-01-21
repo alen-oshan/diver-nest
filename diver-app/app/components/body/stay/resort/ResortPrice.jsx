@@ -6,7 +6,7 @@ import { useCurrencyStore } from '@/store/currencyStore';
 const price = (props) => {
   const currentCurrency = useCurrencyStore((state) => state.currency);
 
-  return (<div>{currentCurrency.symbol} {(currentCurrency.factor * props.price).toFixed(2)} </div>  )
+  return (<>{currentCurrency.symbol} {(currentCurrency.factor * props.price).toFixed(2)} </>  )
 }
 
 export default price

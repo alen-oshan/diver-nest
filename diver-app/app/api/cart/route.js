@@ -17,7 +17,7 @@ export const POST = async(request) => {
     const reqBody = await request.json();
     console.log(reqBody)
     try {
-        await addItemToCart("alennoob80@gmail.com", reqBody)
+        await addItemToCart(session.user.email, reqBody)
         return new NextResponse("Cart item received", {status: 200})
     } catch (e) {
         return new NextResponse("Cart cannot create", {status: 500})
@@ -27,6 +27,7 @@ export const POST = async(request) => {
 export const PUT = async(request) => {
     const session = await auth();
     const reqBody = await request.json();
+    console.log(reqBody)
     if (reqBody.type === 'remove'){
         removeCartItemByEmail(session.user.email, reqBody.item)
         return new NextResponse("Cart item removed", {status: 200})
