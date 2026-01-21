@@ -13,16 +13,16 @@ export function CartSidebar({ isOpen, onClose }) {
       })
       const data = await response.json()
       const formattedData = data.map((item) => ({
-        id: item._id.toString(), 
+        ...item, 
+        id: item._id, 
         name: item.activityName || item.resortName, 
-        price: Number(item.quantity),
+        price: Number(item.price),
         quantity: Number(item.quantity),
         type: item.type,
-        checkIn: item.checkInDate ? item.checkInDate.split('T')[0] : null,
-        checkOut: item.checkOutDate ? item.checkOutDate.split('T')[0] : null, 
-        activityDate: item.bookingDate ? item.bookingDate.split('T')[0] : null, 
+        checkIn: item.checkIn ? item.checkIn.split('T')[0] : null,
+        checkOut: item.checkOut ? item.checkOut.split('T')[0] : null, 
+        activityDate: item.activityDate ? item.activityDate.split('T')[0] : null, 
       }));
-      console.log("Response:", formattedData)
       setCartItems(formattedData)
     }
     getCartItems();

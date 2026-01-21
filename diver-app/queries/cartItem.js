@@ -5,5 +5,13 @@ export async function createCartItem(itemDetails) {
 }
 
 export async function findCartItem(_id) {
-    return await CartItem.findOne({_id})
+    return await CartItem.findOne({_id}).lean()
+}
+
+export async function updateCartItem(updateDetails) {
+    const updatedCartItem = await CartItem.updateOne(
+            { _id: updateDetails.item },
+            { $set: { quantity: updateDetails.change } } 
+        );
+    console.log(updatedCartItem)
 }

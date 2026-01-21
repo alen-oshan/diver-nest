@@ -4,16 +4,46 @@ import CartDateSelector from './CartDateSelector';
 import { updateQuantity, removeItem, updateDate } from './CartUtil';
 
 const SectionCard = ({ arrItems, setCartItems, total, section }) => {
-  const handleUpdateQuantity = (id, change) => {
+  const updateItems = async (item, change, type) => {
+    try {
+      const response = await fetch('api/cart', {
+        method: "PUT",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          item:item,
+          type:type,
+          change:change,
+        }), 
+      });
+
+      if (!response.ok) {
+        throw new Error(`Failed to update item: ${response.statusText}`);
+      }
+
+      console.log("Item updated successfully:", await response.json());
+    } catch (error) {
+      console.error("Error updating item:", error);
+    }
+  };
+
+  const handleUpdateQuantity = (id, change, preValue) => {
+    console.log("value updating: ", preValue + change)
+    updateItems(id, change + preValue , "quantity");
     setCartItems(items => updateQuantity(items, id, change));
+    
   };
 
   const handleRemoveItem = (id) => {
     setCartItems(items => removeItem(items, id));
+    updateItems(id, "", "remove")
   };
 
   const handleUpdateDate = (id, field, value) => {
     setCartItems(items => updateDate(items, id, field, value));
+    updateItems(id, value, field)
   };
 
   return (
@@ -46,14 +76,14 @@ const SectionCard = ({ arrItems, setCartItems, total, section }) => {
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2 bg-white rounded border border-gray-300 px-1.5 py-0.5">
                   <button
-                    onClick={() => handleUpdateQuantity(item.id, -1)}
+                    onClick={() => handleUpdateQuantity(item.id, -1, item.quantity)}
                     className="text-[#4F959D] hover:text-[#205781] transition-colors"
                   >
                     <Minus size={12} />
                   </button>
                   <span className="text-sm font-semibold w-6 text-center">{item.quantity}</span>
                   <button
-                    onClick={() => handleUpdateQuantity(item.id, 1)}
+                    onClick={() => handleUpdateQuantity(item.id, 1, item.quantity)}
                     className="text-[#4F959D] hover:text-[#205781] transition-colors"
                   >
                     <Plus size={12} />

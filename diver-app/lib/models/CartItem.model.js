@@ -10,9 +10,9 @@ const CartItemSchema = new mongoose.Schema(
       type: String,
     },
 
-    checkInDate: Date,
-    checkOutDate: Date,
-    bookingDate: Date,
+    checkIn: Date,
+    checkOut: Date,
+    activityDate: Date,
 
     price: {
       type: Number,
