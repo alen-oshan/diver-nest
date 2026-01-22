@@ -23,7 +23,7 @@ const ResortInfo = ({activity, googleMapsUrl}) => {
         };
 
     const handleSubmit = (event) => {
-        event.preventDefault();
+        event.preventDefault(); 
         if (event.nativeEvent.submitter.value === 'reserve')
             handleReserve()
         else
@@ -34,13 +34,15 @@ const ResortInfo = ({activity, googleMapsUrl}) => {
         await fetch('/api/cart', {
             method:'POST', 
             credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json',
+            },
             body: JSON.stringify(cartDetails),
 
         })
     }
 
-    const handleReserve = () => {
-        
+    const handleReserve = async() => {
         if (!activityDate) {
             setReserveMessage("Please fill all the fields");
         } else {
@@ -53,6 +55,10 @@ const ResortInfo = ({activity, googleMapsUrl}) => {
             }
             sendProductToCart(itemDetail)
         }
+  
+        // setTimeout(() => {
+        //     router.refresh();
+        // }, 300);
         setTimeout(() => setReserveMessage(""), 5000); 
     };
 
@@ -84,6 +90,8 @@ const ResortInfo = ({activity, googleMapsUrl}) => {
                     <DateSelector 
                         activityDate={activityDate}
                         setActivityDate={setActivityDate}
+                        max={activity.totalSeats}
+                        reservations={activity.reserves}
                     />
                     </div>
                 </div>

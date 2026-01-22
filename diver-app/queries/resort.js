@@ -1,5 +1,6 @@
 import Resort from '@/lib/models/Resort.model'
 import dbConnect from '@/lib/db/mongoose'
+import { getReservesByName } from './reserve';
 
 export async function createResort(resortDetails) {
     await dbConnect();
@@ -24,7 +25,9 @@ export async function findResortByName(name) {
     await dbConnect();
     try{
         const resort = await Resort.findOne({name}).select('-_id').lean();
-        return resort;
+        const reserves = await getReservesByName(name);
+        
+        return {...resort, reserves};
         
     } catch(e){
         throw new Error(e);

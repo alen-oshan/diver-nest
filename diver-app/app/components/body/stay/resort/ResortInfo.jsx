@@ -71,6 +71,9 @@ const ResortInfo = ({resort, googleMapsUrl}) => {
             }
             sendProductToCart(itemDetail)
         }
+        setTimeout(() => {
+            window.location.reload();
+        }, 300);
         setTimeout(() => setReserveMessage(""), 5000); 
     };
 
@@ -105,6 +108,9 @@ const ResortInfo = ({resort, googleMapsUrl}) => {
                         checkOutDate={checkOutDate}
                         setCheckInDate={setCheckInDate}
                         setCheckOutDate={setCheckOutDate}
+                        reservations={resort.reserves}
+                        roomType={resort.roomType}
+                        max={resort.totalRooms}
                     />
                     </div>
                 </div>

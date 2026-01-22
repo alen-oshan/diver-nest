@@ -3,6 +3,7 @@ import { findUserByEmail } from '@/queries/user'
 import { createCartItem, findCartItem} from '@/queries/cartItem'
 import { findResortByName } from './resort'
 import { findActivityByName} from './activity'
+import { makeReserve } from './reserve'
 import dbConnect from '@/lib/db/mongoose'
 
 
@@ -19,8 +20,6 @@ export async function findAllCartItemsByEmail(email) {
         if(!cartItem) return null;
         const product = cartItem.type === 'stay' ? 
         await findResortByName(cartItem.resortName) : await findActivityByName(cartItem.activityName);
-        console.log("product:::", cartItem)
-
         const price = cartItem.type === 'stay' ? product.pricePerNight : product.price;
 
         return {...cartItem, price}
@@ -46,12 +45,9 @@ export async function removeCartItemByEmail(email, cartItemId) {
         const updatedItems = cart.items.filter(item => item.toString() !== cartItemId);
 
         await Cart.updateOne({ _id: cart._id }, { $set: { items: updatedItems } });
-
-        console.log(`Cart item ${cartItemId} removed successfully for user ${email}`);
         return { ...cart, items: updatedItems };
-    } catch (error) {
-        console.error(`Error removing cart item for user ${email}:`, error);
-        throw error;
+    } catch (e) {
+        throw new Error(e);
     }
 }
 
@@ -70,16 +66,16 @@ export async function addItemToCart(email, cartItemDetails) {
     try {
         const cartItem = await createCartItem(cartItemDetails)
         let cart = await findCartByEmail(email);
-        
+        await makeReserve(cartItemDetails);
         if(!cart){
             cart = await createCart(email)
         }
-
         const updatedItems = [...(cart.items || []), cartItem._id];
         await Cart.updateOne({ _id: cart._id }, { $set: { items: updatedItems } });
+        
         return { ...cart, items: updatedItems };
     } catch (e) {
-        console.log(e)
+        throw new Error(e);
     }
 
     

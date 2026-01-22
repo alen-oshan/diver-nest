@@ -15,7 +15,6 @@ export const POST = async(request) => {
     await dbConnect();
     const session = await auth();
     const reqBody = await request.json();
-    console.log(reqBody)
     try {
         await addItemToCart(session.user.email, reqBody)
         return new NextResponse("Cart item received", {status: 200})
@@ -27,16 +26,15 @@ export const POST = async(request) => {
 export const PUT = async(request) => {
     const session = await auth();
     const reqBody = await request.json();
-    console.log(reqBody)
-    if (reqBody.type === 'remove'){
-        removeCartItemByEmail(session.user.email, reqBody.item)
-        return new NextResponse("Cart item removed", {status: 200})
-    }
-    updateCartItem(reqBody)
-    return new NextResponse("Cart item updated", {status: 200})
+    
     try {
-        await addItemToCart(session.user.email, reqBody)
+        if (reqBody.type === 'remove'){
+            removeCartItemByEmail(session.user.email, reqBody.item)
+            return new NextResponse("Cart item removed", {status: 200})
+        }
+        updateCartItem(reqBody)
+        return new NextResponse("Cart item updated", {status: 200})
     } catch (e) {
-        return NextResponse("Cart cannot create", {status: 500})
+        return NextResponse("Cart item cannot updated", {status: 500})
     }
 }
