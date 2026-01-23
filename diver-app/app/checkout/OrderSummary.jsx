@@ -93,37 +93,6 @@ const CheckoutPage = () => {
       <div className="max-w-7xl mx-auto px-6 py-8 grid grid-cols-1 lg:grid-cols-3 gap-10">
         {/* -------- LEFT SECTION -------- */}
         <div className="lg:col-span-2 space-y-8">
-          {/* Ordered Items */}
-          <div>
-            <h2 className="text-lg font-semibold mb-4">
-              Your Order
-            </h2>
-
-            <div className="space-y-4">
-              {items.map((item) => (
-                <div
-                  key={item.id}
-                  className="flex gap-4 border w-3/4 border-[#205781]/20 rounded-lg p-4"
-                >
-                  <img
-                    src={item.image}
-                    alt={item.name}
-                    className="w-24 h-24 object-cover rounded-md"
-                  />
-                  <div className="flex-1">
-                    <p className="font-medium">{item.name}</p>
-                    <p className="text-sm">
-                      Quantity: {item.qty}
-                    </p>
-                  </div>
-                  <div className="font-medium">
-                    LKR {(item.price * item.qty).toLocaleString()}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
           {/* Payment Method */}
           <div>
             <h2 className="text-lg font-semibold mb-4">
