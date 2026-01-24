@@ -22,12 +22,10 @@ export async function findAllActivities(){
 }
 
 export async function findActivityByName(name) {
-    await dbConnect();
+    await dbConnect(); 
     try{
         const activity = await Activity.findOne({name}).select('-_id').lean();
-        const reserves = await getReservesByName(name);
-                
-        return {...activity, reserves};
+        return activity;
     } catch(e){
         throw new Error(e);
     }

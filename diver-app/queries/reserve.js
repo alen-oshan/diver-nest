@@ -10,7 +10,6 @@ export async function makeReserve(reserveDetails) {
     }
     try{
         const response = await Reserve.create(formattedDetail)
-        console.log("reserve::", response)
     } catch(e) {
         throw new Error(e)
     }

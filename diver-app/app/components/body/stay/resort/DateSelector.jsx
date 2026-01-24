@@ -22,7 +22,7 @@ const DateSelector = (props) => {
             "oppValue":props.checkInDate,
             "oppFunc":props.setCheckInDate,
         },
-    ]
+    ] 
 
     const dateErrorCheck = (date, dateType) => {
         if (!date) return;

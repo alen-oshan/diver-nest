@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { generatePayHereHash } from "@/lib/payhere";
 
 export async function POST(req) {
-  const { orderId, amount, customer } = await req.json();
+  const { orderId, amount, customer, items } = await req.json();
 
   const hash = generatePayHereHash(orderId, amount);
 
@@ -11,6 +11,7 @@ export async function POST(req) {
     order_id: orderId,
     amount: amount.toFixed(2),
     currency: "LKR",
+    items, 
 
     first_name: customer.firstName,
     last_name: customer.lastName,
@@ -23,8 +24,7 @@ export async function POST(req) {
     notify_url: `${process.env.BASE_URL}/api/payhere/notify`,
     return_url: `${process.env.BASE_URL}/checkout/payment-success`,
     cancel_url: `${process.env.BASE_URL}/checkout/payment-cancel`,
-    items:"Pizza", 
-
+   
     hash,
   });
 }
