@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 
-const CheckoutPage = ({expired, setExpired}) => {
+const CheckoutPage = ({expired, setExpired, items}) => {
   /* ---------------- TIMER ---------------- */
   const SESSION_TIME = 10 * 60; // 10 minutes in seconds
   const [paymentType, setPaymentType] = useState("deposit");
@@ -34,24 +34,6 @@ const CheckoutPage = ({expired, setExpired}) => {
     return `${m}:${s.toString().padStart(2, "0")}`;
   };
 
-  /* ---------------- MOCK ORDER DATA ---------------- */
-  const items = [
-    {
-      id: 1,
-      name: "Scuba Diving Experience",
-      image: "https://images.unsplash.com/photo-1584132967334-10e028bd69f7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxiZWFjaCUyMHJlc29ydHxlbnwxfHx8fDE3NjgxNDI2Mzd8MA&ixlib=rb-4.1.0&q=80&w=1080",
-      qty: 2,
-      price: 15000,
-    },
-    {
-      id: 2,
-      name: "Underwater Photography",
-      image: "https://images.unsplash.com/photo-1445019980597-93fa8acb246c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb3VudGFpbiUyMHJlc29ydHxlbnwxfHx8fDE3NjgyMDAwODF8MA&ixlib=rb-4.1.0&q=80&w=1080",
-      qty: 1,
-      price: 5000,
-    },
-  ];
-
   const subtotal = items.reduce(
     (sum, i) => sum + i.price * i.qty,
     0
@@ -64,7 +46,7 @@ const CheckoutPage = ({expired, setExpired}) => {
 
   const requestData = {
     "orderId": orderId,
-    "amount": 30000,
+    "amount": total,
     "currency": "LKR",
     "customer": {
       firstName,
@@ -280,8 +262,8 @@ const CheckoutPage = ({expired, setExpired}) => {
 
             <div className="p-6">
               <div className="space-y-4 max-h-[40vh] overflow-y-auto pr-2 custom-scrollbar">
-                {items.map((item) => (
-                  <div key={item.id} className="flex justify-between items-start">
+                {items.map((item, index) => (
+                  <div key={index} className="flex justify-between items-start">
                     <div>
                       <div className="font-bold text-slate-800">{item.name}</div>
                       <div className="text-xs text-slate-500">Qty: {item.qty}</div>

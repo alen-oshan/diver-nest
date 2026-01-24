@@ -1,17 +1,25 @@
-'use client';
+import React from 'react'
+import Body from './Body'
+import { auth } from '@/app/auth'
+import { findAllCartItemsByEmail } from '@/queries/cart';
 
-import React, { useState } from 'react'
-import OrderSummary  from './OrderSummary'
-import Expired from './Expired';
+const page = async() => {
+  const session = await auth();
+  let formattedData = []
 
-const page = () => {
-  const [expired, setExpired] = useState(false);
-
+  if(session){
+    const items = await findAllCartItemsByEmail(session.user.email)
+    formattedData = items.map((item) => {
+      return ({
+        name: item.type === 'stay' ? item.resortName : item.activityName,
+        price: item.price,
+        qty: item.quantity,
+      })
+    })
+  }
+  
   return (
-    
-    <div>
-      {expired ? <Expired /> : <OrderSummary setExpired={setExpired} />}
-    </div>
+    <Body items={formattedData} />
   )
 }
 
