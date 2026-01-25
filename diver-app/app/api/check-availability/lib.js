@@ -42,7 +42,6 @@ export const formatReserves = (reservations) => {
         }
     }
     
-    console.log("dateRanges", dateRanges)
     return dateRanges;
 }
 

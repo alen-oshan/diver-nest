@@ -14,6 +14,7 @@ export const GET = async(request) => {
     const item = type === 'stay' ? await findResortByName(name) : await findActivityByName(name)
     const max = item.totalRooms || item.totalSeats
     const reserves = await getReservesByName(name);
+    console.log(reserves);
 
     if (reserves.length === 0) return NextResponse.json(null, {status:200})
     

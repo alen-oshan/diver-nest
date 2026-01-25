@@ -1,5 +1,4 @@
-import { X } from 'lucide-react';
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -24,66 +23,95 @@ const DateSelector = (props) => {
         },
     ] 
 
+    const getMaxRoom = () => {
+        if (!(props.reservations) || !Array.isArray(props.reservations)) {
+            props.setMaxRooms(props.max);
+            return;
+        }
+       
+        if (!(props.checkInDate && props.checkOutDate)) {
+            props.setMaxRooms(0);
+
+            return;
+        }
+        
+        let totalBooked = 0;
+        
+        props.reservations.forEach(res => {
+            if (!res || !res.checkIn || !res.checkOut) return;
+            
+            const checkIn = toYMD(res.checkIn);
+            const checkOut = toYMD(res.checkOut);
+            
+            // Check if the reservation OVERLAPS with selected dates
+            // Overlap exists if: reservation starts before selected period ends AND ends after selected period starts
+            const hasOverlap = checkIn < props.checkOutDate && checkOut > props.checkInDate;
+            
+            if (hasOverlap) {
+                // Sum ALL overlapping reservations' quantities
+                totalBooked += (res.quantity || 1);
+            }
+        });
+                
+        // Calculate available rooms
+        const availableRooms = Math.max(0, props.max - totalBooked);
+        
+        props.setMaxRooms(availableRooms);
+    };
+
     const dateErrorCheck = (date, dateType) => {
         if (!date) return;
 
         const newDate = date.toLocaleDateString("en-CA");
         dateType.func(newDate);
+        
 
         const diff = dateType.normal
         ? calculateDateDiff(newDate, dateType.oppValue)
         : calculateDateDiff(dateType.oppValue, newDate);
 
-        if (diff < 1) dateType.oppFunc("");
+        if (diff < 1) {
+            dateType.oppFunc("");
+            return;
+        }
     }
 
     const toYMD = (d) => new Date(d).toLocaleDateString("en-CA");
 
-    const privateDateDisable = (date, dateType) => {
-        const day = toYMD(date);
-        if (dateType.name === "Check-in") {
-            return props.reservations.some(r =>
-                day >= toYMD(r.checkIn) && day < toYMD(r.checkOut)
-            );
-        } else if (dateType.name === "Check-out") {
-            return props.reservations.some(r =>
-                day > toYMD(r.checkIn + 1) && day <= toYMD(r.checkOut + 1)
-            );
-        }
-        return false;
-    };
-
-    const publicDateDisable = (date, dateType) => {
-        const day = toYMD(date);
-        let bookedSeats = 0;
-        if (dateType.name === "Check-in") {
-            bookedSeats = props.reservations.reduce((sum, r) => {
-                const checkIn = toYMD(r.checkIn);
-                const checkOut = toYMD(r.checkOut);
-
-                if (day >= checkIn && day < checkOut) {
-                    
-                    return sum + r.quantity;
-                }
-                return sum;
-            }, 0);
-
-        } else if (dateType.name === "Check-out") {
-            bookedSeats = props.reservations.reduce((sum, r) => {
-                if (day > toYMD(r.checkIn + 1) && day <= toYMD(r.checkOut + 1)) {
-                    return sum + r.quantity;
-                }
-                return sum;
-            }, 0);
-        }
-        return bookedSeats >= props.max;
+    const getPreviousDay = (date) => {
+        const prevDate = new Date(date);
+        prevDate.setDate(prevDate.getDate() - 1);
+        return prevDate;
     };
 
     const isDateDisabled = (date, dateType) => {
-        if (props.roomType === 'Shared Room')
-            return  publicDateDisable(date, dateType);
-        return privateDateDisable (date, dateType);
+        if (!props.reservations || !Array.isArray(props.reservations)) return false;
+        
+        let targetDate = date;
+        
+        // For check-out, check availability of previous day
+        if (dateType === 'Check-out') {
+            targetDate = getPreviousDay(date);
+        }
+        
+        const day = toYMD(targetDate);
+        let bookedSeats = 0;
+        
+        props.reservations.forEach(res => {
+            if (!res || !res.checkIn || !res.checkOut) return;
+            
+            const checkIn = toYMD(res.checkIn);
+            const checkOut = toYMD(res.checkOut);
+            
+            // Check if target day falls within reservation
+            if (day >= checkIn && day < checkOut) {
+                bookedSeats += (res.quantity || 1);
+            }
+        });
+        
+        return bookedSeats >= props.max;
     };
+
 
     const calculateDateDiff = (checkIn, checkOut) => {
         if (!checkIn || !checkOut) return 0;
@@ -99,6 +127,13 @@ const DateSelector = (props) => {
         const minDate = today.toISOString().split("T")[0];
         return minDate;
     }
+
+    useEffect(() => {
+        if (props.checkInDate && props.checkOutDate) {
+            getMaxRoom();
+        } 
+    }, [props.checkInDate, props.checkOutDate]);
+
     return (
         <> {dateTypes.map((dateType, index) => 
             <div key={index}>
@@ -111,7 +146,7 @@ const DateSelector = (props) => {
                             dateFormat="yyyy-MM-dd"
                             onChange={(date) => dateErrorCheck(date, dateType)}
                             className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#205781]"
-                            filterDate={(date) => !isDateDisabled(date, dateType)}
+                            filterDate={(date) => !isDateDisabled(date, dateType.name)}
                         />
 
                     </div>

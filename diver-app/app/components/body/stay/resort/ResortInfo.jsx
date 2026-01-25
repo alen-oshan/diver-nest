@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Star, Wifi, Coffee, Utensils, Dumbbell, Wind, Car } from "lucide-react";
 import ResortPrice from './ResortPrice'
 import RoomSelector from './RoomSelector';
@@ -11,6 +11,36 @@ const ResortInfo = ({resort, googleMapsUrl}) => {
     const [checkInDate, setCheckInDate] = useState("");
     const [checkOutDate, setCheckOutDate] = useState("");
     const [reserveMessage, setReserveMessage] = useState("");
+    const [reservations, setReservations] = useState(null);
+    const [maxRooms, setMaxRooms] = useState(0)
+
+
+    useEffect(() => {
+        const fetchAvailability = async () => {
+        try {
+            const response = await fetch(
+            '/api/check-availability?name=Sunset%20Beach%20Resort&type=stay'
+            );
+            
+            if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            
+            const data = await response.json();
+            setReservations(data);
+        } catch (err) {
+            console.error('Error fetching availability:', err);
+        } 
+        };
+
+        fetchAvailability();
+
+        const intervalId = setInterval(fetchAvailability, 60 * 1000);
+
+        return () => {
+        clearInterval(intervalId);
+        };
+    }, []); 
 
     const getDateDiff = () => {
         const checkIn = new Date(checkInDate);
@@ -98,7 +128,7 @@ const ResortInfo = ({resort, googleMapsUrl}) => {
                     <RoomSelector 
                         setRooms={setRooms}
                         rooms={rooms}
-                        maxRooms={resort.totalRooms}
+                        maxRooms={maxRooms}
                         roomType={resort.roomType}
                     />
                     
@@ -108,9 +138,10 @@ const ResortInfo = ({resort, googleMapsUrl}) => {
                         checkOutDate={checkOutDate}
                         setCheckInDate={setCheckInDate}
                         setCheckOutDate={setCheckOutDate}
-                        reservations={resort.reserves}
+                        reservations={reservations}
                         roomType={resort.roomType}
                         max={resort.totalRooms}
+                        setMaxRooms={setMaxRooms}
                     />
                     </div>
                 </div>
