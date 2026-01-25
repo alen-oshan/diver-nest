@@ -12,7 +12,7 @@ const ImageGallery = ({activity}) => {
             {/* Main Image */}
             <div className="mb-4 rounded-lg overflow-hidden bg-gray-100">
             <img
-                src={activity.images[selectedImageIndex]}
+                src={activity.images ? activity.images[selectedImageIndex] : ''}
                 alt={`${activity.name} - Image ${selectedImageIndex + 1}`}
                 className="w-full h-[350px] object-cover"
             />

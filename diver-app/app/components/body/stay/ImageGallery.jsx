@@ -12,7 +12,7 @@ const ImageGallery = ({resort}) => {
             {/* Main Image */}
             <div className="mb-4 rounded-lg overflow-hidden bg-gray-100">
             <img
-                src={resort.images[selectedImageIndex]}
+                src={resort.images ? resort.images[selectedImageIndex] : ''}
                 alt={`${resort.name} - Image ${selectedImageIndex + 1}`}
                 className="w-full h-[350px] object-cover"
             />

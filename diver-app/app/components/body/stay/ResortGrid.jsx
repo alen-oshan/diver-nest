@@ -15,7 +15,6 @@ const ResortGrid = (props) => {
           const endpoint = (props.isStay) ? '/api/resort' : '/api/activity';
           const response = await fetch(endpoint);
           const data = await response.json();
-          console.log(data)
           setItems(props.isStay ? data.resortsDTO : data.activitiesDTO);
         } catch (error) {
           console.error('Error fetching data:', error);

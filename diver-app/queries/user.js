@@ -17,7 +17,10 @@ export async function findUserByEmail(email) {
     try {
         const user = await User.findOne({ email })
         .select('name email image notification')
-        .lean();
+        .lean(); 
+        
+        if(!user)
+            return null;
 
         const safeUser = {
         ...user,

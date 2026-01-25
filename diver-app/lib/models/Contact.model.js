@@ -11,23 +11,9 @@ const ContactSchema = new mongoose.Schema(
       maxLength: 50,
     },
 
-    email: {
-      type: String,
-      lowercase: true,
-      trim: true,
-      validate: {
-        validator: validator.isEmail,
-        message: 'Please enter a valid email address'
-      }
-    },
-
-    phone: {
+    contact: {
       type: String,
       trim: true,
-      validate: {
-        validator: (v) => !v || validator.isMobilePhone(v, 'any'),
-        message: 'Please enter a valid phone number'
-      }
     },
 
     message: {

@@ -3,6 +3,21 @@
 import React, { useState } from 'react'
 
 const ContactBody = () => {
+    const sendContactDetails = async () => {
+        try {
+            await fetch('/api/contact', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(form),
+            });
+            
+        } catch (error) {
+            console.error('Error:', error);
+            throw error;
+        }
+    }
 
     const [form, setForm] = useState({
         name: '',
@@ -16,7 +31,12 @@ const ContactBody = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(form);
+        sendContactDetails();
+        setForm({
+            name: '',
+            contact: '',
+            message: '',
+        })
     };
   return (
     <div className="flex justify-center m-4 lg:mt-8">
@@ -33,6 +53,7 @@ const ContactBody = () => {
 
             <input
             name="name"
+            value={form.name}
             placeholder="Your Name"
             className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
             onChange={handleChange}
@@ -41,6 +62,7 @@ const ContactBody = () => {
 
             <input
             name="contact"
+            value={form.contact}
             placeholder="Email or WhatsApp"
             className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
             onChange={handleChange}
@@ -49,6 +71,7 @@ const ContactBody = () => {
 
             <textarea
             name="message"
+            value={form.message}
             placeholder="Tell us what you're interested in"
             className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
             rows={4}
