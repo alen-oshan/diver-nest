@@ -25,7 +25,8 @@ export async function findActivityByName(name) {
     await dbConnect(); 
     try{
         const activity = await Activity.findOne({name}).select('-_id').lean();
-        return activity;
+        const reserves = await getReservesByName(name);
+        return {...activity, reserves};
     } catch(e){
         throw new Error(e);
     }

@@ -26,7 +26,7 @@ export async function findResortByName(name) {
     try{
         const resort = await Resort.findOne({name}).select('-_id').lean();
         const reserves = await getReservesByName(name);
-        
+         
         return {...resort, reserves};
         
     } catch(e){

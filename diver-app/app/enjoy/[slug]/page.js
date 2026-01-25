@@ -6,7 +6,6 @@ export default async function ActivityDetail({params}) {
   const { slug } = await params;
   const decodedSlug = decodeURIComponent(slug);
   const activity = await findActivityByName(decodedSlug);
-  console.log(activity);
   return (
     <>
       <Header />

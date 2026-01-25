@@ -1,8 +1,8 @@
-import React from 'react'
+import React, { useEffect }from 'react'
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-const DateSelector = (props) => {
+const DateSelector = (props) => { 
     const getMinDate = () => {
         const today = new Date();
         today.setDate(today.getDate() + 1);
@@ -12,7 +12,38 @@ const DateSelector = (props) => {
 
     const toYMD = (d) => new Date(d).toLocaleDateString("en-CA");
 
+    const getMaxRoom = () => {
+        if (!Array.isArray(props.reservations)) {
+            props.setMaxSeats(props.max);
+            return;
+        }
+
+        if (!props.activityDate) {
+            props.setMaxSeats(0);
+            return;
+        }
+
+        const selectedDate = toYMD(props.activityDate);
+        let totalBooked = 0;
+
+        props.reservations.forEach(res => {
+            if (!res || !res.activityDate) return;
+
+            const reservationDate = toYMD(res.activityDate);
+
+            if (reservationDate === selectedDate) {
+                totalBooked += res.quantity ?? 1;
+            }
+        });
+
+        const availableSeats = Math.max(0, props.max - totalBooked);
+        props.setMaxSeats(availableSeats);
+    };
+
+
     const isDateDisabled = (date) => {
+        if (!props.reservations)
+            return false;
         const day = toYMD(date);
 
         const bookedSeats = props.reservations.reduce((sum, r) => {
@@ -24,6 +55,12 @@ const DateSelector = (props) => {
 
         return bookedSeats >= props.max;
     };
+
+    useEffect(() => {
+        if (props.activityDate) {
+            getMaxRoom();
+        } 
+    }, [props.activityDate]);
 
 
 

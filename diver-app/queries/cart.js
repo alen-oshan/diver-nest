@@ -63,6 +63,7 @@ export async function createCart(email) {
 
 export async function addItemToCart(email, cartItemDetails) {
     await dbConnect();
+    console.log(cartItemDetails)
     try {
         const cartItem = await createCartItem(cartItemDetails)
         let cart = await findCartByEmail(email);

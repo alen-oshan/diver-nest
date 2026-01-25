@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Star, Wifi, Coffee, Utensils, Dumbbell, Wind, Car } from "lucide-react";
 import ActivityPrice from './ActivityPrice'
 import RoomSelector from './RoomSelector';
@@ -9,13 +9,44 @@ import DateSelector from './DateSelector';
 const ResortInfo = ({activity, googleMapsUrl}) => {
     const [activityDate, setActivityDate] = useState("");
     const [reserveMessage, setReserveMessage] = useState("")
+    const [reservations, setReservations] = useState(null);
     const [seats, setSeats] = useState(1);
+    const [maxSeats, setMaxSeats] = useState(0)
+
+    useEffect(() => {
+        const fetchAvailability = async () => {
+        try {
+            const response = await fetch(
+            `/api/check-availability?name=${activity.name}&type=activity`
+            );
+            
+            if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            
+            const data = await response.json();
+            
+
+            setReservations(data);
+        } catch (err) {
+            console.error('Error fetching availability:', err);
+        } 
+        };
+
+        fetchAvailability();
+
+        const intervalId = setInterval(fetchAvailability, 60 * 1000);
+
+        return () => {
+        clearInterval(intervalId);
+        };
+    }, []); 
 
     const totalPrice = seats * activity.price;
 
     const amenityIcons= {
             "Free WiFi": Wifi,
-            "Restaurant": Utensils,
+            "Restaurant": Utensils, 
             "Breakfast": Coffee,
             "Fitness Center": Dumbbell,
             "Air Conditioning": Wind,
@@ -56,9 +87,9 @@ const ResortInfo = ({activity, googleMapsUrl}) => {
             sendProductToCart(itemDetail)
         }
   
-        // setTimeout(() => {
-        //     router.refresh();
-        // }, 300);
+        setTimeout(() => {
+            window.location.reload();
+        }, 300);
         setTimeout(() => setReserveMessage(""), 5000); 
     };
 
@@ -83,7 +114,7 @@ const ResortInfo = ({activity, googleMapsUrl}) => {
                     <RoomSelector
                         seats={seats} 
                         setSeats={setSeats}
-                        maxSeats={activity.totalSeats}
+                        maxSeats={maxSeats}
                     />
                     
                     <div className="grid grid-cols-2 gap-3">
@@ -91,7 +122,9 @@ const ResortInfo = ({activity, googleMapsUrl}) => {
                         activityDate={activityDate}
                         setActivityDate={setActivityDate}
                         max={activity.totalSeats}
-                        reservations={activity.reserves}
+                        reservations={reservations}
+                        setSeats={setSeats}
+                        setMaxSeats={setMaxSeats}
                     />
                     </div>
                 </div>

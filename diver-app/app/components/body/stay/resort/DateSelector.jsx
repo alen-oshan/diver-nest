@@ -4,7 +4,7 @@ import "react-datepicker/dist/react-datepicker.css";
 
 const DateSelector = (props) => {
 
-    const dateTypes = [
+    const dateTypes = [ 
         {
             "normal": true, // use to choose the datediff func
             "name":"Check-in",
@@ -54,8 +54,7 @@ const DateSelector = (props) => {
         });
                 
         // Calculate available rooms
-        const availableRooms = Math.max(0, props.max - totalBooked);
-        
+        const availableRooms = Math.max(0, props.max - totalBooked);        
         props.setMaxRooms(availableRooms);
     };
 
@@ -127,6 +126,8 @@ const DateSelector = (props) => {
         const minDate = today.toISOString().split("T")[0];
         return minDate;
     }
+
+
 
     useEffect(() => {
         if (props.checkInDate && props.checkOutDate) {

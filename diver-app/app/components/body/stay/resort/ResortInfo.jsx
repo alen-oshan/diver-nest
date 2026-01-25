@@ -19,7 +19,7 @@ const ResortInfo = ({resort, googleMapsUrl}) => {
         const fetchAvailability = async () => {
         try {
             const response = await fetch(
-            '/api/check-availability?name=Sunset%20Beach%20Resort&type=stay'
+            `/api/check-availability?name=${resort.name}&type=stay`
             );
             
             if (!response.ok) {
@@ -133,7 +133,7 @@ const ResortInfo = ({resort, googleMapsUrl}) => {
                     />
                     
                     <div className="grid grid-cols-2 gap-3">
-                    <DateSelector 
+                    <DateSelector  
                         checkInDate={checkInDate} 
                         checkOutDate={checkOutDate}
                         setCheckInDate={setCheckInDate}
