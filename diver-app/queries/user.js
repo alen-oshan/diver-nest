@@ -53,7 +53,26 @@ export async function changeUserName(email, name) {
         throw new Error(e);
     }
 }
-
+export async function changeUserEmail(email, changedEmail) {
+    await dbConnect();
+    try {
+        const user = await User.findOne({email});
+        user.email = changedEmail;
+        await user.save();
+    } catch (e) {
+        throw new Error(e);
+    }
+}
+export async function changeUserRole(email, role) {
+    await dbConnect();
+    try {
+        const user = await User.findOne({email});
+        user.role = role;
+        await user.save();
+    } catch (e) {
+        throw new Error(e);
+    }    
+}
 export async function changeUserPassword(email, password) {
     await dbConnect();
     try {

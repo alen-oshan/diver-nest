@@ -13,28 +13,45 @@ const UserBody = (props) => {
     });
     const [users, setUsers] = useState(props.users)
 
+    const sendEditForm = async (prevEmail, editForm) => {
+        const reqBody = {editForm, prevEmail}
+        try {
+            await fetch('/api/admin/user', {
+                method: 'PUT', 
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(reqBody)
+            });
+        } catch (error) {
+            console.error('Error sending edit form:', error);
+            throw error;
+        }
+    };
+
     const handleEdit = (user, index) => {
-    setEditRowIndex(index);
-    setEditForm({
-        name: user.name,
-        email: user.email,
-        role: user.role
-    });
+        setEditRowIndex(index);
+        setEditForm({
+            name: user.name,
+            email: user.email,
+            role: user.role
+        });
     };
 
     const handleChange = (e) => {
-    setEditForm({ ...editForm, [e.target.name]: e.target.value });
+        setEditForm({ ...editForm, [e.target.name]: e.target.value });
     };
 
     const handleSave = (index) => {
-    const updatedUsers = [...users];
-    updatedUsers[index] = { ...updatedUsers[index], ...editForm };
-    setUsers(updatedUsers); // assuming users is state
-    setEditRowIndex(null);
+        const updatedUsers = [...users];
+        updatedUsers[index] = { ...updatedUsers[index], ...editForm };
+        sendEditForm(users[index].email, editForm);
+        setUsers(updatedUsers); 
+        setEditRowIndex(null);
     };
 
     const handleCancel = () => {
-    setEditRowIndex(null);
+        setEditRowIndex(null);
     };
 
     return (
@@ -140,7 +157,7 @@ const UserBody = (props) => {
                     ))}
                     </tbody>
                 </table>
-                </div>
+            </div>
 
         </>
     )
