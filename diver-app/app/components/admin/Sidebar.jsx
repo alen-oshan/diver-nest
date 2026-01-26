@@ -1,7 +1,13 @@
 import React from 'react'
-import { User, Map, Activity, Mail, CreditCard, ShoppingCart } from 'lucide-react';
+import { User, Map, Activity, Mail, CreditCard, ShoppingCart, LogOut  } from 'lucide-react';
+import LogoutButton from '../auth/LogoutButton';
 
-const Sidebar = () => {
+const Sidebar = ({currPage}) => {
+    console.log(currPage)
+    function firstLetterLower(str) {
+    if (!str) return str;
+    return str.charAt(0).toLowerCase() + str.slice(1);
+}
 
     const navItems = [
     { name: 'User', icon: <User size={18} /> },
@@ -22,9 +28,9 @@ const Sidebar = () => {
                 {navItems.map((item) => (
                 <li key={item.name}>
                     <a
-                    href="#"
+                    href={`/admin/${firstLetterLower(item.name)}`}
                     className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
-                        item.name === 'User' 
+                        item.name === currPage 
                         ? 'bg-[#205781] text-white' 
                         : 'hover:bg-gray-50 text-[#205781]'
                     }`}
@@ -35,7 +41,12 @@ const Sidebar = () => {
                 </li>
                 ))}
             </ul>
+            <div className='flex gap-1  items-center border-2 mt-16 w-fit rounded-md px-4 border-[#205781]'>
+                <LogOut size={18}/><LogoutButton />
+            </div>
+            
             </nav>
+            
         </aside>
     )
 }

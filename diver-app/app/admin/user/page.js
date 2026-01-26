@@ -9,9 +9,10 @@ const AdminDashboard = async() => {
 
   return (
     <div className="flex min-h-screen bg-white text-[#205781] font-sans">
-      <Sidebar />
+      <Sidebar currPage='User'/>
 
       {/* Main Content */}
+      
       <main className="flex-1 p-8">
         <UserBody users={users} />
       </main>

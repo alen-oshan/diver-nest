@@ -36,7 +36,7 @@ const ResortSchema = new mongoose.Schema(
     
     status: {
       type: String,
-      enum: ["available", "fully_booked"],
+      enum: ["available", "not available"],
       default: "available",
     },
 
