@@ -36,7 +36,7 @@ export async function findUserByEmail(email) {
 export async function findAllUsers() {
     await dbConnect();
     try {
-        const users = await User.find().lean();
+        const users = await User.find().select('name email role -_id').lean();
         return users;
     } catch (e){
         throw new Error(e);
