@@ -1,6 +1,6 @@
 import Activity from '@/lib/models/Activity.model'
 import dbConnect from '@/lib/db/mongoose'
-import { getReservesByName } from './reserve';
+import { getReservesByName } from './reserve'
 
 export async function createActivity(activityDetails) {
     await dbConnect();
@@ -28,6 +28,22 @@ export async function findActivityByName(name) {
         const reserves = await getReservesByName(name);
         return {...activity, reserves};
     } catch(e){
+        throw new Error(e);
+    }
+}
+
+export async function updateActivityByName(name, activityDetails) {
+    await dbConnect();
+    try {
+        const updatedActivity = await Activity.findOneAndUpdate(
+            { name }, // Filter by name
+            { $set: activityDetails }, // Update with the provided details
+        ).lean();
+
+        if (!updatedActivity) {
+            throw new Error(`Resort with name "${name}" not found.`);
+        }
+    } catch (e) {
         throw new Error(e);
     }
 }

@@ -3,7 +3,6 @@ import { User, Map, Activity, Mail, CreditCard, ShoppingCart, LogOut  } from 'lu
 import LogoutButton from '../auth/LogoutButton';
 
 const Sidebar = ({currPage}) => {
-    console.log(currPage)
     function firstLetterLower(str) {
     if (!str) return str;
     return str.charAt(0).toLowerCase() + str.slice(1);

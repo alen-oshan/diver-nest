@@ -1,12 +1,12 @@
 import { NextResponse } from 'next/server';
-import { createResort, updateResortByName } from '@/queries/resort';
+import { createActivity, updateActivityByName } from '@/queries/activity';
 
 
 export const POST = async (request) => {
     try {
-        const resortDetails = await request.json();
-        await createResort(resortDetails);
-        return new NextResponse("Resort Created", {
+        const activityDetails = await request.json();
+        await createActivity(activityDetails);
+        return new NextResponse("Activity Created", {
             status:200}
         );
     } catch(e){
@@ -19,9 +19,9 @@ export const POST = async (request) => {
 
 export const PUT = async (request) => {
     try {
-        const {resortDetails, prevName} = await request.json();
-        await updateResortByName(prevName, resortDetails);
-        return new NextResponse("Resort Updated", {
+        const {activityDetails, prevName} = await request.json();
+        await updateActivityByName(prevName, activityDetails);
+        return new NextResponse("Activity Updated", {
             status:200}
         );
     } catch(e){
