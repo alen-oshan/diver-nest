@@ -11,6 +11,7 @@ export async function findAllCartItemsByEmail(email) {
     await dbConnect();
 
     const user = await findUserByEmail(email)
+    if(!user) return null;
     const userId = user._id;
     const cart = await Cart.findOne({userId}).select('items').lean()
     if(!cart) return null;

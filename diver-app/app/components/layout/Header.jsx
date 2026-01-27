@@ -8,7 +8,7 @@ const Header = () => {
     <header className='bg-[#205781]'>
       <TopBar/>
       <Navbar/>
-    </header>
+    </header> 
   )
 }
 

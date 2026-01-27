@@ -3,9 +3,9 @@ import Link from 'next/link'
 
 const BusinessName = () => {
     return (
-        <>
-            <Link className="text-3xl font-bold text-white pl-3 " href='/'>{process.env.COMPANY_NAME}</Link> 
-        </>
+        <Link className="text-3xl font-bold text-white pl-3" href='/'>
+            Diving Nest
+        </Link>
     )
 }
 

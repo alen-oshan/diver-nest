@@ -33,3 +33,19 @@ export async function findResortByName(name) {
         throw new Error(e);
     }
 }
+
+export async function updateResortByName(name, resortDetails) {
+    await dbConnect();
+    try {
+        const updatedResort = await Resort.findOneAndUpdate(
+            { name }, // Filter by name
+            { $set: resortDetails }, // Update with the provided details
+        ).lean();
+
+        if (!updatedResort) {
+            throw new Error(`Resort with name "${name}" not found.`);
+        }
+    } catch (e) {
+        throw new Error(e);
+    }
+}
