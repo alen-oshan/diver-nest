@@ -10,3 +10,4 @@ export const POST = async(request) => {
         return new NextResponse({status:500})
     }
 }
+
