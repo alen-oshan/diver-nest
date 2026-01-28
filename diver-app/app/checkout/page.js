@@ -9,13 +9,15 @@ const page = async() => {
 
   if(session){
     const items = await findAllCartItemsByEmail(session.user.email)
+    if(items) {
     formattedData = items.map((item) => {
       return ({
         name: item.type === 'stay' ? item.resortName : item.activityName,
         price: item.price,
         qty: item.quantity,
       })
-    })
+    })}
+    
   }
   
   return (

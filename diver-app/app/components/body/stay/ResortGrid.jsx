@@ -30,6 +30,8 @@ const ResortGrid = (props) => {
       ? items.filter(item => item.roomType === props.selectedItemType)
       : items.filter(item => item.activityType === props.selectedItemType);
     }
+
+    console.log("filteredProducts", items)
     
     
 
