@@ -5,14 +5,6 @@ export async function POST(req) {
   const { orderId, amount, customer, items } = await req.json();
 
   const hash = generatePayHereHash(orderId, amount);
-  console.log("PAYHERE_DEBUG", {
-    merchant_id: process.env.PAYHERE_MERCHANT_ID,
-    order_id: orderId,
-    amount: amount.toFixed(2),
-    currency: "LKR",
-    secret: process.env.PAYHERE_SECRET,
-    hash
-  });
 
   return NextResponse.json({
     merchant_id: process.env.PAYHERE_MERCHANT_ID,

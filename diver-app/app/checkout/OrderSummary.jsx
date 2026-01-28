@@ -42,7 +42,7 @@ const CheckoutPage = ({expired, setExpired, items}) => {
   const total = subtotal + tax;
   const deposit = Math.round(total * 0.2);
 
-  const orderId = `ORD_1769628148_275`;
+  const orderId = `ORD${Date.now()}_${Math.floor(Math.random() * 1000)}`;
   const itemNames = items.map((item) => item.name)
 
   const requestData = {
@@ -78,7 +78,6 @@ const CheckoutPage = ({expired, setExpired, items}) => {
       }
 
       const data = await response.json();
-      console.log(data);
 
       // Build form and submit to PayHere
       const form = document.createElement("form");

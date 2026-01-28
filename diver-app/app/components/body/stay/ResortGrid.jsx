@@ -29,12 +29,8 @@ const ResortGrid = (props) => {
       return props.isStay
       ? items.filter(item => item.roomType === props.selectedItemType)
       : items.filter(item => item.activityType === props.selectedItemType);
-    }
-
-    console.log("filteredProducts", items)
+    }    
     
-    
-
     return (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-7xl mx-auto">
             {filteredProducts().map((resort, index) => (
