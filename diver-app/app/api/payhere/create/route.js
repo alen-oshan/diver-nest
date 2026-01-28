@@ -10,7 +10,7 @@ export async function POST(req) {
     order_id: orderId,
     amount: amount.toFixed(2),
     currency: "LKR",
-    secret: process.env.PAYHERE_MERCHANT_SECRET,
+    secret: process.env.PAYHERE_SECRET,
     hash
   });
 

@@ -78,6 +78,7 @@ const CheckoutPage = ({expired, setExpired, items}) => {
       }
 
       const data = await response.json();
+      console.log(data);
 
       // Build form and submit to PayHere
       const form = document.createElement("form");
