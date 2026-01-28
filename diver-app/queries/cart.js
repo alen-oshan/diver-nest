@@ -3,7 +3,6 @@ import { findUserByEmail } from '@/queries/user'
 import { createCartItem, findCartItem} from '@/queries/cartItem'
 import { findResortByName } from './resort'
 import { findActivityByName} from './activity'
-import { makeReserve } from './reserve'
 import dbConnect from '@/lib/db/mongoose'
 
 
@@ -68,7 +67,7 @@ export async function addItemToCart(email, cartItemDetails) {
     try {
         const cartItem = await createCartItem(cartItemDetails)
         let cart = await findCartByEmail(email);
-        await makeReserve(cartItemDetails);
+        
         if(!cart){
             cart = await createCart(email)
         }

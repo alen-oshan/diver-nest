@@ -19,6 +19,7 @@ export const POST = async(request) => {
         await addItemToCart(session.user.email, reqBody)
         return new NextResponse("Cart item received", {status: 200})
     } catch (e) {
+        console.log(e)
         return new NextResponse("Cart cannot create", {status: 500})
     }
 }

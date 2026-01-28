@@ -89,7 +89,7 @@ const ResortInfo = ({activity, googleMapsUrl}) => {
   
         setTimeout(() => {
             window.location.reload();
-        }, 300);
+        }, 500);
         setTimeout(() => setReserveMessage(""), 5000); 
     };
 

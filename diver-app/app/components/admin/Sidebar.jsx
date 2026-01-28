@@ -1,5 +1,5 @@
 import React from 'react'
-import { User, Map, Activity, Mail, CreditCard, ShoppingCart, LogOut  } from 'lucide-react';
+import { User, Map, Activity, Mail, CreditCard, ShoppingCart, LogOut, Calendar } from 'lucide-react';
 import LogoutButton from '../auth/LogoutButton';
 
 const Sidebar = ({currPage}) => {
@@ -9,12 +9,13 @@ const Sidebar = ({currPage}) => {
 }
 
     const navItems = [
-    { name: 'User', icon: <User size={18} /> },
-    { name: 'Resort', icon: <Map size={18} /> },
-    { name: 'Activity', icon: <Activity size={18} /> },
-    { name: 'Contact', icon: <Mail size={18} /> },
-    { name: 'Payments', icon: <CreditCard size={18} /> },
-    { name: 'Orders', icon: <ShoppingCart size={18} /> },
+        { name: 'User', icon: <User size={18} /> },
+        { name: 'Resort', icon: <Map size={18} /> },
+        { name: 'Activity', icon: <Activity size={18} /> },
+        { name: 'Contact', icon: <Mail size={18} /> },
+        { name: 'Payments', icon: <CreditCard size={18} /> },
+        { name: 'Orders', icon: <ShoppingCart size={18} /> },
+        { name: 'Bookings', icon: <Calendar size={18}/> },
     ];
 
     return (

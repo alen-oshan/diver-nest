@@ -35,6 +35,11 @@ const ReserveSchema = new mongoose.Schema(
             type: Date,
             required: true,
         },
+
+        userEmail: {
+            type: String, 
+            required:true,
+        }
     },
     { timestamps: true }
 
