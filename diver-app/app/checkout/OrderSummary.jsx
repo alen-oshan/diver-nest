@@ -42,7 +42,7 @@ const CheckoutPage = ({expired, setExpired, items}) => {
   const total = subtotal + tax;
   const deposit = Math.round(total * 0.2);
 
-  const orderId = `ORD${Date.now()}_${Math.floor(Math.random() * 1000)}`;
+  const orderId = `ORD_1769628148_275`;
   const itemNames = items.map((item) => item.name)
 
   const requestData = {
