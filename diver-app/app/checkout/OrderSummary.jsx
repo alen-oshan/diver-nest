@@ -43,13 +43,19 @@ const CheckoutPage = ({expired, setExpired, items}) => {
   const deposit = Math.round(total * 0.2);
 
   const orderId = `ORD${Date.now()}_${Math.floor(Math.random() * 1000)}`;
-  const itemNames = items.map((item) => item.name)
+  
+  // Map items to only include required fields for the order
+  const orderItems = items.map((item) => ({
+    name: item.name,
+    price: item.price,
+    qty: item.qty,
+  }));
 
   const requestData = {
     "orderId": orderId,
     "amount": total,
     "currency": "LKR",
-    "items": itemNames,
+    "items": orderItems,
     "customer": {
       firstName,
       lastName,

@@ -18,3 +18,13 @@ export function generatePayHereHash(orderId, amount) {
 
   return hash;
 }
+
+export function verifyPaymentHash(merchantId, orderId, payhereAmount, payhereCurrency, statusCode, receivedHash) {
+  const merchantSecret = process.env.PAYHERE_SECRET;
+  const secretHash = md5Upper(merchantSecret);
+
+  const rawString = merchantId + orderId + payhereAmount + payhereCurrency + statusCode + secretHash;
+  const localHash = md5Upper(rawString);
+
+  return localHash === receivedHash;
+}
