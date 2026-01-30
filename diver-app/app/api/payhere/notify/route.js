@@ -17,10 +17,10 @@ const isValid = (payload) => {
 
 const updateOrderStatus = (payload) => {
   if(payload.statusCode === '2') {
-    changeOrderStatus(payload, 'PAID')
+    changeOrderStatus(payload.orderId, 'PAID')
     sendPaymentConfirmation(payload, true)
   } else {
-    changeOrderStatus(payload, 'CANCELLED')
+    changeOrderStatus(payload.orderId, 'CANCELLED')
     sendPaymentConfirmation(payload, false)
   }
 }
