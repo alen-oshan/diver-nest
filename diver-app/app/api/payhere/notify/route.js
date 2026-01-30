@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { createPayment } from "@/queries/payment";
 import { verifyPaymentHash } from "@/lib/payhere";
 import { changeOrderStatus } from '@/queries/order';
+import { sendPaymentConfirmation } from "./lib";
 
 const isValid = (payload) => {
    return verifyPaymentHash(
@@ -17,9 +18,10 @@ const isValid = (payload) => {
 const updateOrderStatus = (payload) => {
   if(payload.statusCode === '2') {
     changeOrderStatus(payload, 'PAID')
-    
+    sendPaymentConfirmation(payload, true)
   } else {
     changeOrderStatus(payload, 'CANCELLED')
+    sendPaymentConfirmation(payload, false)
   }
 }
 
