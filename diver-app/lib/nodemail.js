@@ -57,6 +57,8 @@ export async function sendPaymentConfirmation({ to, customerName, orderId, amoun
     };
 
     const transport = createTransport();
+    console.log(message)
+
     await transport.sendMail(message);
 }
 
@@ -111,5 +113,6 @@ export async function sendOrderConfirmation({ to, customerName, orderId, items, 
     };
 
     const transport = createTransport();
+    console.log(message)
     await transport.sendMail(message);
 }
