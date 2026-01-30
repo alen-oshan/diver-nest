@@ -15,6 +15,7 @@ export const POST = async(request) => {
     await dbConnect();
     const session = await auth();
     const reqBody = await request.json();
+    console.log(session)
     try {
         await addItemToCart(session.user.email, reqBody)
         return new NextResponse("Cart item received", {status: 200})

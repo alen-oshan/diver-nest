@@ -50,7 +50,7 @@ export const {
 
                         try {
                             await dbConnect();
-                            const user = await findUserByEmail({email:credentials?.email});
+                            const user = await findUserByEmail(credentials?.email);
                             console.log("User found:", user);
 
                             if (!user) {
@@ -62,9 +62,6 @@ export const {
                                 console.log("User has no password");
                                 return null;
                             }
-
-                            console.log("Credentials password:", credentials.password);
-                            console.log("User passwordHash:", user.password);
 
                             const isMatch = await bcrypt.compare(credentials.password, user.password);
                             console.log("Password match:", isMatch);
@@ -92,14 +89,9 @@ export const {
                 async signIn({ user, account }) {
                     if (account?.provider === "google" || account?.provider === "github") {
                     const existingUser = await findUserByEmail(user.email);
-
+                        console.log('existingUser', existingUser)
                     if (!existingUser) {
-                        await createUser({
-                        email: user.email,
-                        name: user.name,
-                        image: user.image,
-                        role: "user",
-                        });
+                        throw new Error('No user found')
                     }
                     }
                     return true;

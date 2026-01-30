@@ -10,13 +10,35 @@ export async function createUser(user){
     }
 }
 
+export async function findUserForPassword(email) {
+    await dbConnect();
+    
+    try {
+        const user = await User.findOne({ email })
+        .select('password role')
+        .lean(); 
+        
+        if(!user)
+            return null;
+
+        const safeUser = {
+        ...user,
+        _id: user._id.toString(),
+        };
+
+        return safeUser;
+    } catch (e){
+        throw new Error(e);
+    } 
+}
+
 
 export async function findUserByEmail(email) {
     await dbConnect();
     
     try {
-        const user = await User.findOne({ email })
-        .select('name email image notification')
+        const user = await User.findOne({email})
+        .select('name email image notification password')
         .lean(); 
         
         if(!user)

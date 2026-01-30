@@ -1,6 +1,11 @@
 // next.config.js
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  experimental: {
+    serverActions: {
+      allowedOrigins: ['localhost:3000', 'b025zz35-3000.asse.devtunnels.ms'],
+    },
+  },
   images: {
     remotePatterns: [
       {
