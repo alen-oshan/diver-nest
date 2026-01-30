@@ -63,6 +63,9 @@ export const {
                                 return null;
                             }
 
+                            console.log("Credentials password:", credentials.password);
+                            console.log("User passwordHash:", user.password);
+
                             const isMatch = await bcrypt.compare(credentials.password, user.password);
                             console.log("Password match:", isMatch);
                             
@@ -91,7 +94,11 @@ export const {
                     const existingUser = await findUserByEmail(user.email);
                         console.log('existingUser', existingUser)
                     if (!existingUser) {
-                        throw new Error('No user found')
+                        await createUser({
+                            name: user.name,
+                            email: user.email,
+                            image: user.image,
+                        });
                     }
                     }
                     return true;
