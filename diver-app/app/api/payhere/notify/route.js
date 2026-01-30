@@ -4,7 +4,7 @@ import { verifyPaymentHash } from "@/lib/payhere";
 import { changeOrderStatus } from '@/queries/order';
 
 const isValid = (payload) => {
-   verifyPaymentHash(
+   return verifyPaymentHash(
     payload.merchant_id,
     payload.order_id,
     payload.payhere_amount,
