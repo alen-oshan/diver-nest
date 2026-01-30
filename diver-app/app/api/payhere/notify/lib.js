@@ -1,13 +1,13 @@
 import { findOrderById } from '@/queries/order'
+import { sendPaymentConfirmation as sendPaymentEmail, sendOrderConfirmation } from '@/lib/nodemail'
 
-export function sendPaymentConfirmation(payload, isPaid) {
-    const order = findOrderById(payload.orderId);
+export async function sendPaymentConfirmation(payload, isPaid) {
+    const order = await findOrderById(payload.orderId);
     const {toEmail, name, amount, orderId} = order;
-    const currency = payload.currency;
-    const items = payload.items;
+    const currency = payload.payhereCurrency;
 
     if(isPaid) {
-        sendPaymentConfirmation({
+        await sendPaymentEmail({
             to: toEmail,
             customerName: name,
             orderId: orderId,
@@ -15,17 +15,17 @@ export function sendPaymentConfirmation(payload, isPaid) {
             currency: currency,
             isSuccess: true,
         });
-        sendOrderConfirmation({
+        await sendOrderConfirmation({
             to: toEmail,
             customerName: name,
             orderId: orderId,
-            items: items,
+            items: order.items || [],
             totalAmount: amount,
             currency: currency,
         });
     }
     else {
-        sendPaymentConfirmation({
+        await sendPaymentEmail({
             to: toEmail,
             customerName: name,
             orderId: orderId,
