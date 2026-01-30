@@ -16,11 +16,11 @@ const isValid = (payload) => {
 
 const updateOrderStatus = (payload) => {
   console.log(payload.statusCode)
-  if(payload.statusCode === 2) {
-    console('ok')
+  if(payload.statusCode === '2') {
+    console.log('ok')
     changeOrderStatus(payload.orderId, 'PAID')
   } else {
-    console('not ok')
+    console.log('not ok')
     changeOrderStatus(payload.orderId, 'CANCELLED')
   }
 }
