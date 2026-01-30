@@ -25,7 +25,6 @@ export function verifyPaymentHash(merchantId, orderId, payhereAmount, payhereCur
 
   const rawString = merchantId + orderId + payhereAmount + payhereCurrency + statusCode + secretHash;
   const localHash = md5Upper(rawString);
-  console.log("details::", merchantId, orderId, payhereAmount, payhereCurrency, statusCode, receivedHash)
-  console.log("hashes", localHash, receivedHash)
+
   return localHash === receivedHash;
 }
