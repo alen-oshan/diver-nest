@@ -15,27 +15,27 @@ const isValid = (payload) => {
 }
 
 const updateOrderStatus = (payload) => {
+  console.log(payload.statusCode)
   if(payload.statusCode === 2) {
-    changeOrderStatus(payload.orderId, 'CONFIRMED', payload.payemntId)
+    console('ok')
+    changeOrderStatus(payload.orderId, 'PAID')
   } else {
+    console('not ok')
     changeOrderStatus(payload.orderId, 'CANCELLED')
   }
 }
 
 export async function POST(req) {
   const data = await req.formData();
-  console.log(data);
 
   const payload = {};
   for (const [key, value] of data.entries()) {
     payload[key] = value;
   }
   if (!isValid(payload)) {
-    console.log("Hash not matched")
     return null;
   }
 
-  console.log("PayHere Notify Payload:", payload);
   const formattedData = {
     merchantId: payload.merchant_id,
     orderId: payload.order_id,
