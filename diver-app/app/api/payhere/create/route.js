@@ -10,6 +10,7 @@ export async function POST(req) {
     userEmail: customer.email,
     items,
     totalAmount: amount,
+    name: customer.firstName,
   };
 
   await createOrder(orderDetails);

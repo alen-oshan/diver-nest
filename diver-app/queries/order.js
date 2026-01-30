@@ -3,7 +3,6 @@ import dbConnect from '@/lib/db/mongoose'
 
 export async function createOrder(orderDetails) {
     await dbConnect();
-    console.log("orderDetails:", orderDetails);
     try {
         await Order.create(orderDetails);
     } catch(e) {
@@ -19,6 +18,16 @@ export async function changeOrderStatus(orderId, status) {
             { status },
             { new: true }
         );
+    } catch (e) {
+        throw new Error(e);
+    }
+}
+
+export async function findOrderById(orderId, status) {
+    await dbConnect();
+    try {
+        const order = await Order.findOne({orderId})
+        return order;
     } catch (e) {
         throw new Error(e);
     }

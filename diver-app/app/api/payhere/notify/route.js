@@ -12,16 +12,14 @@ const isValid = (payload) => {
     payload.status_code,
     payload.md5sig
   );
-}
+}  
 
 const updateOrderStatus = (payload) => {
-  console.log(payload.statusCode)
   if(payload.statusCode === '2') {
-    console.log('ok')
-    changeOrderStatus(payload.orderId, 'PAID')
+    changeOrderStatus(payload, 'PAID')
+    
   } else {
-    console.log('not ok')
-    changeOrderStatus(payload.orderId, 'CANCELLED')
+    changeOrderStatus(payload, 'CANCELLED')
   }
 }
 
