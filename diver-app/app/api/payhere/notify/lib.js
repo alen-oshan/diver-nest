@@ -3,34 +3,35 @@ import { sendPaymentConfirmation as sendPaymentEmail, sendOrderConfirmation } fr
 
 export async function sendPaymentConfirmation(payload, isPaid) {
     const order = await findOrderById(payload.orderId);
-    const {toEmail, name, amount, orderId} = order;
+    console.log(order)
+    const {userEmail, name, totalAmount, orderId} = order;
     const currency = payload.payhereCurrency;
     try {
 
         if(isPaid) {
             await sendPaymentEmail({
-                to: toEmail,
+                to: userEmail,
                 customerName: name,
                 orderId: orderId,
-                amount: amount,
+                amount: totalAmount,
                 currency: currency,
                 isSuccess: true,
             });
             await sendOrderConfirmation({
-                to: toEmail,
+                to: userEmail,
                 customerName: name,
                 orderId: orderId,
                 items: order.items || [],
-                totalAmount: amount,
+                totalAmount: totalAmount,
                 currency: currency,
             });
         }
         else {
             await sendPaymentEmail({
-                to: toEmail,
+                to: userEmail,
                 customerName: name,
                 orderId: orderId,
-                amount: amount,
+                amount: totalAmount,
                 currency: currency,
                 isSuccess: false,
             });
