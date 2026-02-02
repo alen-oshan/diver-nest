@@ -58,8 +58,11 @@ export async function sendPaymentConfirmation({ to, customerName, orderId, amoun
 
     const transport = createTransport();
     console.log(message)
-
-    await transport.sendMail(message);
+    try {
+        await transport.sendMail(message);
+    } catch (e) {
+        console.log(e)
+    }
 }
 
 export async function sendOrderConfirmation({ to, customerName, orderId, items, totalAmount, currency }) {
@@ -114,5 +117,9 @@ export async function sendOrderConfirmation({ to, customerName, orderId, items, 
 
     const transport = createTransport();
     console.log(message)
-    await transport.sendMail(message);
+    try{
+        await transport.sendMail(message);
+    } catch (e) {
+        console.log(e)
+    }
 }

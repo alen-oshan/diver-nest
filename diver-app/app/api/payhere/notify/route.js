@@ -15,13 +15,13 @@ const isValid = (payload) => {
   );
 }  
 
-const updateOrderStatus = (payload) => {
+const updateOrderStatus = async (payload) => {
   if(payload.statusCode === '2') {
-    changeOrderStatus(payload.orderId, 'PAID')
-    sendPaymentConfirmation(payload, true)
+    await changeOrderStatus(payload.orderId, 'PAID')
+    await sendPaymentConfirmation(payload, true)
   } else {
-    changeOrderStatus(payload.orderId, 'CANCELLED')
-    sendPaymentConfirmation(payload, false)
+    await changeOrderStatus(payload.orderId, 'CANCELLED')
+    await sendPaymentConfirmation(payload, false)
   }
 }
 
@@ -55,7 +55,7 @@ export async function POST(req) {
     custom2: payload.custom_2,
   };
   await createPayment(formattedData);
-  updateOrderStatus(formattedData);
+  await updateOrderStatus(formattedData);
 
   return new NextResponse("OK", { status: 200 });
 }
