@@ -1,6 +1,4 @@
 import mongoose from "mongoose";
-import { Activity } from "react";
-import validator from 'validator'
 
 const ReserveSchema = new mongoose.Schema(
     {

@@ -22,8 +22,8 @@ const EditCard = ({ formData, onChange, onSave, onCancel, title }) => (
         <div className="flex flex-col gap-1">
           <label className="text-[10px] uppercase font-bold text-gray-500">Type</label>
           <select name="type" value={formData.type ?? 'single'} onChange={onChange} className="p-2 border rounded bg-white">
-            <option value="single">Single</option>
-            <option value="group">Group</option>
+            <option value="Single">Single</option>
+            <option value="Group">Group</option>
           </select>
         </div>
         <div className="flex flex-col gap-1">

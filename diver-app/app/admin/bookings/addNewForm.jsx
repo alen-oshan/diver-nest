@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 
 const AddNewForm = ({setIsAdding, setShowPopup}) => {
     const [formData, setFormData] = useState(
@@ -12,6 +12,23 @@ const AddNewForm = ({setIsAdding, setShowPopup}) => {
       "Mountain Peak Lodge", 
       "Coral Reef Suites"
     ];
+    const [resortNames, setResortNames] = useState([]);
+    const [activityNames, setActivityNames] = useState([]);
+    
+    useEffect(()=> {
+        const getResortNames = async() => {
+            const response = await fetch('/api/resort')
+            const {resortsDTO} = await response.json()
+            setResortNames(resortsDTO.map((resort) => resort.name))
+        }
+        const getActivitiesNames = async() => {
+            const response = await fetch('/api/activity')
+            const {activitiesDTO} = await response.json()
+            setActivityNames(activitiesDTO.map((activity) => activity.name))
+        }
+        getResortNames();   
+        getActivitiesNames();
+    }, [])
 
     const handleAddBooking = (e) => {
         e.preventDefault();
@@ -49,6 +66,7 @@ const AddNewForm = ({setIsAdding, setShowPopup}) => {
             },
             body: JSON.stringify(form),
         });
+        console.log(form);
     }
 
 
@@ -67,8 +85,8 @@ const AddNewForm = ({setIsAdding, setShowPopup}) => {
                     onChange={e => setFormData({...formData, name: e.target.value})}
                 >
                     <option value="" disabled>Select a resort</option>
-                    {resorts.map((resort) => (
-                    <option key={resort} value={resort}>
+                    {resortNames.map((resort, index) => (
+                    <option key={index} value={resort}>
                         {resort}
                     </option>
                     ))}
@@ -151,16 +169,22 @@ const AddNewForm = ({setIsAdding, setShowPopup}) => {
                 </div>
                 </form>
             :   <form onSubmit={handleAddBooking} className="space-y-4 animate-in slide-in-from-bottom-2 duration-300">
-                    {/* Guest Name */}
+                    {/* Activity Name */}
                     <div className="space-y-1">
-                        <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Guest Name</label>
-                        <input 
-                        required 
-                        placeholder="Guest Full Name"
-                        className="w-full p-2.5 rounded-xl border border-slate-200 text-sm outline-none focus:ring-2 focus:ring-[#205781]/20 transition-all" 
-                        value={formData.name} 
-                        onChange={e => setFormData({...formData, name: e.target.value})} 
-                        />
+                        <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Activity Name</label>
+                        <select 
+                            required 
+                            className="w-full p-2.5 rounded-xl border border-slate-200 text-sm outline-none bg-white focus:ring-2 focus:ring-[#205781]/20 transition-all cursor-pointer" 
+                            value={formData.name} 
+                            onChange={e => setFormData({...formData, name: e.target.value})}
+                        >
+                            <option value="" disabled>Select a activity</option>
+                            {activityNames.map((activity, index) => (
+                            <option key={index} value={activity}>
+                                {activity}
+                            </option>
+                            ))}
+                        </select>
                     </div>
 
                     {/* Row 1: Activity Date & Time Slot */}

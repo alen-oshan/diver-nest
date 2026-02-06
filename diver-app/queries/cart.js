@@ -77,13 +77,10 @@ export async function createCart(email) {
 
 export async function addItemToCart(email, cartItemDetails) {
     await dbConnect();
-    console.log(email)
     try {
         const cartItem = await createCartItem(cartItemDetails)
         let cart = await findCartByEmail(email);
-        console.log('cart::', cart)
         if(!cart){
-            console.log('no cart found')
             cart = await createCart(email)
         }
         if(!cart){

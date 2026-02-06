@@ -21,6 +21,7 @@ const ResortInfo = ({resort, googleMapsUrl}) => {
             const response = await fetch(
             `/api/check-availability?name=${resort.name}&type=stay`
             );
+            console.log(`/api/check-availability?name=${resort.name}&type=stay`)
             
             if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);

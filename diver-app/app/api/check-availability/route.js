@@ -9,8 +9,8 @@ export const GET = async(request) => {
     const name = searchParams.get('name'); 
     const type = searchParams.get('type');
 
-    const item = type === 'stay' ? await findResortByName(name) : await findActivityByName(name)
     const reserves = await getReservesByName(name);
+    console.log("reserves:::", reserves)
 
     if (reserves.length === 0) 
         return NextResponse.json(null, {status:200})

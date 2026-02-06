@@ -1,5 +1,6 @@
 import Order from '@/lib/models/Order.model'
 import dbConnect from '@/lib/db/mongoose'
+import { putCartToReserve } from './reserve';
 
 export async function createOrder(orderDetails) {
     await dbConnect();
@@ -11,6 +12,10 @@ export async function createOrder(orderDetails) {
 }
 
 export async function changeOrderStatus(orderId, status) {
+    if(status === "PAID"){
+        const order = await findOne({ orderId })
+        putCartToReserve(order.userEmail)
+    }
     await dbConnect();
     try {
         await Order.findOneAndUpdate(

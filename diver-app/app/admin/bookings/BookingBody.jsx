@@ -109,7 +109,6 @@ const BookingCalendar = ({reserves}) => {
                         </div>
                         <p className="text-xs text-slate-500 flex items-center gap-1"><Mail size={12}/> {booking.email}</p>
                         <div className="mt-3 pt-3 border-t border-slate-50 flex justify-between items-center">
-                          <span className="text-sm font-bold">${booking.totalAmount}</span>
                           <span className="text-[10px] font-medium text-slate-400 italic">{booking.type}</span>
                         </div>
                       </div>

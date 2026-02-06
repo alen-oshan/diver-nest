@@ -107,7 +107,6 @@ const DateSelector = (props) => {
                 bookedSeats += (res.quantity || 1);
             }
         });
-        
         return bookedSeats >= props.max;
     };
 
