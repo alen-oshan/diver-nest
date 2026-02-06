@@ -3,6 +3,8 @@ import { createPayment } from "@/queries/payment";
 import { verifyPaymentHash } from "@/lib/payhere";
 import { changeOrderStatus } from '@/queries/order';
 import { sendPaymentConfirmation } from "./lib";
+import { DeleteAllCartItems } from '@/queries/cart';
+import { auth } from '@/app/auth'
 
 const isValid = (payload) => {
    return verifyPaymentHash(
@@ -16,7 +18,9 @@ const isValid = (payload) => {
 }  
 
 const updateOrderStatus = async (payload) => {
+  const session = await auth()
   if(payload.statusCode === '2') {
+    await DeleteAllCartItems(session.user.email)
     await changeOrderStatus(payload.orderId, 'PAID')
     await sendPaymentConfirmation(payload, true)
   } else {

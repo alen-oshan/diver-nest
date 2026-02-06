@@ -36,6 +36,17 @@ export async function findCartByEmail(email) {
     return cart;
 }
 
+export async function DeleteAllCartItems(email) {
+    await dbConnect();
+    try {
+        const user = await findUserByEmail(email);
+        const userId = user._id;
+        await Cart.deleteOne({ userId }).lean();
+    } catch(e) {
+        console.log(e)
+    }
+}
+
 export async function removeCartItemByEmail(email, cartItemId) {
     await dbConnect();
     try {
