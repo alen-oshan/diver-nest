@@ -92,7 +92,6 @@ export const {
                 async signIn({ user, account }) {
                     if (account?.provider === "google" || account?.provider === "github") {
                     const existingUser = await findUserByEmail(user.email);
-                        console.log('existingUser', existingUser)
                     if (!existingUser) {
                         await createUser({
                             name: user.name,
