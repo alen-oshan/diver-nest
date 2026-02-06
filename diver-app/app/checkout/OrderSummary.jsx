@@ -53,7 +53,7 @@ const CheckoutPage = ({expired, setExpired, items}) => {
 
   const requestData = {
     "orderId": orderId,
-    "amount": total,
+    "amount": paymentType === 'full' ? total : total * 0.2,
     "currency": "LKR",
     "items": orderItems,
     "customer": {
@@ -149,9 +149,6 @@ const CheckoutPage = ({expired, setExpired, items}) => {
                 <div className="font-bold text-lg">20% Secure Deposit</div>
                 <div className="text-2xl font-black mt-1">LKR {deposit.toLocaleString()}</div>
                 <p className="text-sm opacity-70 mt-2">Pay the rest later</p>
-                {paymentType === "deposit" && (
-                  <div className="absolute top-4 right-4 text-[#205781]">✓</div>
-                )}
               </button>
 
               <button
@@ -164,9 +161,6 @@ const CheckoutPage = ({expired, setExpired, items}) => {
                 <div className="font-bold text-lg">Full Payment</div>
                 <div className="text-2xl font-black mt-1">LKR {total.toLocaleString()}</div>
                 <p className="text-sm opacity-70 mt-2">No further charges</p>
-                {paymentType === "full" && (
-                  <div className="absolute top-4 right-4 text-[#205781]">✓</div>
-                )}
               </button>
             </div>
           </section>
@@ -241,7 +235,7 @@ const CheckoutPage = ({expired, setExpired, items}) => {
                   <input
                     className="w-full bg-slate-50 border-none rounded-xl px-4 py-3 focus:ring-2 focus:ring-[#205781] transition-all"
                     placeholder="Colombo"
-                    value={address}
+                    value={city}
                     onChange={(e) => setCity(e.target.value)}
                     type="text"
                   />
@@ -284,11 +278,11 @@ const CheckoutPage = ({expired, setExpired, items}) => {
               <div className="mt-6 pt-6 border-t border-slate-100 space-y-3">
                 <div className="flex justify-between text-slate-500">
                   <span>Subtotal</span>
-                  <span>LKR {total.toLocaleString()}</span>
+                  <span>LKR {subtotal.toLocaleString()}</span>
                 </div>
                 <div className="flex justify-between text-slate-500">
                   <span>Tax & Fees</span>
-                  <span>Included</span>
+                  <span>{tax.toLocaleString()}</span>
                 </div>
                 <div className="flex justify-between text-xl font-black pt-2 text-[#205781]">
                   <span>Grand Total</span>
