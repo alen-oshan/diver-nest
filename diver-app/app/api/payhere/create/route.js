@@ -3,8 +3,10 @@ import { generatePayHereHash } from "@/lib/payhere";
 import { createOrder } from '@/queries/order'
 
 export async function POST(req) {
-  const { orderId, amount, customer, items } = await req.json(); 
-
+  const data = await req.json(); 
+  const { orderId, amount, currency, customer, items } = data
+  const formattedItems = items.map((item)=> item.name)
+  console.log('data::', data)
   const orderDetails = {
     orderId,
     userEmail: customer.email,
@@ -14,14 +16,14 @@ export async function POST(req) {
   };
 
   await createOrder(orderDetails);
-  const hash = generatePayHereHash(orderId, amount);
+  const hash = generatePayHereHash(orderId, amount, currency);
 
   return NextResponse.json({
     merchant_id: process.env.PAYHERE_MERCHANT_ID,
     order_id: orderId,
-    amount: amount.toFixed(2),
-    currency: "LKR",
-    items, 
+    amount: amount,
+    currency: currency,
+    items: formattedItems, 
 
     first_name: customer.firstName,
     last_name: customer.lastName,

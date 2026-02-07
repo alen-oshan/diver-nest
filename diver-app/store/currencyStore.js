@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
 
 const defaultCurrency = {
   code: "USD",
@@ -7,7 +8,14 @@ const defaultCurrency = {
   symbol: "$"
 };
 
-export const useCurrencyStore = create((set) => ({
-  currency: defaultCurrency,
-  setCurrency: (newCurrency) => set({ currency: newCurrency }),
-}));
+export const useCurrencyStore = create(
+  persist(
+    (set) => ({
+      currency: defaultCurrency,
+      setCurrency: (newCurrency) => set({ currency: newCurrency }),
+    }),
+    {
+      name: 'currency-storage',
+    }
+  )
+);

@@ -2,6 +2,7 @@ import React from 'react'
 import { Trash2, Minus, Plus } from 'lucide-react'
 import CartDateSelector from './CartDateSelector';
 import { updateQuantity, removeItem, updateDate } from './CartUtil';
+import ResortPrice from '@/app/components/body/stay/resort/ResortPrice'
 
 const SectionCard = ({ arrItems, setCartItems, total, section }) => {
   const updateItems = async (item, change, type) => {
@@ -84,8 +85,8 @@ const SectionCard = ({ arrItems, setCartItems, total, section }) => {
                   </button>
                 </div>
                 <div className="text-right">
-                  <p className="text-xs text-gray-600">${item.price} each</p>
-                  <p className="text-sm font-bold text-[#205781]">${item.price * item.quantity}</p>
+                  <p className="text-xs text-gray-600"><ResortPrice price={item.price} /> each</p>
+                  <p className="text-sm font-bold text-[#205781]"><ResortPrice price={item.price * item.quantity} /></p>
                 </div>
               </div>
             </div>
@@ -95,7 +96,7 @@ const SectionCard = ({ arrItems, setCartItems, total, section }) => {
       <div className="mt-2 pt-2 border-t border-gray-300">
         <div className="flex justify-between items-center">
           <span className="font-bold text-sm text-gray-700">{section} Total:</span>
-          <span className="font-bold text-lg text-[#205781]">${total}</span>
+          <span className="font-bold text-lg text-[#205781]"><ResortPrice price={total} /></span>
         </div>
       </div>
     </div>

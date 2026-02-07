@@ -12,7 +12,7 @@ const ReserveSchema = new mongoose.Schema(
 
         checkOut: {
             type: Date,
-        },
+        }, 
 
         activityDate: {
             type: Date

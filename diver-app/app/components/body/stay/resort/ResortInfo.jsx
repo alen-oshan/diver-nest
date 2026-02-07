@@ -14,34 +14,28 @@ const ResortInfo = ({resort, googleMapsUrl}) => {
     const [reservations, setReservations] = useState(null);
     const [maxRooms, setMaxRooms] = useState(0)
 
-
     useEffect(() => {
-        const fetchAvailability = async () => {
-        try {
-            const response = await fetch(
-            `/api/check-availability?name=${resort.name}&type=stay`
-            );
-            console.log(`/api/check-availability?name=${resort.name}&type=stay`)
-            
-            if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+        // Create SSE connection for real-time availability
+        const eventSource = new EventSource(`/api/sse/availability?name=${encodeURIComponent(resort.name)}&type=stay`);
+        
+        eventSource.onmessage = (event) => {
+            try {
+                const data = JSON.parse(event.data);
+                setReservations(data);
+            } catch (error) {
+                console.error('Error parsing SSE data:', error);
             }
-            
-            const data = await response.json();
-            setReservations(data);
-        } catch (err) {
-            console.error('Error fetching availability:', err);
-        } 
         };
 
-        fetchAvailability();
-
-        const intervalId = setInterval(fetchAvailability, 60 * 1000);
+        eventSource.onerror = (error) => {
+            console.error('SSE error:', error);
+            eventSource.close();
+        };
 
         return () => {
-        clearInterval(intervalId);
+            eventSource.close();
         };
-    }, []); 
+    }, [resort.name]); 
 
     const getDateDiff = () => {
         const checkIn = new Date(checkInDate);
@@ -86,7 +80,7 @@ const ResortInfo = ({resort, googleMapsUrl}) => {
         })
     }
 
-    const handleReserve = () => {
+    const handleReserve = async () => {
         
         if (!checkInDate || !checkOutDate) {
             setReserveMessage("Please fill all the fields");
@@ -100,11 +94,9 @@ const ResortInfo = ({resort, googleMapsUrl}) => {
                 resortName:resort.name,
                 quantity:rooms
             }
-            sendProductToCart(itemDetail)
+            await sendProductToCart(itemDetail)
+            // SSE will auto-update availability
         }
-        setTimeout(() => {
-            window.location.reload();
-        }, 300);
         setTimeout(() => setReserveMessage(""), 5000); 
     };
 
@@ -131,6 +123,7 @@ const ResortInfo = ({resort, googleMapsUrl}) => {
                         rooms={rooms}
                         maxRooms={maxRooms}
                         roomType={resort.roomType}
+                        disabled={!checkInDate || !checkOutDate}
                     />
                     
                     <div className="grid grid-cols-2 gap-3">

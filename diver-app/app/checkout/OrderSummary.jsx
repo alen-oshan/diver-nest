@@ -1,6 +1,8 @@
 'use client';
 
 import React, { useEffect, useState } from "react";
+import ResortPrice from '@/app/components/body/stay/resort/ResortPrice'
+import { useCurrencyStore } from '@/store/currencyStore';
 
 const CheckoutPage = ({expired, setExpired, items}) => {
   /* ---------------- TIMER ---------------- */
@@ -14,6 +16,8 @@ const CheckoutPage = ({expired, setExpired, items}) => {
   const [phone, setPhone] = useState("")
   const [address, setAddress] = useState("")
   const [city, setCity] = useState("")
+
+  const currentCurrency = useCurrencyStore((state) => state.currency);
 
   useEffect(() => {
     if (timeLeft <= 0) {
@@ -38,8 +42,8 @@ const CheckoutPage = ({expired, setExpired, items}) => {
     (sum, i) => sum + i.price * i.qty,
     0
   );
-  const tax = Math.round(subtotal * 0.1);
-  const total = subtotal + tax;
+  const tax = currentCurrency.factor * Math.round(subtotal * 0.1);
+  const total = (currentCurrency.factor * subtotal + tax).toFixed(2);
   const deposit = Math.round(total * 0.2);
 
   const orderId = `ORD${Date.now()}_${Math.floor(Math.random() * 1000)}`;
@@ -54,7 +58,7 @@ const CheckoutPage = ({expired, setExpired, items}) => {
   const requestData = {
     "orderId": orderId,
     "amount": paymentType === 'full' ? total : total * 0.2,
-    "currency": "LKR",
+    "currency": currentCurrency.code,
     "items": orderItems,
     "customer": {
       firstName,
@@ -147,7 +151,7 @@ const CheckoutPage = ({expired, setExpired, items}) => {
                     : 'border-slate-100 hover:border-slate-300'}`}
               >
                 <div className="font-bold text-lg">20% Secure Deposit</div>
-                <div className="text-2xl font-black mt-1">LKR {deposit.toLocaleString()}</div>
+                <div className="text-2xl font-black mt-1">{currentCurrency.symbol} {deposit}</div>
                 <p className="text-sm opacity-70 mt-2">Pay the rest later</p>
               </button>
 
@@ -159,7 +163,7 @@ const CheckoutPage = ({expired, setExpired, items}) => {
                     : 'border-slate-100 hover:border-slate-300'}`}
               >
                 <div className="font-bold text-lg">Full Payment</div>
-                <div className="text-2xl font-black mt-1">LKR {total.toLocaleString()}</div>
+                <div className="text-2xl font-black mt-1">{currentCurrency.symbol} {total}</div>
                 <p className="text-sm opacity-70 mt-2">No further charges</p>
               </button>
             </div>
@@ -270,7 +274,7 @@ const CheckoutPage = ({expired, setExpired, items}) => {
                       <div className="font-bold text-slate-800">{item.name}</div>
                       <div className="text-xs text-slate-500">Qty: {item.qty}</div>
                     </div>
-                    <div className="font-semibold">LKR {(item.price * item.qty).toLocaleString()}</div>
+                    <div className="font-semibold"><ResortPrice price={item.price * item.qty} /></div>
                   </div>
                 ))}
               </div>
@@ -278,15 +282,15 @@ const CheckoutPage = ({expired, setExpired, items}) => {
               <div className="mt-6 pt-6 border-t border-slate-100 space-y-3">
                 <div className="flex justify-between text-slate-500">
                   <span>Subtotal</span>
-                  <span>LKR {subtotal.toLocaleString()}</span>
+                  <span><ResortPrice price={subtotal} /></span>
                 </div>
                 <div className="flex justify-between text-slate-500">
                   <span>Tax & Fees</span>
-                  <span>{tax.toLocaleString()}</span>
+                  <span>{currentCurrency.symbol} {tax.toLocaleString()}</span>
                 </div>
                 <div className="flex justify-between text-xl font-black pt-2 text-[#205781]">
                   <span>Grand Total</span>
-                  <span>LKR {total.toLocaleString()}</span>
+                  <span>{currentCurrency.symbol} {total}</span>
                 </div>
               </div>
               

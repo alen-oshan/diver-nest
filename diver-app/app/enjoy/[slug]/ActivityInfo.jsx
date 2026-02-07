@@ -14,33 +14,27 @@ const ResortInfo = ({activity, googleMapsUrl}) => {
     const [maxSeats, setMaxSeats] = useState(0)
 
     useEffect(() => {
-        const fetchAvailability = async () => {
-        try {
-            const response = await fetch(
-            `/api/check-availability?name=${activity.name}&type=activity`
-            );
-            
-            if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+        // Create SSE connection for real-time availability
+        const eventSource = new EventSource(`/api/sse/availability?name=${encodeURIComponent(activity.name)}&type=activity`);
+        
+        eventSource.onmessage = (event) => {
+            try {
+                const data = JSON.parse(event.data);
+                setReservations(data);
+            } catch (error) {
+                console.error('Error parsing SSE data:', error);
             }
-            
-            const data = await response.json();
-            
-
-            setReservations(data);
-        } catch (err) {
-            console.error('Error fetching availability:', err);
-        } 
         };
 
-        fetchAvailability();
-
-        const intervalId = setInterval(fetchAvailability, 60 * 1000);
+        eventSource.onerror = (error) => {
+            console.error('SSE error:', error);
+            eventSource.close();
+        };
 
         return () => {
-        clearInterval(intervalId);
+            eventSource.close();
         };
-    }, []); 
+    }, [activity.name]); 
 
     const totalPrice = seats * activity.price;
 
@@ -84,12 +78,10 @@ const ResortInfo = ({activity, googleMapsUrl}) => {
                 activityName:activity.name,
                 quantity:seats
             }
-            sendProductToCart(itemDetail)
+            await sendProductToCart(itemDetail)
+            // SSE will automatically receive the updated availability
         }
-  
-        setTimeout(() => {
-            window.location.reload();
-        }, 500);
+
         setTimeout(() => setReserveMessage(""), 5000); 
     };
 
@@ -115,6 +107,7 @@ const ResortInfo = ({activity, googleMapsUrl}) => {
                         seats={seats} 
                         setSeats={setSeats}
                         maxSeats={maxSeats}
+                        disabled={!activityDate}
                     />
                     
                     <div className="grid grid-cols-2 gap-3">

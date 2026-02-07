@@ -21,12 +21,21 @@ const currencies = [
 
 export default function CurrencySelect() {
   const [open, setOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
   
   const currentCurrency = useCurrencyStore((state) => state.currency);
   const setCurrency = useCurrencyStore((state) => state.setCurrency);
 
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return <div className="relative inline-block w-fit" style={{ minWidth: '80px' }} suppressHydrationWarning />;
+  }
+
   return (
-    <div className="relative inline-block w-fit">
+    <div className="relative inline-block w-fit" suppressHydrationWarning>
       <CurrencyButton 
         open={open}
         setOpen={setOpen}

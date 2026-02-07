@@ -4,32 +4,35 @@ import { useEffect, useState } from 'react';
 import CartHeader from './CartHeader'
 import SectionCard from './SectionCard';
 import Link from 'next/link';
+import ResortPrice from '@/app/components/body/stay/resort/ResortPrice'
 
 export function CartSidebar({ isOpen, onClose }) {
-
-  useEffect( () =>{
-    async function getCartItems() {
-      const response = await fetch('/api/cart',{
-        credentials: "include",
-      })
-      const data = await response.json()
-      if (!data) return null
-      const formattedData = data.map((item) => ({
-        ...item, 
-        id: item._id, 
-        name: item.activityName || item.resortName, 
-        price: Number(item.price),
-        quantity: Number(item.quantity),
-        checkIn: item.checkIn ? item.checkIn.split('T')[0] : null,
-        checkOut: item.checkOut ? item.checkOut.split('T')[0] : null, 
-        activityDate: item.activityDate ? item.activityDate.split('T')[0] : null, 
-      }));
-      setCartItems(formattedData)
-    }
-    getCartItems();
-  }, [])
-  
   const [cartItems, setCartItems] = useState([]);
+
+  useEffect(() => {
+    if (!isOpen) return;
+
+    // Create SSE connection
+    const eventSource = new EventSource('/api/sse/cart');
+
+    eventSource.onmessage = (event) => {
+      try {
+        const data = JSON.parse(event.data);
+        setCartItems(data);
+      } catch (error) {
+        console.error('Error parsing SSE data:', error);
+      }
+    };
+
+    eventSource.onerror = (error) => {
+      console.error('SSE error:', error);
+      eventSource.close();
+    };
+
+    return () => {
+      eventSource.close();
+    };
+  }, [isOpen]);
 
   const stayItems = cartItems.filter(item => item.type === 'stay');
   const activityItems = cartItems.filter(item => item.type === 'activity');
@@ -82,7 +85,7 @@ export function CartSidebar({ isOpen, onClose }) {
               </div>
               <div className="text-right">
                 <span className="font-black text-md text-[#205781] tracking-tight">
-                  ${grandTotal.toLocaleString()}
+                  <ResortPrice price={grandTotal} />
                 </span>
               </div>
             </div>

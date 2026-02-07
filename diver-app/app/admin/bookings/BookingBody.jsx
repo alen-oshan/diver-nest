@@ -1,8 +1,9 @@
 'use client'
 
-import React, { useState } from 'react';
-import { ChevronLeft, ChevronRight, MapPin, Activity, X, Mail, DollarSign, Calendar as CalendarIcon, Plus } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { ChevronLeft, ChevronRight, MapPin, Activity, X, Mail, DollarSign, Calendar as CalendarIcon, Plus, RefreshCw } from 'lucide-react';
 import AddNewForm from './addNewForm';
+import { transformBooking } from './help';
 
 const BookingCalendar = ({reserves}) => {
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -10,6 +11,35 @@ const BookingCalendar = ({reserves}) => {
   const [showPopup, setShowPopup] = useState(false);
   const [isAdding, setIsAdding] = useState(false);
   const [allBookings, setAllBookings] = useState(reserves);
+  const [isConnected, setIsConnected] = useState(false);
+
+  useEffect(() => {
+    // Create SSE connection
+    const eventSource = new EventSource('/api/sse/bookings');
+
+    eventSource.onmessage = (event) => {
+      try {
+        const data = JSON.parse(event.data);
+        if (data && Array.isArray(data)) {
+          const formattedReserves = data.flatMap(transformBooking);
+          setAllBookings(formattedReserves);
+        }
+        setIsConnected(true);
+      } catch (error) {
+        console.error('Error parsing SSE data:', error);
+      }
+    };
+
+    eventSource.onerror = (error) => {
+      console.error('SSE error:', error);
+      setIsConnected(false);
+      eventSource.close();
+    };
+
+    return () => {
+      eventSource.close();
+    };
+  }, []);
 
   const year = currentDate.getFullYear();
   const month = currentDate.getMonth();
@@ -36,6 +66,10 @@ const BookingCalendar = ({reserves}) => {
             <button onClick={() => {setShowPopup(true); setIsAdding(true)}} className="bg-white/10 hover:bg-white/20 p-2 rounded-lg flex items-center gap-1 text-xs font-bold transition-all">
                 <Plus size={16}/> New
             </button>
+            <div className="flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium" title={isConnected ? 'Live updates active' : 'Connecting...'}>
+                <span className={`w-2 h-2 rounded-full ${isConnected ? 'bg-green-500 animate-pulse' : 'bg-yellow-500'}`}></span>
+                <span className="text-slate-500">{isConnected ? 'Live' : 'Connecting'}</span>
+            </div>
         </div>
         
         <div className="flex items-center bg-white rounded-xl shadow-sm border border-slate-200 p-1">

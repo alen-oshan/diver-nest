@@ -1,7 +1,5 @@
 import { NextResponse } from 'next/server';
 import { getReservesByName } from '@/queries/reserve'
-import { findResortByName } from '@/queries/resort'
-import { findActivityByName } from '@/queries/activity'
 import { formatReserves } from './lib';
 
 export const GET = async(request) => {
@@ -10,7 +8,6 @@ export const GET = async(request) => {
     const type = searchParams.get('type');
 
     const reserves = await getReservesByName(name);
-    console.log("reserves:::", reserves)
 
     if (reserves.length === 0) 
         return NextResponse.json(null, {status:200})

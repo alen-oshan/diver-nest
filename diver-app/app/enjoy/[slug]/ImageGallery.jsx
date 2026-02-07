@@ -38,6 +38,14 @@ const ImageGallery = ({activity}) => {
                 </button>
             ))}
             </div>
+
+            {/* Description Section */}
+            {activity.description && (
+                <div className="mt-6 p-5 bg-white border border-gray-200 rounded-lg">
+                    <h3 className="text-lg font-semibold text-gray-900 mb-3">About this activity</h3>
+                    <p className="text-gray-600 leading-relaxed whitespace-pre-line">{activity.description}</p>
+                </div>
+            )}
         </div>
     )
 }
