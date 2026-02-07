@@ -1,7 +1,8 @@
 'use client'
 
 import { SessionProvider } from 'next-auth/react'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
+import { usePathname } from 'next/navigation'
 import { useCurrencyStore } from '@/store/currencyStore'
 
 // Component to handle Zustand hydration for SSR
@@ -17,11 +18,29 @@ function StoreHydration({ children }) {
   return children
 }
 
+// Component to handle checkout reservation cleanup on navigation
+function CheckoutCleanup({ children }) {
+  const pathname = usePathname()
+  const prevPathname = useRef(pathname)
+
+  useEffect(() => {
+    // If navigating away from checkout page, clear temp reserves
+    if (prevPathname.current === '/checkout' && pathname !== '/checkout') {
+      fetch('/api/reserve/clear-temp', { method: 'DELETE' })
+    }
+    prevPathname.current = pathname
+  }, [pathname])
+
+  return children
+}
+
 export default function Providers({ children }) {
   return (
     <SessionProvider>
       <StoreHydration>
-        {children}
+        <CheckoutCleanup>
+          {children}
+        </CheckoutCleanup>
       </StoreHydration>
     </SessionProvider>
   )

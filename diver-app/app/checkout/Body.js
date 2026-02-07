@@ -1,12 +1,35 @@
 'use client';
 
-import React, { useState } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import OrderSummary  from './OrderSummary'
 import Expired from './Expired';
 import Link from 'next/link';
 
 const Body = ({items, clashes = []}) => {
   const [expired, setExpired] = useState(false);
+  const isCheckoutMounted = useRef(false);
+
+  // Clear temp reservations when user closes/refreshes the page
+  useEffect(() => {
+    // Delay setting mounted to avoid race conditions during hydration
+    const timeoutId = setTimeout(() => {
+      isCheckoutMounted.current = true;
+    }, 500);
+
+    // Handle page unload (close tab, refresh)
+    const handleBeforeUnload = () => {
+      if (isCheckoutMounted.current) {
+        navigator.sendBeacon('/api/reserve/clear-temp');
+      }
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+
+    return () => {
+      clearTimeout(timeoutId);
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+  }, []);
 
   // Show clash error page if there are clashes
   if (clashes.length > 0) {
@@ -55,8 +78,7 @@ const Body = ({items, clashes = []}) => {
   }
 
   return (
-    
-    <div>
+    <div data-checkout-page>
       {expired ? <Expired /> : <OrderSummary items={items} setExpired={setExpired} />}
     </div>
   )

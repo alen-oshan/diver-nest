@@ -186,6 +186,7 @@ const CheckoutPage = ({expired, setExpired, items}) => {
                     value={firstName}
                     onChange={(e) => setFirstName(e.target.value)}
                     type="text"
+                    required
                   />
                 </div>
                 <div className="space-y-2">
@@ -196,6 +197,7 @@ const CheckoutPage = ({expired, setExpired, items}) => {
                     value={lastName}
                     onChange={(e) => setLastName(e.target.value)}
                     type="text"
+                    required
                   />
                 </div>
               </div>
@@ -209,6 +211,7 @@ const CheckoutPage = ({expired, setExpired, items}) => {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     type="email"
+                    required
                   />
                 </div>
                 <div className="space-y-2">
@@ -219,6 +222,7 @@ const CheckoutPage = ({expired, setExpired, items}) => {
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
                     type="tel"
+                    required
                   />
                 </div>
               </div>
@@ -232,6 +236,7 @@ const CheckoutPage = ({expired, setExpired, items}) => {
                     value={address}
                     onChange={(e) => setAddress(e.target.value)}
                     type="text"
+                    required
                   />
                 </div>
                 <div className="space-y-2">
@@ -242,6 +247,7 @@ const CheckoutPage = ({expired, setExpired, items}) => {
                     value={city}
                     onChange={(e) => setCity(e.target.value)}
                     type="text"
+                    required
                   />
                 </div>
               </div>

@@ -2,7 +2,10 @@ import React from 'react'
 import Body from './Body'
 import { auth } from '@/app/auth'
 import { findAllCartItemsByEmail } from '@/queries/cart';
-import { makeTempReserve, checkReservationClash } from '@/queries/reserve';
+import { makeTempReserve, checkReservationClash, clearTempReserves } from '@/queries/reserve';
+
+// Disable caching for this page
+export const dynamic = 'force-dynamic'
 
 const page = async() => {
   const session = await auth();
@@ -11,7 +14,10 @@ const page = async() => {
 
   if(session){
     const items = await findAllCartItemsByEmail(session.user.email)
-    if(items) {
+    if(items && items.length > 0) {
+      // Clear any existing temp reserves first to avoid duplicates
+      await clearTempReserves(session.user.email)
+      
       // Check for clashes before proceeding
       clashes = await checkReservationClash(items)
       
@@ -25,7 +31,7 @@ const page = async() => {
       
       // Only create temp reserves if no clashes
       if (clashes.length === 0) {
-        await Promise.all(items.map((item) => makeTempReserve(session.user.email, item)))
+        const reserves = await Promise.all(items.map((item) => makeTempReserve(session.user.email, item)))
       }
     }
   }

@@ -33,10 +33,25 @@ export async function makeTempReserve(userEmail, reserveDetails) {
             ...reserveDetails, 
             name: reserveDetails.type === 'stay' ? reserveDetails.resortName: reserveDetails.activityName,
             expiryDate: new Date(Date.now() + 10 * 60 * 1000),
+            isTemp: true,
             userEmail,
         }
         const response = await Reserve.create(formattedDetail)
         return response;
+    } catch (e) {
+        console.log(e)
+        throw new Error(e)
+    }
+}
+
+export async function clearTempReserves(userEmail) {
+    await dbConnect()
+    try {
+        const result = await Reserve.deleteMany({ 
+            userEmail, 
+            isTemp: true 
+        })
+        return result;
     } catch (e) {
         console.log(e)
         throw new Error(e)

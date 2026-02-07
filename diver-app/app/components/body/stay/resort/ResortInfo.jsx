@@ -1,12 +1,16 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Star, Wifi, Coffee, Utensils, Dumbbell, Wind, Car } from "lucide-react";
+import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
+import { Wifi, Coffee, Utensils, Dumbbell, Wind, Car } from "lucide-react";
 import ResortPrice from './ResortPrice'
 import RoomSelector from './RoomSelector';
 import DateSelector from './DateSelector';
 
 const ResortInfo = ({resort, googleMapsUrl}) => {
+    const { data: session } = useSession();
+    const router = useRouter();
     const [rooms, setRooms] = useState(1);
     const [checkInDate, setCheckInDate] = useState("");
     const [checkOutDate, setCheckOutDate] = useState("");
@@ -81,11 +85,16 @@ const ResortInfo = ({resort, googleMapsUrl}) => {
     }
 
     const handleReserve = async () => {
+        // Check if user is logged in
+        if (!session) {
+            router.push('/login');
+            return;
+        }
         
         if (!checkInDate || !checkOutDate) {
             setReserveMessage("Please fill all the fields");
+            setTimeout(() => setReserveMessage(""), 5000);
         } else {
-            setReserveMessage("You reserved the room for 15 minutes");
             const itemDetail = {
                 rooms,
                 checkIn:checkInDate,
@@ -96,11 +105,16 @@ const ResortInfo = ({resort, googleMapsUrl}) => {
             }
             await sendProductToCart(itemDetail)
             // SSE will auto-update availability
+            router.push('/checkout');
         }
-        setTimeout(() => setReserveMessage(""), 5000); 
     };
 
     const handleBookNow = () => {
+        // Check if user is logged in
+        if (!session) {
+            router.push('/login');
+            return;
+        }
         alert(`Booking ${rooms} room(s) from ${checkInDate || 'TBD'} to ${checkOutDate || 'TBD'}`);
     };
 
@@ -152,17 +166,17 @@ const ResortInfo = ({resort, googleMapsUrl}) => {
                     <button
                     type='submit'
                     value='reserve'
-                    className="flex-1 bg-white border-2 border-blue-600 text-blue-600 px-4 py-3 rounded-lg font-semibold hover:bg-blue-50 transition-colors"
+                    className="flex-1 bg-blue-600 text-white px-4 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
                     >
-                    Reserve
+                    Add to Cart
                     </button>
-                    <button
+                    {/* <button
                     type='submit'
                     value='book'
                     className="flex-1 bg-blue-600 text-white px-4 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
                     >
                     Book Now
-                    </button>
+                    </button> */}
                 </div>
 
                 {/* Reserve Message */}
@@ -171,15 +185,6 @@ const ResortInfo = ({resort, googleMapsUrl}) => {
                     {reserveMessage}
                     </div>
                 )}
-                </div>
-
-                {/* Rating */}
-                <div className="flex items-center gap-2 mb-6 pb-6 border-b border-gray-200">
-                <div className="flex items-center gap-1">
-                    <Star className="w-5 h-5 fill-yellow-400 text-yellow-400" />
-                    <span className="font-semibold text-lg">{resort.rating.toFixed(1)}</span>
-                </div>
-                <span className="text-gray-600">({resort.reviewCount} reviews)</span>
                 </div>
 
                 {/* Amenities */}

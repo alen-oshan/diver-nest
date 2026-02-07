@@ -1,11 +1,13 @@
 "use client";
 
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { Eye, EyeOff } from 'lucide-react';
 
 const UserRegister = () => {
     const router = useRouter();
+    const [showPassword, setShowPassword] = useState(false);
 
     async function handleSubmit(event) {
         event.preventDefault();
@@ -65,12 +67,21 @@ const UserRegister = () => {
             <label htmlFor="password" className="text-sm mb-1 text-gray-700">
                 Password
             </label>
-            <input
-                type="password"
-                id="password"
-                name="password"
-                className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400"
-            />
+            <div className="relative">
+                <input
+                    type={showPassword ? "text" : "password"}
+                    id="password"
+                    name="password"
+                    className="border border-gray-300 rounded-md px-3 py-2 pr-10 w-full focus:outline-none focus:ring-2 focus:ring-orange-400"
+                />
+                <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                >
+                    {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                </button>
+            </div>
             </div>
 
             <button

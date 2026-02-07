@@ -34,6 +34,11 @@ const ReserveSchema = new mongoose.Schema(
             required: true,
         },
 
+        isTemp: {
+            type: Boolean,
+            default: false,
+        },
+
         userEmail: {
             type: String, 
             required:true,
