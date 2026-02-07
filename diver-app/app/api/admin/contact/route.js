@@ -1,7 +1,11 @@
 import { createContact, findAllContacts, updateContactStatus } from '@/queries/contact'
 import { NextResponse } from 'next/server';
+import { requireAdminApi } from '@/lib/requireAdmin';
 
 export const PUT = async(request) => {
+    const { error } = await requireAdminApi();
+    if (error) return error;
+
     const {id, newStatus} = await request.json();
     try {
         updateContactStatus(id, newStatus)
@@ -13,6 +17,9 @@ export const PUT = async(request) => {
 }
 
 export const GET = async() => {
+    const { error } = await requireAdminApi();
+    if (error) return error;
+
     const contacts = await findAllContacts();
     console.log(contacts)
     return new NextResponse(JSON.stringify(contacts), {status:200})

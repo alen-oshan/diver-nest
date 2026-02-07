@@ -1,12 +1,11 @@
 import { NextResponse } from "next/server";
-import { auth } from '@/app/auth'
+import { requireAdminApi } from '@/lib/requireAdmin';
 import { findAllUsers, changeUserName, changeUserRole, changeUserEmail, createUser } from '@/queries/user'
 
 
 export const GET = async() => {
-    const session = await auth()
-    if (!session)
-        return new NextResponse({message: 'Access forbidden'})
+    const { error } = await requireAdminApi();
+    if (error) return error;
 
     const users = await findAllUsers();
     console.log(users)
@@ -15,6 +14,9 @@ export const GET = async() => {
 }
 
 export const PUT = async(request) => {
+    const { error } = await requireAdminApi();
+    if (error) return error;
+
     try{
         const {editForm, prevEmail} =  await request.json();
         console.log(editForm, prevEmail);
@@ -29,6 +31,9 @@ export const PUT = async(request) => {
 }
 
 export const POST = async(request) => {
+    const { error } = await requireAdminApi();
+    if (error) return error;
+
     try{
         const data =  await request.json();
         console.log(data)

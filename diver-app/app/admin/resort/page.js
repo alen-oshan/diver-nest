@@ -2,9 +2,10 @@ import React from 'react'
 import Sidebar from '@/app/components/admin/Sidebar';
 import ResortBody from './ResortBody'
 import { findAllResorts } from '@/queries/resort';
-
+import { requireAdmin } from '@/lib/requireAdmin';
 
 const page = async() => {
+  await requireAdmin();
 
   const resorts = await findAllResorts();
   const resortsDTO = resorts.map((resort, index) => ({  ...resort, "_id": index,}))

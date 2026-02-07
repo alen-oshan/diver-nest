@@ -1,8 +1,12 @@
 import { NextResponse } from 'next/server';
 import { createActivity, updateActivityByName } from '@/queries/activity';
+import { requireAdminApi } from '@/lib/requireAdmin';
 
 
 export const POST = async (request) => {
+    const { error } = await requireAdminApi();
+    if (error) return error;
+
     try {
         const activityDetails = await request.json();
         await createActivity(activityDetails);
@@ -18,6 +22,9 @@ export const POST = async (request) => {
 }
 
 export const PUT = async (request) => {
+    const { error } = await requireAdminApi();
+    if (error) return error;
+
     try {
         const {activityDetails, prevName} = await request.json();
         await updateActivityByName(prevName, activityDetails);

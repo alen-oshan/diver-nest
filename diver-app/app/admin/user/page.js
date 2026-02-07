@@ -2,8 +2,10 @@ import React from 'react';
 import { findAllUsers } from '@/queries/user';
 import Sidebar from '@/app/components/admin/Sidebar';
 import UserBody from './UserBody';
+import { requireAdmin } from '@/lib/requireAdmin';
 
 const AdminDashboard = async() => {
+  await requireAdmin();
 
   const users = await findAllUsers()
 

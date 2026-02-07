@@ -3,8 +3,10 @@ import Sidebar from '@/app/components/admin/Sidebar';
 import BookingBody from './BookingBody'
 import { findAllReservations } from '@/queries/reserve';
 import { transformBooking } from './help'
+import { requireAdmin } from '@/lib/requireAdmin';
 
 const page = async() => {
+    await requireAdmin();
 
     const reserves = await findAllReservations();
     let formattedReserves = []

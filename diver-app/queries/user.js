@@ -38,7 +38,7 @@ export async function findUserByEmail(email) {
     
     try {
         const user = await User.findOne({email})
-        .select('name email image notification password')
+        .select('name email image notification password role')
         .lean(); 
         
         if(!user)

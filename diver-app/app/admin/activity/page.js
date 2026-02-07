@@ -2,8 +2,10 @@ import React from 'react'
 import Sidebar from '@/app/components/admin/Sidebar';
 import ActivityBody from './ActivityBody'
 import { findAllActivities } from '@/queries/activity';
+import { requireAdmin } from '@/lib/requireAdmin';
 
 const page = async() => {
+  await requireAdmin();
 
   const activities = await findAllActivities();
   const activitiesDTO = activities.map((activity, index) => ({  ...activity, "_id": index,}))

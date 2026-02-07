@@ -24,9 +24,9 @@ export async function GET(req) {
             name: item.activityName || item.resortName,
             price: Number(item.price),
             quantity: Number(item.quantity),
-            checkIn: item.checkIn ? item.checkIn.split('T')[0] : null,
-            checkOut: item.checkOut ? item.checkOut.split('T')[0] : null,
-            activityDate: item.activityDate ? item.activityDate.split('T')[0] : null,
+            checkIn: item.checkIn ? new Date(item.checkIn).toISOString().split('T')[0] : null,
+            checkOut: item.checkOut ? new Date(item.checkOut).toISOString().split('T')[0] : null,
+            activityDate: item.activityDate ? new Date(item.activityDate).toISOString().split('T')[0] : null,
           })) : [];
 
           const dataString = JSON.stringify(formattedData);

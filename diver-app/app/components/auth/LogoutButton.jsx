@@ -1,14 +1,22 @@
+'use client'
+
 import React from 'react'
-import {logout} from "@/app/actions/index"
+import { signOut } from 'next-auth/react'
 
 const LogoutButton = () => {
+  const handleLogout = () => {
+    signOut({ callbackUrl: '/' });
+  }
+
   return (
     <div>
-        <form action={logout}>
-            <button type='submit' className='p-2 rounded-md hover:opacity-80 transition-opacity'>
-                Logout
-            </button>
-        </form>
+      <button 
+        type='button' 
+        onClick={handleLogout}
+        className='p-2 rounded-md hover:opacity-80 transition-opacity'
+      >
+        Logout
+      </button>
     </div>
   )
 }

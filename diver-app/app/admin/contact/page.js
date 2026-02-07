@@ -2,8 +2,10 @@ import React from 'react'
 import Sidebar from '@/app/components/admin/Sidebar';
 import ContactBody from './ContactBody'
 import { findAllContacts } from '@/queries/contact';
+import { requireAdmin } from '@/lib/requireAdmin';
 
 const page = async() => {
+  await requireAdmin();
 
   const contacts = await findAllContacts();
 

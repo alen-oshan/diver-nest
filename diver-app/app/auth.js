@@ -73,7 +73,8 @@ export const {
                                 return {
                                     id: user.id,
                                     name: user.name,
-                                    email: user.email
+                                    email: user.email,
+                                    role: user.role
                                 };
                             } else {
                                 console.log("Password mismatch");
@@ -91,26 +92,27 @@ export const {
             callbacks: {
                 async signIn({ user, account }) {
                     if (account?.provider === "google" || account?.provider === "github") {
-                    const existingUser = await findUserByEmail(user.email);
-                    if (!existingUser) {
-                        await createUser({
-                            name: user.name,
-                            email: user.email,
-                            image: user.image,
-                        });
-                    }
+                        const existingUser = await findUserByEmail(user.email);
+                        if (!existingUser) {
+                            await createUser({
+                                name: user.name,
+                                email: user.email,
+                                image: user.image,
+                                role: 'user',
+                            });
+                        }
                     }
                     return true;
                 },
 
                 async jwt({ token, user }) {
                     if (user) {
-                    token.role = user.role;
+                        token.role = user.role;
                     }
 
                     if (!token.role && token.email) {
-                    const dbUser = await findUserByEmail(token.email);
-                    token.role = dbUser?.role;
+                        const dbUser = await findUserByEmail(token.email);
+                        token.role = dbUser?.role;
                     }
 
                     return token;
