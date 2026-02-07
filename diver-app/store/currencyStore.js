@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
+import { persist, createJSONStorage } from 'zustand/middleware';
 
 const defaultCurrency = {
   code: "USD",
@@ -16,6 +16,19 @@ export const useCurrencyStore = create(
     }),
     {
       name: 'currency-storage',
+      storage: createJSONStorage(() => localStorage),
+      skipHydration: true, // Prevents SSR hydration mismatch
     }
   )
 );
+
+// Hook to rehydrate on client side
+export const useHydrateCurrencyStore = () => {
+  const rehydrated = useCurrencyStore.persist.hasHydrated();
+  
+  if (typeof window !== 'undefined' && !rehydrated) {
+    useCurrencyStore.persist.rehydrate();
+  }
+  
+  return rehydrated;
+};
