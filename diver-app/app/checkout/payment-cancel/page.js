@@ -3,6 +3,9 @@ import React from 'react';
 import { auth } from '@/app/auth';
 import { clearPaymentReserves } from '@/queries/reserve';
 
+// Force dynamic for payment processing
+export const dynamic = 'force-dynamic';
+
 export const metadata = {
   title: "Payment Cancelled",
   description: "Your payment was cancelled. You can try booking again or contact us for assistance.",

@@ -4,7 +4,7 @@ import { auth } from '@/app/auth'
 import { findAllCartItemsByEmail } from '@/queries/cart';
 import { makeTempReserve, checkReservationClash, clearTempReserves } from '@/queries/reserve';
 
-// Disable caching for this page
+// Force dynamic for user-specific cart and payment data
 export const dynamic = 'force-dynamic'
 
 export const metadata = {

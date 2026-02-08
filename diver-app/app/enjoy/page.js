@@ -2,6 +2,9 @@ import React from 'react'
 import Header from '@/app/components/layout/Header'
 import StayBody from '@/app/components/body/stay/StayBody'
 
+// Static generation for activities listing page
+export const dynamic = 'force-static';
+
 export const metadata = {
   title: "Diving Activities & Underwater Adventures",
   description: "Explore our exciting collection of diving activities and underwater adventures. From beginner-friendly snorkeling to advanced technical dives, find the perfect marine experience for your skill level.",

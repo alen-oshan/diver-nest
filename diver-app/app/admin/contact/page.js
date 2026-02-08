@@ -4,6 +4,9 @@ import ContactBody from './ContactBody'
 import { findAllContacts } from '@/queries/contact';
 import { requireAdmin } from '@/lib/requireAdmin';
 
+// Force dynamic for real-time contact data
+export const dynamic = 'force-dynamic';
+
 export const metadata = {
   title: "Admin - Contact Messages",
   description: "Admin dashboard to manage customer inquiries and contact messages.",

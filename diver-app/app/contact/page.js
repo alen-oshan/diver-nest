@@ -1,6 +1,9 @@
 import Header from '@/app/components/layout/Header'
 import ContactBody from '@/app/components/body/contact/ContactBody'
 
+// Static generation for contact page
+export const dynamic = 'force-static';
+
 export const metadata = {
   title: "Contact Us",
   description: "Get in touch with Diving Nest for questions about diving tours, resort bookings, or travel planning. Our expert team is ready to help you plan the perfect underwater adventure.",

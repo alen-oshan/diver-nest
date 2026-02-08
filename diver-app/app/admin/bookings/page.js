@@ -5,6 +5,9 @@ import { findAllReservations } from '@/queries/reserve';
 import { transformBooking } from './help'
 import { requireAdmin } from '@/lib/requireAdmin';
 
+// Force dynamic for real-time booking data
+export const dynamic = 'force-dynamic';
+
 export const metadata = {
   title: "Admin - Manage Bookings",
   description: "Admin dashboard to manage all diving activity and resort bookings.",

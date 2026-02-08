@@ -4,6 +4,9 @@ import { auth } from '@/app/auth'
 import { clearPaymentReserves } from '@/queries/reserve';
 import PaymentSuccessContent from './PaymentSuccessContent';
 
+// Force dynamic for payment processing
+export const dynamic = 'force-dynamic';
+
 export const metadata = {
   title: "Payment Successful",
   description: "Your booking has been confirmed! Thank you for choosing Diving Nest for your underwater adventure.",

@@ -4,6 +4,9 @@ import ResortBody from './ResortBody'
 import { findAllResorts } from '@/queries/resort';
 import { requireAdmin } from '@/lib/requireAdmin';
 
+// Force dynamic for real-time resort data
+export const dynamic = 'force-dynamic';
+
 export const metadata = {
   title: "Admin - Manage Resorts",
   description: "Admin dashboard to manage resort listings and accommodations.",

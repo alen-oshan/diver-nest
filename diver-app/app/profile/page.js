@@ -5,6 +5,9 @@ import { auth } from '@/app/auth'
 import { redirect } from "next/navigation";
 import { findUserByEmail } from '@/queries/user';
 
+// Force dynamic for user-specific profile data
+export const dynamic = 'force-dynamic';
+
 export const metadata = {
   title: "My Profile",
   description: "Manage your Diving Nest profile, view your booking history, update personal information, and track your diving adventures.",

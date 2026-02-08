@@ -1,6 +1,22 @@
 import Header from '@/app/components/layout/Header'
 import ActivityBody from './ActivityBody';
-import { findActivityByName } from '@/queries/activity'
+import { findActivityByName, findAllActivities } from '@/queries/activity'
+
+// Force dynamic for real-time availability data
+export const dynamic = 'force-dynamic';
+
+// Generate static params for all activities
+export async function generateStaticParams() {
+  try {
+    const activities = await getAllActivities();
+    return activities.map((activity) => ({
+      slug: encodeURIComponent(activity.name),
+    }));
+  } catch (error) {
+    console.error('Error generating static params:', error);
+    return [];
+  }
+}
 
 export async function generateMetadata({params}) {
   const { slug } = await params;

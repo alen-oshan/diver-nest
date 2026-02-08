@@ -4,6 +4,9 @@ import Sidebar from '@/app/components/admin/Sidebar';
 import UserBody from './UserBody';
 import { requireAdmin } from '@/lib/requireAdmin';
 
+// Force dynamic for real-time user data
+export const dynamic = 'force-dynamic';
+
 export const metadata = {
   title: "Admin - Manage Users",
   description: "Admin dashboard to manage user accounts and customer information.",

@@ -1,6 +1,22 @@
 import Header from '@/app/components/layout/Header'
 import ResortBody from '@/app/components/body/stay/resort/ResortBody';
-import {findResortByName} from '@/queries/resort'
+import {findResortByName, findAllResorts} from '@/queries/resort'
+
+// Force dynamic for real-time availability data
+export const dynamic = 'force-dynamic';
+
+// Generate static params for all resorts
+export async function generateStaticParams() {
+  try {
+    const resorts = await findAllResorts();
+    return resorts.map((resort) => ({
+      slug: encodeURIComponent(resort.name),
+    }));
+  } catch (error) {
+    console.error('Error generating static params:', error);
+    return [];
+  }
+}
 
 export async function generateMetadata({params}) {
   const { slug } = await params;
