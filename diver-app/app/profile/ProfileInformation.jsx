@@ -13,7 +13,7 @@ const ProfileInformation = ({user, name, setName}) => {
           name={name}
           setName={setName}
         />
-        <ChangePassword />
+        {user.password && <ChangePassword />}
         <EmailNotification notification={user.notification}/>
     </div>
   )

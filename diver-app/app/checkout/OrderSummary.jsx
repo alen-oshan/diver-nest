@@ -1,12 +1,14 @@
 'use client';
 
 import React, { useEffect, useState } from "react";
+import Link from 'next/link';
+import { ArrowLeft } from 'lucide-react';
 import ResortPrice from '@/app/components/body/stay/resort/ResortPrice'
 import { useCurrencyStore } from '@/store/currencyStore';
 
 const CheckoutPage = ({expired, setExpired, items}) => {
   /* ---------------- TIMER ---------------- */
-  const SESSION_TIME = 10 * 60; // 10 minutes in seconds
+  const SESSION_TIME = 5 * 60; // 5 minutes in seconds
   const [paymentType, setPaymentType] = useState("deposit");
   const [timeLeft, setTimeLeft] = useState(SESSION_TIME);
 
@@ -73,6 +75,9 @@ const CheckoutPage = ({expired, setExpired, items}) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
+      // Mark reserves as in-payment before redirecting to payment gateway
+      await fetch('/api/reserve/mark-payment', { method: 'POST' });
+
       const response = await fetch("/api/payhere/create", {
         method: "POST",
         headers: {
@@ -117,7 +122,10 @@ const CheckoutPage = ({expired, setExpired, items}) => {
       {/* ---------------- HEADER TIMER ---------------- */}
       <div className="sticky top-0 z-50 bg-[#205781] shadow-lg backdrop-blur-md bg-opacity-95">
         <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center text-white">
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-3">
+            <Link href="/" className="flex items-center justify-center hover:opacity-70 transition-opacity">
+              <ArrowLeft className="w-6 h-6" />
+            </Link>
             <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
               <span className="text-xs">🔒</span>
             </div>

@@ -39,6 +39,12 @@ const ReserveSchema = new mongoose.Schema(
             default: false,
         },
 
+        status: {
+            type: String,
+            enum: ['temp', 'in-payment', 'confirmed'],
+            default: 'temp',
+        },
+
         userEmail: {
             type: String, 
             required:true,

@@ -32,8 +32,9 @@ export async function makeTempReserve(userEmail, reserveDetails) {
         const formattedDetail = {
             ...reserveDetails, 
             name: reserveDetails.type === 'stay' ? reserveDetails.resortName: reserveDetails.activityName,
-            expiryDate: new Date(Date.now() + 10 * 60 * 1000),
+            expiryDate: new Date(Date.now() + 5 * 60 * 1000),
             isTemp: true,
+            status: 'temp',
             userEmail,
         }
         const response = await Reserve.create(formattedDetail)
@@ -47,9 +48,40 @@ export async function makeTempReserve(userEmail, reserveDetails) {
 export async function clearTempReserves(userEmail) {
     await dbConnect()
     try {
+        // Clear all temp reserves (including ones without status field from before migration)
         const result = await Reserve.deleteMany({ 
             userEmail, 
-            isTemp: true 
+            isTemp: true,
+            status: { $ne: 'in-payment' }
+        })
+        return result;
+    } catch (e) {
+        console.log(e)
+        throw new Error(e)
+    }
+}
+
+export async function markReservesInPayment(userEmail) {
+    await dbConnect()
+    try {
+        const result = await Reserve.updateMany(
+            { userEmail, isTemp: true, status: 'temp' },
+            { $set: { status: 'in-payment', expiryDate: new Date(Date.now() + 30 * 60 * 1000) } }
+        )
+        return result;
+    } catch (e) {
+        console.log(e)
+        throw new Error(e)
+    }
+}
+
+export async function clearPaymentReserves(userEmail) {
+    await dbConnect()
+    try {
+        const result = await Reserve.deleteMany({ 
+            userEmail, 
+            isTemp: true, 
+            status: 'in-payment' 
         })
         return result;
     } catch (e) {
@@ -81,7 +113,10 @@ export async function getReservesByName(name) {
 export async function findAllReservations() {
     await dbConnect();
     try {
-        const reserves = await Reserve.find({ expiryDate: { $gte: new Date() } }).lean()
+        const reserves = await Reserve.find({ 
+            expiryDate: { $gte: new Date() },
+            isTemp: { $ne: true }
+        }).lean()
         if(reserves.length === 0) return null;
         const formattedReserves = reserves.map((reserve) => ({
             ...reserve,

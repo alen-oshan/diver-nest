@@ -1,7 +1,15 @@
 import Link from 'next/link';
 import React from 'react';
+import { auth } from '@/app/auth';
+import { clearPaymentReserves } from '@/queries/reserve';
 
-const PaymentCanceled = () => {
+const PaymentCanceled = async() => {
+  const session = await auth();
+  if (session) {
+    // Clear in-payment reserves since payment was canceled
+    await clearPaymentReserves(session.user.email)
+  }
+
   return (
     <div className="min-h-screen bg-slate-50 flex items-center justify-center p-6 font-sans">
       <div className="max-w-md w-full text-center">

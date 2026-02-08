@@ -22,10 +22,22 @@ const EditCard = ({ formData, onChange, onSave, onCancel, title }) => (
         <div className="flex flex-col gap-1">
           <label className="text-[10px] uppercase font-bold text-gray-500">Type</label>
           <select name="type" value={formData.type ?? 'single'} onChange={onChange} className="p-2 border rounded bg-white">
-            <option value="Single">Single</option>
-            <option value="Group">Group</option>
+            <option value="single">Single</option>
+            <option value="group">Group</option>
           </select>
         </div>
+        {formData.type === 'group' && (
+          <div className="md:col-span-2 flex flex-col gap-1">
+            <label className="text-[10px] uppercase font-bold text-gray-500">Group Sizes (comma separated)</label>
+            <input 
+              name="groupSizes" 
+              value={formData.groupSizes ? (Array.isArray(formData.groupSizes) ? formData.groupSizes.join(', ') : formData.groupSizes) : '5, 10'} 
+              onChange={onChange} 
+              className="p-2 border rounded" 
+              placeholder="5, 10, 15" 
+            />
+          </div>
+        )}
         <div className="flex flex-col gap-1">
           <label className="text-[10px] uppercase font-bold text-gray-500">Status</label>
           <select name="status" value={formData.status ?? 'available'} onChange={onChange} className="p-2 border rounded bg-white">
@@ -34,6 +46,7 @@ const EditCard = ({ formData, onChange, onSave, onCancel, title }) => (
           </select>
         </div>
         <InputGroup label="Total Seats" name="totalSeats" type="number" value={formData.totalSeats} onChange={onChange} />
+        <InputGroup label="Minimum Seats" name="minimumSeats" type="number" value={formData.minimumSeats} onChange={onChange} />
         <InputGroup label="Duration (mins)" name="duration" type="number" value={formData.duration} onChange={onChange} />
         <InputGroup label="Rating (0-5)" name="rating" type="number" value={formData.rating} onChange={onChange} />
         <InputGroup label="Review Count" name="reviewCount" type="number" value={formData.reviewCount} onChange={onChange} />

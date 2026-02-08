@@ -23,7 +23,8 @@ const ActivityManagement = ({ activities }) => {
       ...activity,
       images: Array.isArray(activity.images) ? activity.images.join(', ') : activity.images,
       amenities: Array.isArray(activity.amenities) ? activity.amenities.join(', ') : activity.amenities,
-      availableTimes: Array.isArray(activity.availableTimes) ? activity.availableTimes.join(', ') : activity.availableTimes
+      availableTimes: Array.isArray(activity.availableTimes) ? activity.availableTimes.join(', ') : activity.availableTimes,
+      groupSizes: Array.isArray(activity.groupSizes) ? activity.groupSizes.join(', ') : (activity.groupSizes || '5, 10')
     };
     setUpdateFormData(formattedActivity);
   };
@@ -74,8 +75,10 @@ const ActivityManagement = ({ activities }) => {
       images: typeof formData.images === 'string' ? formData.images.split(',').map(s => s.trim()) : formData.images,
       amenities: typeof formData.amenities === 'string' ? formData.amenities.split(',').map(s => s.trim()) : formData.amenities,
       availableTimes: typeof formData.availableTimes === 'string' ? formData.availableTimes.split(',').map(s => s.trim()) : formData.availableTimes,
+      groupSizes: formData.type === 'group' && typeof formData.groupSizes === 'string' ? formData.groupSizes.split(',').map(s => Number(s.trim())) : (formData.groupSizes || [5, 10]),
       price: Number(formData.price),
       totalSeats: Number(formData.totalSeats),
+      minimumSeats: Number(formData.minimumSeats) || 1,
       duration: Number(formData.duration),
       rating: Number(formData.rating),
       reviewCount: Number(formData.reviewCount),
@@ -97,8 +100,10 @@ const ActivityManagement = ({ activities }) => {
       images: typeof updateFormData.images === 'string' ? updateFormData.images.split(',').map(s => s.trim()) : updateFormData.images,
       amenities: typeof updateFormData.amenities === 'string' ? updateFormData.amenities.split(',').map(s => s.trim()) : updateFormData.amenities,
       availableTimes: typeof updateFormData.availableTimes === 'string' ? updateFormData.availableTimes.split(',').map(s => s.trim()) : updateFormData.availableTimes,
+      groupSizes: updateFormData.type === 'group' && typeof updateFormData.groupSizes === 'string' ? updateFormData.groupSizes.split(',').map(s => Number(s.trim())) : (updateFormData.groupSizes || [5, 10]),
       price: Number(updateFormData.price),
       totalSeats: Number(updateFormData.totalSeats),
+      minimumSeats: Number(updateFormData.minimumSeats) || 1,
       duration: Number(updateFormData.duration),
       rating: Number(updateFormData.rating),
       reviewCount: Number(updateFormData.reviewCount),

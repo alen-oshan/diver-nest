@@ -8,7 +8,7 @@ import ActivityPrice from './ActivityPrice'
 import RoomSelector from './RoomSelector';
 import DateSelector from './DateSelector';
 
-const ResortInfo = ({activity, googleMapsUrl}) => {
+const ResortInfo = ({activity}) => {
     const { data: session } = useSession();
     const router = useRouter();
     const [activityDate, setActivityDate] = useState("");
@@ -16,6 +16,13 @@ const ResortInfo = ({activity, googleMapsUrl}) => {
     const [reservations, setReservations] = useState(null);
     const [seats, setSeats] = useState(1);
     const [maxSeats, setMaxSeats] = useState(0)
+
+    useEffect(() => {
+        // Initialize seats based on activity minimum after component mounts
+        if (activity?.minimumSeats) {
+            setSeats(activity.minimumSeats);
+        }
+    }, [activity?.minimumSeats]);
 
     useEffect(() => {
         // Create SSE connection for real-time availability
@@ -121,7 +128,9 @@ const ResortInfo = ({activity, googleMapsUrl}) => {
                         seats={seats} 
                         setSeats={setSeats}
                         maxSeats={maxSeats}
+                        minSeats={activity?.minimumSeats || 1}
                         disabled={!activityDate}
+                        activity={activity}
                     />
                     
                     <div className="grid grid-cols-2 gap-3">
@@ -130,7 +139,6 @@ const ResortInfo = ({activity, googleMapsUrl}) => {
                         setActivityDate={setActivityDate}
                         max={activity.totalSeats}
                         reservations={reservations}
-                        setSeats={setSeats}
                         setMaxSeats={setMaxSeats}
                     />
                     </div>
@@ -196,7 +204,7 @@ const ResortInfo = ({activity, googleMapsUrl}) => {
                     />
                 </div>
                 <a
-                    href={googleMapsUrl}
+                    href={activity.mapUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="mt-3 block text-center text-sm text-blue-600 hover:text-blue-700 hover:underline"

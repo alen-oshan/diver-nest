@@ -73,12 +73,10 @@ const ResortGrid = (props) => {
                       
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-1">
-                          <Star className="w-5 h-5 fill-yellow-400 text-yellow-400" />
-                          <span className="text-[20px] font-medium">{resort.rating}</span>
                         </div>
                         <div className="text-[24px] font-bold" style={{ color: '#205781' }}>
                           <Price price={resort.price}/>
-                          <span className="text-[16px] text-gray-500 font-normal">/night</span>
+                          <span className="text-[16px] text-gray-500 font-normal">{props.isStay ? '/night' : '/person'}</span>
                         </div>
                       </div>
                     </div>
