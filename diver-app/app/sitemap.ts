@@ -1,5 +1,5 @@
 import { MetadataRoute } from 'next'
-import { getAllActivities } from '@/queries/activity'
+import { findAllActivities } from '@/queries/activity'
 import { findAllResorts } from '@/queries/resort'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
@@ -53,7 +53,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   try {
     // Dynamic activity pages
-    const activities = await getAllActivities()
+    const activities = await findAllActivities()
     const activityPages: MetadataRoute.Sitemap = activities.map((activity) => ({
       url: `${baseUrl}/enjoy/${encodeURIComponent(activity.name)}`,
       lastModified: new Date(),

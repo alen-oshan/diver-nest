@@ -8,7 +8,7 @@ export const dynamic = 'force-dynamic';
 // Generate static params for all activities
 export async function generateStaticParams() {
   try {
-    const activities = await getAllActivities();
+    const activities = await findAllActivities();
     return activities.map((activity) => ({
       slug: encodeURIComponent(activity.name),
     }));
