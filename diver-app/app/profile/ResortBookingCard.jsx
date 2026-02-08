@@ -11,7 +11,7 @@ const ResortBookingCard = ({booking, getStatusStyle}) => {
         <div className="flex justify-between mb-3">
         <div>
             <p className="font-medium">{booking.resortName}</p>
-            <p className="text-sm text-gray-500 capitalize">
+            <p className="text-sm text-gray-600 capitalize">
             {booking.type === "room" ? "Room Booking" : "Activity Booking"}
             </p>
         </div>

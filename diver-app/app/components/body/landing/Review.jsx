@@ -57,7 +57,7 @@ export default function ReviewsSection() {
                   <h3 className="text-lg text-[#205781]">
                     {review.name}
                   </h3>
-                  <p className="text-sm text-gray-500">{review.date}</p>
+                  <p className="text-sm text-gray-700">{review.date}</p>
                 </div>
                 <div className="flex">
                   {[...Array(review.rating)].map((_, i) => (
@@ -65,7 +65,7 @@ export default function ReviewsSection() {
                   ))}
                 </div>
               </div>
-              <p className="text-gray-700">{review.comment}</p>
+              <p className="text-gray-800">{review.comment}</p>
             </div>
           ))}
         </div>

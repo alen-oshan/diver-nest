@@ -167,7 +167,7 @@ export default function PrivacyPolicy() {
                 <li><strong>Hours:</strong> Monday-Friday, 9AM-6PM EST</li>
               </ul>
 
-              <p className="text-sm text-gray-500 mt-8 pt-4 border-t">
+              <p className="text-sm text-gray-600 mt-8 pt-4 border-t">
                 This privacy policy was last updated on February 8, 2026. Effective date: February 8, 2026.
               </p>
             </div>

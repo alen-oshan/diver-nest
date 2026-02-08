@@ -11,7 +11,7 @@ const ProfileBody = ({user}) => {
     const tabTypes = ['My Profile', 'My Bookings'];
 
     return (
-        <div className='py-6 lg:px-8'>
+        <div className='py-6 px-3 lg:px-8'>
             <FilterButtons 
                 setSelectedItemType={setSelectedTab}
                 selectedItemType={selectedTab}

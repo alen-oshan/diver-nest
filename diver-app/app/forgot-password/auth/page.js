@@ -96,7 +96,7 @@ const VerifyCode = () => {
                             Resend
                         </button>
                     </p>
-                    <Link href="/login" className="block text-sm text-gray-500 hover:text-[#205781]">
+                    <Link href="/login" className="block text-sm text-gray-600 hover:text-[#205781]">
                         Back to Login
                     </Link>
                 </div>

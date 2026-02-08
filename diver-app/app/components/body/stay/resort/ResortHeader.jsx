@@ -15,7 +15,7 @@ const ResortHeader = ({resort}) => {
               <div>
                 <span className="text-gray-400">• </span>
                 <a
-                  href={resort.googleMapsUrl}
+                  href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(resort.address || resort.name)}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-blue-600 hover:text-blue-700 hover:underline"

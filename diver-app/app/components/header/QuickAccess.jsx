@@ -2,10 +2,13 @@
 
 import React from 'react'
 import Link from 'next/link'
-import LogoutButton from '@/app/components/auth/LogoutButton'
-import CurrencySelector from '@/app/components/header/CurrencySelector'
+import dynamic from 'next/dynamic'
 import { useSession } from 'next-auth/react'
-import CartButton from './CartButton';
+import CurrencySelector from '@/app/components/header/CurrencySelector'
+
+// Lazy-load components only needed for authenticated users
+const LogoutButton = dynamic(() => import('@/app/components/auth/LogoutButton'), { ssr: false })
+const CartButton = dynamic(() => import('./CartButton'), { ssr: false })
 
 
 const QuickAccess = () => {

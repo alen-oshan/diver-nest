@@ -9,7 +9,7 @@ import ResortPrice from './ResortPrice'
 import RoomSelector from './RoomSelector';
 import DateSelector from './DateSelector';
 
-const ResortInfo = ({resort, googleMapsUrl}) => {
+const ResortInfo = ({resort}) => {
     const { data: session } = useSession();
     const router = useRouter();
     const [rooms, setRooms] = useState(1);
@@ -190,7 +190,7 @@ const ResortInfo = ({resort, googleMapsUrl}) => {
 
                 {/* Amenities */}
                 <div className="mb-6">
-                <h3 className="font-semibold text-lg mb-4">What this place offers</h3>
+                <h2 className="font-semibold text-lg mb-4">What this place offers</h2>
                 <div className="space-y-3">
                     {resort.amenities.map((amenity, index) => {
                     const Icon = amenityIcons[amenity] || Wifi;
@@ -206,7 +206,7 @@ const ResortInfo = ({resort, googleMapsUrl}) => {
 
                 {/* Location Map */}
                 <div className="pt-6 border-t border-gray-200">
-                <h3 className="font-semibold text-lg mb-3">Location</h3>
+                <h2 className="font-semibold text-lg mb-3">Location</h2>
                 <div className="rounded-lg overflow-hidden border border-gray-200">
                     <Image
                     src={resort.mapUrl}
@@ -217,7 +217,7 @@ const ResortInfo = ({resort, googleMapsUrl}) => {
                     />
                 </div>
                 <a
-                    href={googleMapsUrl}
+                    href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(resort.address || resort.name)}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="mt-3 block text-center text-sm text-blue-600 hover:text-blue-700 hover:underline"

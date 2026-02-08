@@ -20,7 +20,7 @@ const EditCard = ({ formData, onChange, onSave, onCancel, title }) => (
         <InputGroup label="Town" name="town" value={formData.town} onChange={onChange} />
         <InputGroup label="Price/Night" name="pricePerNight" type="number" value={formData.pricePerNight} onChange={onChange} />
         <div className="flex flex-col gap-1">
-          <label className="text-[10px] uppercase font-bold text-gray-500">Status</label>
+          <label className="text-[10px] uppercase font-bold text-gray-600">Status</label>
           <select name="status" value={formData.status} onChange={onChange} className="p-2 border rounded bg-white">
             <option value="available">Available</option>
             <option value="not available">Not Available</option>
@@ -30,7 +30,7 @@ const EditCard = ({ formData, onChange, onSave, onCancel, title }) => (
         
         <InputGroup label="Map URL" name="mapUrl" value={formData.mapUrl} onChange={onChange} />
         <div className="flex flex-col gap-1">
-          <label className="text-[10px] uppercase font-bold text-gray-500">Room Type</label>
+          <label className="text-[10px] uppercase font-bold text-gray-600">Room Type</label>
           <select name="roomType" value={formData.roomType} onChange={onChange} className="p-2 border rounded bg-white">
             <option value="Private Room">Private Room</option>
             <option value="Shared Room">Shared Room</option>
@@ -39,18 +39,18 @@ const EditCard = ({ formData, onChange, onSave, onCancel, title }) => (
         <InputGroup label="Rating (0-5)" name="rating" type="number" value={formData.rating} onChange={onChange} />
 
         <div className="md:col-span-2 flex flex-col gap-1">
-          <label className="text-[10px] uppercase font-bold text-gray-500">Amenities (comma separated)</label>
+          <label className="text-[10px] uppercase font-bold text-gray-600">Amenities (comma separated)</label>
           <input name="amenities" value={formData.amenities} onChange={onChange} className="p-2 border rounded" placeholder="WiFi, AC, Pool" />
         </div>
         <div className="md:col-span-2 flex flex-col gap-1">
-          <label className="text-[10px] uppercase font-bold text-gray-500">Images (comma separated links)</label>
+          <label className="text-[10px] uppercase font-bold text-gray-600">Images (comma separated links)</label>
           <input name="images" value={formData.images} onChange={onChange} className="p-2 border rounded" placeholder="url1, url2" />
         </div>
         <InputGroup label="Address" name="address" value={formData.address} onChange={onChange} />
         <InputGroup label="Total Rooms" name="totalRooms" value={formData.totalRooms} onChange={onChange} />
         <div className="md:col-span-4 flex flex-col gap-1">
-          <label className="text-[10px] uppercase font-bold text-gray-500">Description</label>
-          <textarea name="description" value={formData.description} onChange={onChange} className="p-2 border rounded w-full" rows="2"></textarea>
+          <label className="text-[10px] uppercase font-bold text-gray-600">Description</label>
+          <textarea name="description" value={formData.description || ''} onChange={onChange} className="p-2 border rounded w-full" rows="3" placeholder="Enter resort description..."></textarea>
         </div>
 
       </div>

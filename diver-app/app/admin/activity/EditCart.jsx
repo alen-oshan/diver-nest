@@ -20,7 +20,7 @@ const EditCard = ({ formData, onChange, onSave, onCancel, title }) => (
         <InputGroup label="Town" name="town" value={formData.town} onChange={onChange} />
         <InputGroup label="Price" name="price" type="number" value={formData.price} onChange={onChange} />
         <div className="flex flex-col gap-1">
-          <label className="text-[10px] uppercase font-bold text-gray-500">Type</label>
+          <label className="text-[10px] uppercase font-bold text-gray-600">Type</label>
           <select name="type" value={formData.type ?? 'single'} onChange={onChange} className="p-2 border rounded bg-white">
             <option value="single">Single</option>
             <option value="group">Group</option>
@@ -28,7 +28,7 @@ const EditCard = ({ formData, onChange, onSave, onCancel, title }) => (
         </div>
         {formData.type === 'group' && (
           <div className="md:col-span-2 flex flex-col gap-1">
-            <label className="text-[10px] uppercase font-bold text-gray-500">Group Sizes (comma separated)</label>
+            <label className="text-[10px] uppercase font-bold text-gray-600">Group Sizes (comma separated)</label>
             <input 
               name="groupSizes" 
               value={formData.groupSizes ? (Array.isArray(formData.groupSizes) ? formData.groupSizes.join(', ') : formData.groupSizes) : '5, 10'} 
@@ -39,7 +39,7 @@ const EditCard = ({ formData, onChange, onSave, onCancel, title }) => (
           </div>
         )}
         <div className="flex flex-col gap-1">
-          <label className="text-[10px] uppercase font-bold text-gray-500">Status</label>
+          <label className="text-[10px] uppercase font-bold text-gray-600">Status</label>
           <select name="status" value={formData.status ?? 'available'} onChange={onChange} className="p-2 border rounded bg-white">
             <option value="available">Available</option>
             <option value="not available">Not Available</option>
@@ -53,20 +53,20 @@ const EditCard = ({ formData, onChange, onSave, onCancel, title }) => (
         <InputGroup label="Map URL" name="mapUrl" value={formData.mapUrl} onChange={onChange} />
 
         <div className="md:col-span-2 flex flex-col gap-1">
-          <label className="text-[10px] uppercase font-bold text-gray-500">Available Times (comma separated)</label>
+          <label className="text-[10px] uppercase font-bold text-gray-600">Available Times (comma separated)</label>
           <input name="availableTimes" value={formData.availableTimes ?? ''} onChange={onChange} className="p-2 border rounded" placeholder="9:00 AM, 2:00 PM, 5:00 PM" />
         </div>
         <div className="md:col-span-2 flex flex-col gap-1">
-          <label className="text-[10px] uppercase font-bold text-gray-500">Amenities (comma separated)</label>
+          <label className="text-[10px] uppercase font-bold text-gray-600">Amenities (comma separated)</label>
           <input name="amenities" value={formData.amenities ?? ''} onChange={onChange} className="p-2 border rounded" placeholder="Equipment, Guide, Snacks" />
         </div>
         <div className="md:col-span-4 flex flex-col gap-1">
-          <label className="text-[10px] uppercase font-bold text-gray-500">Images (comma separated links)</label>
+          <label className="text-[10px] uppercase font-bold text-gray-600">Images (comma separated links)</label>
           <input name="images" value={formData.images ?? ''} onChange={onChange} className="p-2 border rounded" placeholder="url1, url2" />
         </div>
         <div className="md:col-span-4 flex flex-col gap-1">
-          <label className="text-[10px] uppercase font-bold text-gray-500">Description</label>
-          <textarea name="description" value={formData.description ?? ''} onChange={onChange} className="p-2 border rounded w-full" rows="2" maxLength="1000"></textarea>
+          <label className="text-[10px] uppercase font-bold text-gray-600">Description</label>
+          <textarea name="description" value={formData.description || ''} onChange={onChange} className="p-2 border rounded w-full" rows="3" maxLength="1000" placeholder="Enter activity description..."></textarea>
         </div>
 
       </div>

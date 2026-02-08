@@ -29,8 +29,6 @@ export const POST = async(request) => {
             totalAmount: Number(totalAmount),   
     }
 
-    console.log('Creating booking:', newBooking);
-
     try{
         await createResortBooking(newBooking);
 
@@ -63,8 +61,6 @@ export const GET = async () => {
     totalAmount: booking.totalAmount,
     type:booking.type,
   }))
-
-  console.log(resortBookingDTO)
 
   return NextResponse.json(resortBookingDTO, {
     status:200,

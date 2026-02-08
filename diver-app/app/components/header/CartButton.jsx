@@ -1,8 +1,15 @@
 'use client'
 
 import React, { useState} from 'react'
-import { CartSidebar } from './cart/CartSidebar';
+import dynamic from 'next/dynamic';
 import { ShoppingCart } from 'lucide-react';
+
+// Lazy-load CartSidebar — it's heavy (SSE, cart logic, sub-components)
+// and only rendered when the user clicks the cart icon
+const CartSidebar = dynamic(
+    () => import('./cart/CartSidebar').then(mod => ({ default: mod.CartSidebar })),
+    { ssr: false }
+);
 
 const CartButton = () => {
     const [isCartOpen, setIsCartOpen] = useState(false);
@@ -15,7 +22,9 @@ const CartButton = () => {
             >
             <ShoppingCart/>
             </button>
-            <CartSidebar isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
+            {isCartOpen && (
+                <CartSidebar isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
+            )}
         </div>
     )
 }

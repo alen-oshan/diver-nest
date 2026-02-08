@@ -2,8 +2,8 @@ import Header from '@/app/components/layout/Header'
 import ResortBody from '@/app/components/body/stay/resort/ResortBody';
 import {findResortByName, findAllResorts} from '@/queries/resort'
 
-// Force dynamic for real-time availability data
-export const dynamic = 'force-dynamic';
+// Use ISR with 60s revalidation — real-time availability is handled client-side via SSE
+export const revalidate = 60;
 
 // Generate static params for all resorts
 export async function generateStaticParams() {
@@ -30,17 +30,19 @@ export async function generateMetadata({params}) {
     }
   }
 
+  const desc = resort.description || '';
+
   return {
     title: `${resort.name} - Luxury Resort`,
-    description: resort.description ? 
-      `${resort.description.substring(0, 155)}...` : 
-      `Stay at ${resort.name}, a luxury resort perfect for your diving vacation. Premium amenities, stunning ocean views, and world-class service.`,
+    description: desc
+      ? `${desc.substring(0, 155)}...`
+      : `Stay at ${resort.name}, a luxury resort perfect for your diving vacation. Premium amenities, stunning ocean views, and world-class service.`,
     keywords: `${resort.name}, diving resort, luxury accommodation, oceanfront hotel, diving vacation, beach resort`,
     openGraph: {
       title: `${resort.name} - Diving Nest`,
-      description: resort.description ? 
-        `${resort.description.substring(0, 155)}...` : 
-        `Stay at ${resort.name}, a luxury resort perfect for your diving vacation with premium amenities and stunning views.`,
+      description: desc
+        ? `${desc.substring(0, 155)}...`
+        : `Stay at ${resort.name}, a luxury resort perfect for your diving vacation with premium amenities and stunning views.`,
       images: resort.images ? [{
         url: resort.images[0],
         width: 1200,
@@ -60,7 +62,9 @@ export default async function ResortDetail({params}) {
   return (
     <>
       <Header />
-      <ResortBody resort={resort}/>
+      <main>
+        <ResortBody resort={resort}/>
+      </main>
     </>
   );
 }

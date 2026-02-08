@@ -5,6 +5,11 @@ const nextConfig = {
     serverActions: {
       allowedOrigins: ['localhost:3000', 'b025zz35-3000.asse.devtunnels.ms'],
     },
+    optimizePackageImports: [
+      'lucide-react',
+      'react-icons',
+      'react-loading-skeleton',
+    ],
   },
   images: {
     remotePatterns: [

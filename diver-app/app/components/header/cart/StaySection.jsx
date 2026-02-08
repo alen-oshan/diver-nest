@@ -29,7 +29,7 @@ const StaySection = ({stayItems, setCartItems, stayTotal}) => {
                 Stays
             </h3>
                 {stayItems.length === 0 ? (
-                <p className="text-gray-500 italic text-sm">No stays in cart</p>
+                <p className="text-gray-600 italic text-sm">No stays in cart</p>
                 ) : (
                 <div className="space-y-2">
                     {stayItems.map(item => (

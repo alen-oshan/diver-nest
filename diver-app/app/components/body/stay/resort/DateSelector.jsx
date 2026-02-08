@@ -137,10 +137,11 @@ const DateSelector = (props) => {
     return (
         <> {dateTypes.map((dateType, index) => 
             <div key={index}>
-                <label className="block text-sm text-gray-600 mb-1">{dateType.name}</label>
+                <label htmlFor={`date-${dateType.name.toLowerCase().replace(/\s+/g, '-')}`} className="block text-sm text-gray-600 mb-1">{dateType.name}</label>
                 <div className="relative">
                     <div className="top-full w-fit left-0 right-0 z-10 bg-white border border-gray-300 rounded-md shadow-md">
                         <DatePicker
+                            id={`date-${dateType.name.toLowerCase().replace(/\s+/g, '-')}`}
                             selected={dateType.value ? new Date(dateType.value) : null}
                             minDate={new Date(getMinDate())}
                             dateFormat="yyyy-MM-dd"

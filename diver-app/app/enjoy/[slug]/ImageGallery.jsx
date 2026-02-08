@@ -18,12 +18,13 @@ const ImageGallery = ({activity}) => {
                 className="w-full h-[350px] object-cover"
                 width={800}
                 height={350}
+                priority={selectedImageIndex === 0}
             />
             </div>
 
             {/* Thumbnail Images */}
             <div className="grid grid-cols-5 gap-3">
-            {activity.images.map((image, index) => (
+            {activity.images?.map((image, index) => (
                 <button
                     key={index}
                     onClick={() => setSelectedImageIndex(index)}

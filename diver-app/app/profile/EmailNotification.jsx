@@ -28,7 +28,7 @@ const EmailNotification = ({notification}) => {
         <div className="flex items-center justify-between">
             <div>
             <p className="text-sm font-medium">Booking Confirmations</p>
-            <p className="text-xs text-gray-500">
+            <p className="text-xs text-gray-600">
                 Notify when a booking is confirmed
             </p>
             </div>

@@ -8,6 +8,7 @@ const SVGComp = (props) => {
         alt={`${props.src} image`}
         width={props.size}
         height={props.size}
+        priority
     />
   )
 }

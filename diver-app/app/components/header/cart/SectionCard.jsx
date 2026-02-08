@@ -47,7 +47,7 @@ const SectionCard = ({ arrItems, setCartItems, total, section }) => {
         {section}
       </h3>
       {arrItems.length === 0 ? (
-        <p className="text-gray-500 italic text-sm">No {section} in cart</p>
+        <p className="text-gray-600 italic text-sm">No {section} in cart</p>
       ) : (
         <div className="space-y-2">
           {arrItems.map(item => (

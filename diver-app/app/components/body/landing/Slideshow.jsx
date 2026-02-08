@@ -2,50 +2,34 @@
 
 import { useEffect, useState } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import Link from 'next/link'
 import Image from 'next/image';
 
 const slides = [
   {
-    imageDesktop: "https://images.unsplash.com/photo-1727101761134-a3ef9bd657df?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxzY3ViYSUyMGRpdmluZyUyMHVuZGVyd2F0ZXJ8ZW58MXx8fHwxNzY4MTEwNDQ5fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
-    imageMobile: '/images/hero-mobile-1.jpg',
+    image: "https://images.unsplash.com/photo-1727101761134-a3ef9bd657df?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxzY3ViYSUyMGRpdmluZyUyMHVuZGVyd2F0ZXJ8ZW58MXx8fHwxNzY4MTEwNDQ5fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
     title: "Explore the Deep Blue",
-    description: "Discover the most breathtaking underwater experiences with our expert dive guides."
+    description: "Discover the most breathtaking underwater experiences with our expert dive guides.",
+    buttonNav: "/about"
   },
   {
-    imageDesktop: "https://images.unsplash.com/photo-1558117338-aa433feb1c62?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx0cm9waWNhbCUyMGJlYWNoJTIwcmVzb3J0fGVufDF8fHx8MTc2ODA3NDA3MXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
-    imageMobile: '/images/hero-mobile-1.jpg',
+    image: "https://images.unsplash.com/photo-1558117338-aa433feb1c62?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx0cm9waWNhbCUyMGJlYWNoJTIwcmVzb3J0fGVufDF8fHx8MTc2ODA3NDA3MXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
     title: "Luxury Beach Resorts",
-    description: "Relax in paradise between dives at our hand-picked coastal accommodations."
+    description: "Relax in paradise between dives at our hand-picked coastal accommodations.",
+    buttonNav: "/home"
   },
   {
-    imageDesktop: "https://images.unsplash.com/photo-1727093481948-a84c1c24db99?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxkaXZpbmclMjBjb3JhbCUyMHJlZWZ8ZW58MXx8fHwxNzY4MTQzMzY0fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
-    imageMobile: '/images/hero-mobile-1.jpg',    
+    image: "https://images.unsplash.com/photo-1727093481948-a84c1c24db99?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxkaXZpbmclMjBjb3JhbCUyMHJlZWZ8ZW58MXx8fHwxNzY4MTQzMzY0fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
     title: "Vibrant Coral Reefs",
-    description: "Experience the stunning beauty of pristine coral ecosystems and marine life."
+    description: "Experience the stunning beauty of pristine coral ecosystems and marine life.",
+    buttonNav: "/profile"
   }
 ];
 
-function useIsMobile(breakpoint = 640) {
-  const [isMobile, setIsMobile] = useState(false)
-
-  useEffect(() => {
-    const mediaQuery = window.matchMedia(`(max-width: ${breakpoint}px)`)
-
-    const handler = (e) => setIsMobile(e.matches)
-    setIsMobile(mediaQuery.matches)
-
-    mediaQuery.addEventListener('change', handler)
-    return () => mediaQuery.removeEventListener('change', handler)
-  }, [breakpoint])
-
-  return isMobile
-}
 
 export default function Slideshow() {
   const [currentSlide, setCurrentSlide] = useState(0);
   
-  const isMobile = useIsMobile()
-
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % slides.length);
@@ -78,11 +62,13 @@ export default function Slideshow() {
           }`}
         >
           <Image
-            src={isMobile ? slide.imageMobile : slide.imageDesktop}
+            src={slide.image}
             alt={slide.title}
             className="w-full h-full object-cover"
             fill
-            priority
+            priority={index === 0}
+            loading='eager'
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 1080px"
           />
           
           {/* Dark overlay for text readability */}
@@ -98,9 +84,11 @@ export default function Slideshow() {
                 <p className="text-lg md:text-xl text-white/90 mb-6">
                   {slide.description}
                 </p>
-                <button className="bg-[#205781] text-white hover:bg-[#FFFFFF] hover:text-[#205781]  px-8 py-3 rounded-lg transition-colors duration-300 font-medium">
-                  Book Now
-                </button>
+                <Link href={slide.buttonNav}>
+                  <button className="bg-[#205781] text-white hover:bg-[#FFFFFF] hover:text-[#205781]  px-8 py-3 rounded-lg transition-colors duration-300 font-medium">
+                    Book Now
+                  </button>
+                </Link>
               </div>
             </div>
           </div>

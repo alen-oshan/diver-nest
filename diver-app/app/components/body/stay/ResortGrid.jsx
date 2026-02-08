@@ -76,7 +76,7 @@ const ResortGrid = (props) => {
                         </div>
                         <div className="text-[24px] font-bold" style={{ color: '#205781' }}>
                           <Price price={resort.price}/>
-                          <span className="text-[16px] text-gray-500 font-normal">{props.isStay ? '/night' : '/person'}</span>
+                          <span className="text-[16px] text-gray-600 font-normal">{props.isStay ? '/night' : '/person'}</span>
                         </div>
                       </div>
                     </div>

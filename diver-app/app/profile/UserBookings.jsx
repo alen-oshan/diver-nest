@@ -43,7 +43,7 @@ const UserBookings = () => {
           
 
         {resortBookings.length === 0 ? (
-          <div className="col-span-2 bg-white border rounded-md p-10 text-center text-gray-500">
+          <div className="col-span-2 bg-white border rounded-md p-10 text-center text-gray-600">
             <Calendar className="w-10 h-10 mx-auto mb-3" />
             No Room bookings found
           </div>
@@ -59,7 +59,7 @@ const UserBookings = () => {
         <div className='grid lg:grid-cols-3 gap-4'>
           
         {activityBookings.length === 0 ? (
-          <div className="col-span-2 bg-white border rounded-md p-10 text-center text-gray-500">
+          <div className="col-span-2 bg-white border rounded-md p-10 text-center text-gray-600">
             <Calendar className="w-10 h-10 mx-auto mb-3" />
             No Activity bookings found
           </div>

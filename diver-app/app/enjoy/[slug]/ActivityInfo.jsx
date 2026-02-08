@@ -182,7 +182,7 @@ const ResortInfo = ({activity}) => {
                 <div className="mb-6">
                 <h3 className="font-semibold text-lg mb-4">What this place offers</h3>
                 <div className="space-y-3">
-                    {activity.amenities.map((amenity, index) => {
+                    {activity.amenities?.map((amenity, index) => {
                     const Icon = amenityIcons[amenity] || Wifi;
                     return (
                         <div key={index} className="flex items-center gap-3">
@@ -207,7 +207,7 @@ const ResortInfo = ({activity}) => {
                     />
                 </div>
                 <a
-                    href={activity.mapUrl}
+                    href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(activity.address || activity.name)}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="mt-3 block text-center text-sm text-blue-600 hover:text-blue-700 hover:underline"

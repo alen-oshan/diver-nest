@@ -18,6 +18,7 @@ const ImageGallery = ({resort}) => {
                 className="w-full h-[350px] object-cover"
                 width={800}
                 height={350}
+                priority={selectedImageIndex === 0}
             />
             </div>
 
@@ -27,6 +28,7 @@ const ImageGallery = ({resort}) => {
                 <button
                     key={index}
                     onClick={() => setSelectedImageIndex(index)}
+                    aria-label={`View image ${index + 1} of ${resort.images.length}`}
                     className={`rounded-md overflow-hidden border-2 transition-all ${
                         selectedImageIndex === index
                         ? "border-blue-600 ring-2 ring-blue-200"
@@ -47,7 +49,7 @@ const ImageGallery = ({resort}) => {
             {/* Description Section */}
             {resort.description && (
                 <div className="mt-6 p-5 bg-white border border-gray-200 rounded-lg">
-                    <h3 className="text-lg font-semibold text-gray-900 mb-3">About this place</h3>
+                    <h2 className="text-lg font-semibold text-gray-900 mb-3">About this place</h2>
                     <p className="text-gray-600 leading-relaxed whitespace-pre-line">{resort.description}</p>
                 </div>
             )}

@@ -12,9 +12,10 @@ const RoomSelector = ({rooms, setRooms, maxRooms, roomType, disabled = false}) =
 
   return (
     <div className="relative">
-        <label className="block text-sm text-gray-600 mb-1">{roomType === 'Shared Room' ? "Rooms": "Beds"}</label>
+        <label htmlFor="room-selector" className="block text-sm text-gray-600 mb-1">{roomType === 'Shared Room' ? "Rooms": "Beds"}</label>
         <div onClick={handleClick}>
           <input
+              id="room-selector"
               type="number"
               value={rooms}
               onChange={(e) => setRooms(Math.max(1, Number(e.target.value)))}

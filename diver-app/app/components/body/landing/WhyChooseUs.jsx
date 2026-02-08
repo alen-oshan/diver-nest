@@ -49,7 +49,7 @@ export default function WhyChooseUs() {
         </h2>
         <p
           className="text-center text-lg mb-12"
-          style={{ color: "#205781" }}
+          style={{ color: "#154268" }}
         >
           Discover what makes Diving Nest the perfect choice for
           your underwater adventures

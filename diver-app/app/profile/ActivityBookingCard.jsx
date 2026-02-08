@@ -8,7 +8,7 @@ const ActivityBookingCard = ({booking, getStatusStyle}) => {
             <div className="flex justify-between mb-3">
             <div>
                 <p className="font-medium">{booking.activityName}</p>
-                <p className="text-sm text-gray-500 capitalize">
+                <p className="text-sm text-gray-600 capitalize">
                 Activity Booking
                 </p>
             </div>

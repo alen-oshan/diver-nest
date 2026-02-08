@@ -89,6 +89,7 @@ export const {
                 })
             ],
             secret: process.env.NEXTAUTH_SECRET,
+            trustHost: true,
             callbacks: {
                 async signIn({ user, account }) {
                     if (account?.provider === "google" || account?.provider === "github") {

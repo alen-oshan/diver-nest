@@ -47,7 +47,7 @@ const ContactBody = () => {
             <h2 className="text-xl font-semibold text-gray-800">
             Get in Touch
             </h2>
-            <p className="text-sm text-gray-500">
+            <p className="text-sm text-gray-600">
             Tell us a little about what you’re looking for.
             </p>
 

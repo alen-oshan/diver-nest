@@ -1,9 +1,10 @@
+import { notFound } from 'next/navigation';
 import Header from '@/app/components/layout/Header'
 import ActivityBody from './ActivityBody';
 import { findActivityByName, findAllActivities } from '@/queries/activity'
 
-// Force dynamic for real-time availability data
-export const dynamic = 'force-dynamic';
+// Use ISR with 60s revalidation — real-time availability is handled client-side via SSE
+export const revalidate = 60;
 
 // Generate static params for all activities
 export async function generateStaticParams() {
@@ -30,17 +31,19 @@ export async function generateMetadata({params}) {
     }
   }
 
+  const desc = activity.description || '';
+
   return {
     title: `${activity.name} - Diving Activity`,
-    description: activity.description ? 
-      `${activity.description.substring(0, 155)}...` : 
-      `Experience ${activity.name} with Diving Nest. Professional guides, top-quality equipment, and unforgettable underwater adventures await.`,
+    description: desc
+      ? `${desc.substring(0, 155)}...`
+      : `Experience ${activity.name} with Diving Nest. Professional guides, top-quality equipment, and unforgettable underwater adventures await.`,
     keywords: `${activity.name}, diving activity, underwater adventure, scuba diving, marine experience, diving tour`,
     openGraph: {
       title: `${activity.name} - Diving Nest`,
-      description: activity.description ? 
-        `${activity.description.substring(0, 155)}...` : 
-        `Experience ${activity.name} with professional guides and top-quality equipment.`,
+      description: desc
+        ? `${desc.substring(0, 155)}...`
+        : `Experience ${activity.name} with professional guides and top-quality equipment.`,
       images: activity.images ? [{
         url: activity.images[0],
         width: 1200,
@@ -56,6 +59,7 @@ export default async function ActivityDetail({params}) {
   const { slug } = await params;
   const decodedSlug = decodeURIComponent(slug);
   const activity = await findActivityByName(decodedSlug);
+  if (!activity) notFound();
   return (
     <>
       <Header />

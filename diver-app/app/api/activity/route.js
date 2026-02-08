@@ -18,7 +18,6 @@ export const GET = async () => {
             })
         )
         
-        console.log(activitiesDTO)
         return NextResponse.json({ activitiesDTO });
     } catch(e){
         console.log("Error details:", e);

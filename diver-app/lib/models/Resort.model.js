@@ -45,7 +45,7 @@ const ResortSchema = new mongoose.Schema(
     },
 
     description: {
-      type: [String],
+      type: String,
     },
 
     roomType: {
