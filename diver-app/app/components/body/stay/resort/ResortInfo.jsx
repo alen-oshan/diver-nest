@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { Wifi, Coffee, Utensils, Dumbbell, Wind, Car } from "lucide-react";
+import Image from 'next/image';
 import ResortPrice from './ResortPrice'
 import RoomSelector from './RoomSelector';
 import DateSelector from './DateSelector';
@@ -207,10 +208,12 @@ const ResortInfo = ({resort, googleMapsUrl}) => {
                 <div className="pt-6 border-t border-gray-200">
                 <h3 className="font-semibold text-lg mb-3">Location</h3>
                 <div className="rounded-lg overflow-hidden border border-gray-200">
-                    <img
+                    <Image
                     src={resort.mapUrl}
                     alt="Resort location map"
                     className="w-full h-40 object-cover"
+                    width={400}
+                    height={160}
                     />
                 </div>
                 <a

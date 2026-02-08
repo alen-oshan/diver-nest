@@ -4,6 +4,12 @@ import { auth } from '@/app/auth'
 import { clearPaymentReserves } from '@/queries/reserve';
 import PaymentSuccessContent from './PaymentSuccessContent';
 
+export const metadata = {
+  title: "Payment Successful",
+  description: "Your booking has been confirmed! Thank you for choosing Diving Nest for your underwater adventure.",
+  robots: "noindex, nofollow",
+};
+
 const PaymentSuccess = async() => {
   const session = await auth();
   await DeleteAllCartItems(session.user.email)

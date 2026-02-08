@@ -4,6 +4,12 @@ import ContactBody from './ContactBody'
 import { findAllContacts } from '@/queries/contact';
 import { requireAdmin } from '@/lib/requireAdmin';
 
+export const metadata = {
+  title: "Admin - Contact Messages",
+  description: "Admin dashboard to manage customer inquiries and contact messages.",
+  robots: "noindex, nofollow",
+};
+
 const page = async() => {
   await requireAdmin();
 

@@ -3,6 +3,12 @@ import React from 'react';
 import { auth } from '@/app/auth';
 import { clearPaymentReserves } from '@/queries/reserve';
 
+export const metadata = {
+  title: "Payment Cancelled",
+  description: "Your payment was cancelled. You can try booking again or contact us for assistance.",
+  robots: "noindex, nofollow",
+};
+
 const PaymentCanceled = async() => {
   const session = await auth();
   if (session) {

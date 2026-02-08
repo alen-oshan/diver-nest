@@ -3,7 +3,11 @@ import Sidebar from '@/app/components/admin/Sidebar';
 import ActivityBody from './ActivityBody'
 import { findAllActivities } from '@/queries/activity';
 import { requireAdmin } from '@/lib/requireAdmin';
-
+export const metadata = {
+  title: "Admin - Manage Activities",
+  description: "Admin dashboard to manage diving activities and underwater experiences.",
+  robots: "noindex, nofollow",
+};
 const page = async() => {
   await requireAdmin();
 

@@ -5,6 +5,12 @@ import { auth } from '@/app/auth'
 import { redirect } from "next/navigation";
 import { findUserByEmail } from '@/queries/user';
 
+export const metadata = {
+  title: "My Profile",
+  description: "Manage your Diving Nest profile, view your booking history, update personal information, and track your diving adventures.",
+  robots: "noindex, nofollow",
+};
+
 const page = async() => {
   const session = await auth();
 

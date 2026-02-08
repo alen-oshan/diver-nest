@@ -4,6 +4,12 @@ import Sidebar from '@/app/components/admin/Sidebar';
 import UserBody from './UserBody';
 import { requireAdmin } from '@/lib/requireAdmin';
 
+export const metadata = {
+  title: "Admin - Manage Users",
+  description: "Admin dashboard to manage user accounts and customer information.",
+  robots: "noindex, nofollow",
+};
+
 const AdminDashboard = async() => {
   await requireAdmin();
 

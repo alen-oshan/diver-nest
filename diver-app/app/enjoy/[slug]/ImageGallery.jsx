@@ -2,6 +2,7 @@
 
 import React from 'react'
 import { useState } from 'react';
+import Image from 'next/image';
 
 const ImageGallery = ({activity}) => {
 
@@ -11,10 +12,12 @@ const ImageGallery = ({activity}) => {
         <div className="lg:col-span-2">
             {/* Main Image */}
             <div className="mb-4 rounded-lg overflow-hidden bg-gray-100">
-            <img
+            <Image
                 src={activity.images ? activity.images[selectedImageIndex] : ''}
                 alt={`${activity.name} - Image ${selectedImageIndex + 1}`}
                 className="w-full h-[350px] object-cover"
+                width={800}
+                height={350}
             />
             </div>
 
@@ -30,10 +33,12 @@ const ImageGallery = ({activity}) => {
                         : "border-gray-200 hover:border-gray-300"
                     }`}
                 >
-                <img
+                <Image
                     src={image}
                     alt={`Thumbnail ${index + 1}`}
                     className="w-full h-16 object-cover"
+                    width={100}
+                    height={64}
                 />
                 </button>
             ))}

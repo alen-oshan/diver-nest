@@ -7,6 +7,12 @@ import { makeTempReserve, checkReservationClash, clearTempReserves } from '@/que
 // Disable caching for this page
 export const dynamic = 'force-dynamic'
 
+export const metadata = {
+  title: "Checkout",
+  description: "Complete your booking for diving activities and resort stays. Secure payment processing for your underwater adventure.",
+  robots: "noindex, nofollow",
+};
+
 const page = async() => {
   const session = await auth();
   let formattedData = []

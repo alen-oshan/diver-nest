@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import Image from 'next/image';
 
 const slides = [
   {
@@ -76,10 +77,12 @@ export default function Slideshow() {
               : 'opacity-0 pointer-events-none'
           }`}
         >
-          <img
+          <Image
             src={isMobile ? slide.imageMobile : slide.imageDesktop}
             alt={slide.title}
             className="w-full h-full object-cover"
+            fill
+            priority
           />
           
           {/* Dark overlay for text readability */}

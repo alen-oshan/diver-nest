@@ -4,6 +4,12 @@ import ResortBody from './ResortBody'
 import { findAllResorts } from '@/queries/resort';
 import { requireAdmin } from '@/lib/requireAdmin';
 
+export const metadata = {
+  title: "Admin - Manage Resorts",
+  description: "Admin dashboard to manage resort listings and accommodations.",
+  robots: "noindex, nofollow",
+};
+
 const page = async() => {
   await requireAdmin();
 

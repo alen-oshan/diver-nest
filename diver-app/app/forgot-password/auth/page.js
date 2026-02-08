@@ -4,6 +4,9 @@ import React, { useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 
+// Note: Client components cannot export static metadata.
+// Metadata should be handled by the parent layout or moved to a server component.
+
 const VerifyCode = () => {
     const router = useRouter();
     const [otp, setOtp] = useState(new Array(6).fill(""));
