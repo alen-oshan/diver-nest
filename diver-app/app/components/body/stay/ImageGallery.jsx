@@ -24,7 +24,7 @@ const ImageGallery = ({resort}) => {
 
             {/* Thumbnail Images */}
             <div className="grid grid-cols-5 gap-3">
-            {resort.images.map((image, index) => (
+            {resort.images?.map((image, index) => (
                 <button
                     key={index}
                     onClick={() => setSelectedImageIndex(index)}

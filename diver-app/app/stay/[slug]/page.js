@@ -1,3 +1,4 @@
+import { notFound } from 'next/navigation';
 import Header from '@/app/components/layout/Header'
 import ResortBody from '@/app/components/body/stay/resort/ResortBody';
 import {findResortByName, findAllResorts} from '@/queries/resort'
@@ -59,6 +60,7 @@ export default async function ResortDetail({params}) {
   const decodedSlug = decodeURIComponent(slug);
 
   const resort = await findResortByName(decodedSlug);
+  if (!resort) notFound();
   return (
     <>
       <Header />

@@ -192,7 +192,7 @@ const ResortInfo = ({resort}) => {
                 <div className="mb-6">
                 <h2 className="font-semibold text-lg mb-4">What this place offers</h2>
                 <div className="space-y-3">
-                    {resort.amenities.map((amenity, index) => {
+                    {resort.amenities?.map((amenity, index) => {
                     const Icon = amenityIcons[amenity] || Wifi;
                     return (
                         <div key={index} className="flex items-center gap-3">
