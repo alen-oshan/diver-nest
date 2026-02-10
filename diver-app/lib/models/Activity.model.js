@@ -50,14 +50,6 @@ const ActivitySchema = new mongoose.Schema(
       min: 1,
     },
 
-    groupSizes: {
-      type: [Number],
-      default: [5, 10],
-      required: function() {
-        return this.type === 'group';
-      },
-    },
-
     availableTimes:{
       type: [String],
       required: true,
