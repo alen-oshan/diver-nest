@@ -44,6 +44,10 @@ const ResortSchema = new mongoose.Schema(
       type: [String],
     },
 
+    mapImage: {
+      type: String,
+    },
+
     description: {
       type: String,
     },

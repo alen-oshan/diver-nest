@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
-import { Wifi, Coffee, Utensils, Dumbbell, Wind, Car } from "lucide-react";
+import { Disc } from "lucide-react";
 import Image from 'next/image';
 import ActivityPrice from './ActivityPrice'
 import RoomSelector from './RoomSelector';
@@ -49,15 +49,6 @@ const ResortInfo = ({activity}) => {
     }, [activity.name]); 
 
     const totalPrice = seats * activity.price;
-
-    const amenityIcons= {
-            "Free WiFi": Wifi,
-            "Restaurant": Utensils, 
-            "Breakfast": Coffee,
-            "Fitness Center": Dumbbell,
-            "Air Conditioning": Wind,
-            "Free Parking": Car,
-        };
 
     const handleSubmit = (event) => {
         event.preventDefault(); 
@@ -180,13 +171,12 @@ const ResortInfo = ({activity}) => {
 
                 {/* Amenities */}
                 <div className="mb-6">
-                <h3 className="font-semibold text-lg mb-4">What this place offers</h3>
+                <h3 className="font-semibold text-lg mb-4">What this service has</h3>
                 <div className="space-y-3">
                     {activity.amenities?.map((amenity, index) => {
-                    const Icon = amenityIcons[amenity] || Wifi;
                     return (
                         <div key={index} className="flex items-center gap-3">
-                        <Icon className="w-5 h-5 text-gray-600" />
+                        <Disc className="w-5 h-5 text-gray-600" />
                         <span className="text-gray-700">{amenity}</span>
                         </div>
                     );
@@ -199,15 +189,15 @@ const ResortInfo = ({activity}) => {
                 <h3 className="font-semibold text-lg mb-3">Location</h3>
                 <div className="rounded-lg overflow-hidden border border-gray-200">
                     <Image
-                    src={activity.mapUrl}
-                    alt="Resort location map"
-                    className="w-full h-40 object-cover"
-                    width={400}
-                    height={160}
+                        src={activity.mapImage}
+                        alt="Resort location map"
+                        className="w-full h-40 object-cover"
+                        width={400}
+                        height={160}
                     />
                 </div>
                 <a
-                    href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(activity.address || activity.name)}`}
+                    href={activity.mapUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="mt-3 block text-center text-sm text-blue-600 hover:text-blue-700 hover:underline"

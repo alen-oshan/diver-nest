@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
-import { Wifi, Coffee, Utensils, Dumbbell, Wind, Car } from "lucide-react";
+import { Disc } from "lucide-react";
 import Image from 'next/image';
 import ResortPrice from './ResortPrice'
 import RoomSelector from './RoomSelector';
@@ -58,15 +58,6 @@ const ResortInfo = ({resort}) => {
     
     const nights = calculateNights();
     const totalPrice = resort.pricePerNight * rooms * nights;
-
-    const amenityIcons= {
-        "Free WiFi": Wifi,
-        "Restaurant": Utensils,
-        "Breakfast": Coffee,
-        "Fitness Center": Dumbbell,
-        "Air Conditioning": Wind,
-        "Free Parking": Car,
-    };
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -193,10 +184,9 @@ const ResortInfo = ({resort}) => {
                 <h2 className="font-semibold text-lg mb-4">What this place offers</h2>
                 <div className="space-y-3">
                     {resort.amenities?.map((amenity, index) => {
-                    const Icon = amenityIcons[amenity] || Wifi;
                     return (
                         <div key={index} className="flex items-center gap-3">
-                        <Icon className="w-5 h-5 text-gray-600" />
+                        <Disc className="w-5 h-5 text-gray-600" />
                         <span className="text-gray-700">{amenity}</span>
                         </div>
                     );
@@ -209,7 +199,7 @@ const ResortInfo = ({resort}) => {
                 <h2 className="font-semibold text-lg mb-3">Location</h2>
                 <div className="rounded-lg overflow-hidden border border-gray-200">
                     <Image
-                    src={resort.mapUrl}
+                    src={resort.mapImage}
                     alt="Resort location map"
                     className="w-full h-40 object-cover"
                     width={400}
@@ -217,7 +207,7 @@ const ResortInfo = ({resort}) => {
                     />
                 </div>
                 <a
-                    href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(resort.address || resort.name)}`}
+                    href={resort.mapUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="mt-3 block text-center text-sm text-blue-600 hover:text-blue-700 hover:underline"

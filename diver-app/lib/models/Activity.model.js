@@ -27,6 +27,10 @@ const ActivitySchema = new mongoose.Schema(
       type: [String],
     },
 
+    mapImage: {
+      type: String
+    },
+
     rating: {
       type:Number,
       min: 0,
